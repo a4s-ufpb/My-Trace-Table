@@ -1,17 +1,26 @@
 .header {
     width: 100%;
-    background: linear-gradient(80deg,aquamarine, aqua);
-    height: 120px;
+    background: linear-gradient(80deg,#66CEA4, #3DCFBC);
+    height: 15%;
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.6);
+}
+
+.header h1 {
+    color: #07433C;
 }
 
 .header img {
-    width: 100px;
-    height: 100px;
+    width: 90px;
+    height: 90px;
     position: absolute;
-    top: 10px;
+    top: auto;
     right: 50px;
+    background-color: #fff;
+    border-radius: 50%;
+    box-shadow: inset 0px 0px  10px #3DCFBC;
+    cursor: pointer;
 }
