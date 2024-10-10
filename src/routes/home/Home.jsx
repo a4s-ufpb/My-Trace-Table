@@ -1,12 +1,13 @@
-import "./Home.css";
+import { useNavigate } from "react-router-dom";
+import Button from "../../components/button/Button";
 
 function Home() {
+  const navigate = useNavigate();
+
   return (
-    <div className="home">
-      <div className="container-home-btn">
-        <button>Exercícios</button>
-        <button>Sobre</button>
-      </div>
+    <div className="background">
+        <Button text="Exercícios" action={() => navigate("/exercices")}/>
+        <Button text="Sobre" action={() => navigate("/about")}/>
     </div>
   );
 }
