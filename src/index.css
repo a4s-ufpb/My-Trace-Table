@@ -15,4 +15,27 @@
     align-items: center;
     justify-content: center;
     gap: 1em;
+    position: relative;
+}
+
+.title {
+    width: 50%;
+    background-color: #07433C;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    border-radius: 20px;
+    text-transform: uppercase;
+    position: absolute;
+    top: 70px;
+}
+
+.container-data {
+    width: 80%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 1em;
+    overflow: auto;
 }
