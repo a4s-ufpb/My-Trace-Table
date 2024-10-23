@@ -1,12 +1,8 @@
-import operatorsData from "../../data/operators.json";
-import repeatsData from "../../data/repeats.json";
-import conditionalsData from "../../data/conditonals.json";
-import listsData from "../../data/lists.json";
-
 function TraceTable() {
-
-  const data = [operatorsData, repeatsData, conditionalsData, listsData];
-  
+  const e = localStorage.getItem("exercice")
+  if(e) {
+    console.log(JSON.parse(e))
+  }
   return <div>TraceTable</div>;
 }
 

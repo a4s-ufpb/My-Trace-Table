@@ -1,9 +1,14 @@
-import operatorsData from "../../../data/operators.json";
+import operatorsData from "../../../data/arithmetic-operators/operators.json";
 import Button from "../../../components/button/Button";
 import { useNavigate } from "react-router-dom";
 
 function Operators() {
   const navigate = useNavigate();
+
+  function navigateForTraceTable(exercice, exerciceId) {
+    localStorage.setItem("exercice", JSON.stringify(exercice));
+    navigate(`/exercices/conditionals/${exerciceId}`);
+  }
 
   return (
     <div className="background">
@@ -15,7 +20,7 @@ function Operators() {
             <div key={exercice.id}>
               <Button
                 text={`Exercício ${exercice.id}`}
-                action={() => navigate(`/exercices/operators/${exercice.id}`)}
+                action={() => navigateForTraceTable(exercice, exercice.id)}
               />
             </div>
           ))}
