@@ -1,7 +1,7 @@
 [
   {
     "id": 1,
-    "imgPath": "/lists/ex1.png",
+    "imgPath": "/lists/ex1.webp",
     "header": ["Passo", "continuar", "contador", "lista[contador]"],
     "showTraceTable": [
       ["?", "#", "#"],
