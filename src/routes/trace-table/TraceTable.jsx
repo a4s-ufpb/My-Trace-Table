@@ -81,7 +81,8 @@ function TraceTable() {
                       ) : (
                         <input
                           type="text"
-                          value={cell}
+                          value={(cell === "?") ? "" : cell}
+                          placeholder="?"
                           onChange={(e) =>
                             handleInputChange(
                               rowIndex,

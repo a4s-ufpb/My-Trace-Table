@@ -7,7 +7,7 @@ function Operators() {
 
   function navigateForTraceTable(exercice, exerciceId) {
     localStorage.setItem("exercice", JSON.stringify(exercice));
-    navigate(`/exercices/conditionals/${exerciceId}`);
+    navigate(`/exercices/operators/${exerciceId}`);
   }
 
   return (

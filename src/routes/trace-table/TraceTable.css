@@ -18,7 +18,7 @@ body {
 }
 
 .trace-table-container {
-  width: 80%;
+  width: 90%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -38,7 +38,7 @@ body {
 }
 
 .image-container {
-  width: 40%;
+  min-width: 400px;
   display: flex;
   align-items: start;
   justify-content: center;
@@ -50,10 +50,11 @@ body {
   color: white;
   font-weight: 100;
   border-radius: 10px;
+  animation: fadeIn 0.8s ease-in-out;
 }
 
 .exercise-image {
-  width: 400px;
+  width: 100%;
   object-fit: cover;
   cursor: zoom-in;
 }
@@ -98,17 +99,18 @@ input {
   text-align: center;
   transition: 0.3s;
   font-size: 1.3em;
+  font-weight: bold;
 }
 
 input.error {
   border-color: red;
-  background-color: #ffe6e6;
+  background-color: #fbcbcb;
   animation: shake 0.5s ease-in-out;
 }
 
 input.success {
   border-color: green;
-  background-color: #e6ffe6;
+  background-color: #d0fcd0;
 }
 
 .btn-container {
@@ -167,4 +169,21 @@ input.success {
 .success {
   color: green;
   font-weight: bold;
+}
+
+@media(max-width: 1000px) {
+  .trace-table-container {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  table {
+    border-spacing: 1px;
+  }
+}
+
+@media(max-width: 450px) {
+  .image-container {
+    min-width: 90%;
+  }
 }
