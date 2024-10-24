@@ -4,7 +4,7 @@
     "imgPath": "/lists/ex1.png",
     "header": ["Passo", "continuar", "contador", "lista[contador]"],
     "showTraceTable": [
-      ["?", "-", "-"],
+      ["?", "#", "#"],
       ["?", "?", "?"],
       ["?", "?", "?"],
       ["?", "?", "?"],
@@ -14,7 +14,7 @@
       ["?", "?", "?"]
     ],
     "expectedTraceTable": [
-      ["True", "-", "-"],
+      ["True", "#", "#"],
       ["True", "0", "3"],
       ["True", "0", "3"],
       ["True", "0", "3"],

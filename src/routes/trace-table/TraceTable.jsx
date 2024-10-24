@@ -13,6 +13,10 @@ function TraceTable() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleInputChange = (rowIndex, colIndex, value) => {
+    if (value.includes("#")) {
+      return;
+    }
+    
     const newTable = userTraceTable.map((row, rIdx) =>
       row.map((col, cIdx) =>
         rIdx === rowIndex && cIdx === colIndex ? value : col
@@ -76,7 +80,7 @@ function TraceTable() {
                   <td>{rowIndex + 1}°</td>
                   {row.map((cell, colIndex) => (
                     <td key={colIndex}>
-                      {cell === "-" ? (
+                      {cell === "#" ? (
                         <div className="disabled-cell"></div>
                       ) : (
                         <input
@@ -90,7 +94,7 @@ function TraceTable() {
                               e.target.value
                             )
                           }
-                          disabled={cell === "-"}
+                          disabled={cell === "#"}
                           className={
                             submitted
                               ? checkIfCorrect(rowIndex, colIndex)
