@@ -39,7 +39,7 @@ function TraceTable() {
   };
 
   return (
-    <div className="background">
+    <div className="background-trace">
       <div className="trace-table-container">
         <div className="image-container">
           <h2>Exercício {exerciceJson.id}</h2>
