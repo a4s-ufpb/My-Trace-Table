@@ -55,6 +55,7 @@ body {
 .exercise-image {
   width: 400px;
   object-fit: cover;
+  cursor: zoom-in;
 }
 
 table {

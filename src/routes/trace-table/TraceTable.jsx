@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./TraceTable.css";
+import ImageModal from "../../components/image-modal/ImageModal"; 
 
 function TraceTable() {
   const exercice = localStorage.getItem("exercice");
@@ -9,6 +10,7 @@ function TraceTable() {
     exerciceJson.showTraceTable
   );
   const [submitted, setSubmitted] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleInputChange = (rowIndex, colIndex, value) => {
     const newTable = userTraceTable.map((row, rIdx) =>
@@ -38,6 +40,14 @@ function TraceTable() {
     );
   };
 
+  const handleImageClick = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <div className="background-trace">
       <div className="trace-table-container">
@@ -47,6 +57,7 @@ function TraceTable() {
             src={exerciceJson.imgPath}
             alt="Ilustração do exercício"
             className="exercise-image"
+            onClick={handleImageClick}
           />
         </div>
 
@@ -96,9 +107,16 @@ function TraceTable() {
           </table>
         </div>
       </div>
+
       <div className="btn-container">
         <button onClick={handleSubmit}>Enviar</button>
       </div>
+
+      <ImageModal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        imageSrc={exerciceJson.imgPath}
+      />
     </div>
   );
 }
