@@ -22,7 +22,10 @@ function Menu({ setMenu }) {
 
   return (
     <div ref={menuRef} className="menu">
-      <BsArrowRightCircleFill className="back-btn" onClick={() => setMenu(false)} />
+      <div className="container-back-btn">
+      <p className="back-btn" onClick={() => setMenu(false)}> X </p>
+      </div>
+      
       <div className="menu-itens">
         <Link to="/" onClick={() => setMenu(false)}>Ínicio</Link>
         <Link to="/exercices" onClick={() => setMenu(false)}>Exercícios</Link>
