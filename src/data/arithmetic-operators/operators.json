@@ -1,7 +1,7 @@
 [
   {
     "id": 1,
-    "imgPath": "./dist/arithmetic-operators/ex1.png",
+    "imgPath": "../../../dist/arithmetic-operators/ex1.png",
     "header": ["Passo", "Linha", "base", "altura", "area"],
     "showTraceTable": [
       ["1", "?", "-", "-"],
