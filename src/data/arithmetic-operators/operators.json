@@ -16,7 +16,7 @@
   },
   {
     "id": 2,
-    "imgPath": "../../../public/arithmetic-operators/ex2.png",
+    "imgPath": "/arithmetic-operators/ex2.png",
     "header": ["Passo", "A", "B", "C"],
     "showTraceTable": [
       ["?", "-", "-"],
@@ -35,7 +35,7 @@
   },
   {
     "id": 3,
-    "imgPath": "../../../public/arithmetic-operators/ex3.png",
+    "imgPath": "/arithmetic-operators/ex3.png",
     "header": ["Passo", "A", "B", "C"],
     "showTraceTable": [
       ["-", "-", "?"],
@@ -54,7 +54,7 @@
   },
   {
     "id": 4,
-    "imgPath": "../../../public/arithmetic-operators/ex4.png",
+    "imgPath": "/arithmetic-operators/ex4.png",
     "header": ["Passo", "A", "B", "C"],
     "showTraceTable": [
       ["?", "-", "-"],
@@ -73,7 +73,7 @@
   },
   {
     "id": 5,
-    "imgPath": "../../../public/arithmetic-operators/ex5.png",
+    "imgPath": "/arithmetic-operators/ex5.png",
     "header": ["Passo", "A", "B", "C"],
     "showTraceTable": [
       ["?", "-", "-"],
