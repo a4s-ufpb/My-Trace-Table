@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./TraceTable.css";
 import ImageModal from "../../components/image-modal/ImageModal";
 import FeedbackBox from "../../components/feedback-box/FeedbackBox";
+import { BsArrowRepeat } from "react-icons/bs";
 
 function TraceTable() {
   const exercice = localStorage.getItem("exercice");
@@ -12,7 +14,9 @@ function TraceTable() {
   );
   const [submitted, setSubmitted] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isCorrect, setIsCorrect] = useState(null); // Estado para armazenar o resultado
+  const [isCorrect, setIsCorrect] = useState(null);
+
+  const navigate = useNavigate();
 
   const handleInputChange = (rowIndex, colIndex, value) => {
     if (value.includes("#")) {
@@ -37,9 +41,10 @@ function TraceTable() {
       });
     });
     setSubmitted(true);
-    setIsCorrect(errorList.length === 0); // Define se está correto ou não
+    setIsCorrect(errorList.length === 0);
   };
 
+  // Função para verificar se a célula está correta
   const checkIfCorrect = (rowIndex, colIndex) => {
     return (
       userTraceTable[rowIndex][colIndex] ===
@@ -117,7 +122,14 @@ function TraceTable() {
       </div>
 
       <div className="btn-container">
-        <button onClick={handleSubmit}>Enviar</button>
+        {!submitted ? (
+          <button onClick={handleSubmit}>Enviar</button>
+        ) : (
+          <>
+            <button onClick={() => window.location.reload()}><BsArrowRepeat/></button>
+            <button onClick={() => navigate("/exercices")}>Exercícios</button>
+          </>
+        )}
       </div>
 
       {submitted && (
