@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./TraceTable.css";
-import ImageModal from "../../components/image-modal/ImageModal"; 
+import ImageModal from "../../components/image-modal/ImageModal";
+import FeedbackBox from "../../components/feedback-box/FeedbackBox";
 
 function TraceTable() {
   const exercice = localStorage.getItem("exercice");
@@ -11,6 +12,7 @@ function TraceTable() {
   );
   const [submitted, setSubmitted] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isCorrect, setIsCorrect] = useState(null); // Estado para armazenar o resultado
 
   const handleInputChange = (rowIndex, colIndex, value) => {
     if (value.includes("#")) {
@@ -35,6 +37,7 @@ function TraceTable() {
       });
     });
     setSubmitted(true);
+    setIsCorrect(errorList.length === 0); // Define se está correto ou não
   };
 
   const checkIfCorrect = (rowIndex, colIndex) => {
@@ -116,6 +119,17 @@ function TraceTable() {
       <div className="btn-container">
         <button onClick={handleSubmit}>Enviar</button>
       </div>
+
+      {submitted && (
+        <FeedbackBox
+          title={
+            isCorrect
+              ? "Parabéns! Você acertou!"
+              : "Que pena! Tente novamente"
+          }
+          color={isCorrect ? "green" : "red"}
+        />
+      )}
 
       <ImageModal
         isOpen={isModalOpen}

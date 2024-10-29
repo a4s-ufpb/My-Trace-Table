@@ -1,6 +1,6 @@
 .header {
   width: 100%;
-  background: linear-gradient(80deg, #66cea4, #3dcfbc);
+  background: var(--primary-white);
   height: 15%;
   display: flex;
   align-items: center;
@@ -16,16 +16,17 @@
   left: 50px;
   font-size: 40px;
   cursor: pointer;
-  color: #07433c;
+  color: var(--primary-black);
   transition: all 0.2s ease-in-out;
+  opacity: 0.9;
 }
 
 .header svg:hover {
-  color: #f4eded;
+  opacity: 1;
 }
 
 .header h1 {
-  color: #07433c;
+  color: var(--primary-black);
   cursor: pointer;
 }
 

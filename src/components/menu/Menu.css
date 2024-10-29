@@ -4,7 +4,7 @@
   left: 0;
   width: 250px;
   height: 100vh;
-  background-color: #07433c;
+  background-color: var(--secondary-blue);
   display: flex;
   flex-direction: column;
   padding: 20px;
@@ -52,7 +52,7 @@
 }
 
 .menu-itens a:hover {
-  background-color: #66bb6a;
+  background-color: var(--primary-blue);
   transform: scale(1.05);
 }
 
