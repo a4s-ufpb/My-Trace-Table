@@ -11,6 +11,7 @@
   opacity: 0;
   animation: slideDown 2s ease-in-out forwards;
   text-align: center;
+  z-index: 5;
 }
 
 @keyframes slideDown {
