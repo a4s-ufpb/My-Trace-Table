@@ -37,3 +37,13 @@
 .about-container strong {
   color: #0056b3;
 }
+
+@media(max-width: 900px) {
+  .about-section {
+    width: 95%;
+  }
+
+  .about-container p {
+    font-size: 1.1em;
+  }
+}
