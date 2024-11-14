@@ -2,7 +2,7 @@
   {
     "id": 1,
     "header": ["Passo", "A", "B", "C"],
-    "imgPath": "/repeat-loops/ex1.webp",
+    "imgPath": "/repeat-loops/ex1.png",
     "showTraceTable": [
       ["?", "#", "#"],
       ["?", "?", "#"],
@@ -27,7 +27,7 @@
   {
     "id": 2,
     "header": ["Passo", "A", "B", "C", "print"],
-    "imgPath": "/repeat-loops/ex2.webp",
+    "imgPath": "/repeat-loops/ex2.png",
     "showTraceTable": [
       ["#", "?", "#", "#"],
       ["?", "?", "#", "#"],
@@ -56,7 +56,7 @@
   {
     "id": 3,
     "header": ["Passo", "A", "B", "C"],
-    "imgPath": "/repeat-loops/ex3.webp",
+    "imgPath": "/repeat-loops/ex3.png",
     "showTraceTable": [
       ["?", "#", "#"],
       ["?", "?", "#"],

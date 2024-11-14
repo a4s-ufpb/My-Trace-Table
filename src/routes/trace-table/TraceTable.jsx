@@ -9,12 +9,14 @@ function TraceTable() {
   const exercice = localStorage.getItem("exercice");
   const exerciceJson = JSON.parse(exercice);
 
-  const [userTraceTable, setUserTraceTable] = useState(
-    exerciceJson.showTraceTable
-  );
+  const [userTraceTable, setUserTraceTable] = useState(exerciceJson.showTraceTable);
   const [submitted, setSubmitted] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isCorrect, setIsCorrect] = useState(null);
+
+  const [placeholders, setPlaceholders] = useState(
+    userTraceTable.map(row => row.map(() => "?"))
+  );
 
   const navigate = useNavigate();
 
@@ -31,6 +33,26 @@ function TraceTable() {
     setUserTraceTable(newTable);
   };
 
+  const handleFocus = (rowIndex, colIndex) => {
+    setPlaceholders(prevPlaceholders => 
+      prevPlaceholders.map((row, rIdx) =>
+        row.map((placeholder, cIdx) => 
+          rIdx === rowIndex && cIdx === colIndex ? "" : placeholder
+        )
+      )
+    );
+  };
+
+  const handleBlur = (rowIndex, colIndex) => {
+    setPlaceholders(prevPlaceholders => 
+      prevPlaceholders.map((row, rIdx) =>
+        row.map((placeholder, cIdx) => 
+          rIdx === rowIndex && cIdx === colIndex ? "?" : placeholder
+        )
+      )
+    );
+  };
+
   const handleSubmit = () => {
     const errorList = [];
     userTraceTable.forEach((row, rowIndex) => {
@@ -44,7 +66,6 @@ function TraceTable() {
     setIsCorrect(errorList.length === 0);
   };
 
-  // Função para verificar se a célula está correta
   const checkIfCorrect = (rowIndex, colIndex) => {
     return (
       userTraceTable[rowIndex][colIndex] ===
@@ -93,8 +114,10 @@ function TraceTable() {
                       ) : (
                         <input
                           type="text"
-                          value={(cell === "?") ? "" : cell}
-                          placeholder="?"
+                          value={cell === "?" ? "" : cell}
+                          placeholder={placeholders[rowIndex][colIndex]}
+                          onFocus={() => handleFocus(rowIndex, colIndex)}
+                          onBlur={() => handleBlur(rowIndex, colIndex)}
                           onChange={(e) =>
                             handleInputChange(
                               rowIndex,
@@ -127,7 +150,7 @@ function TraceTable() {
         ) : (
           <>
             <button onClick={() => window.location.reload()}><BsArrowRepeat/></button>
-            <button onClick={() => navigate("/exercices")}>Exercícios</button>
+            <button onClick={() => navigate(-1)}>Exercícios</button>
           </>
         )}
       </div>

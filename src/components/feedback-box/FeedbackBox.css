@@ -1,8 +1,8 @@
 .feedback-box {
   width: 250px;
-  position: fixed;
-  top: 0;
-  left: 50%;
+  position: absolute;
+  top: 50%;
+  left: 80%;
   transform: translateX(-50%);
   background-color: white;
   padding: 20px;
@@ -45,4 +45,11 @@
 
 .feedback-box p {
   font-size: 1.1em;
+}
+
+@media (max-width: 550px) {
+  .feedback-box {
+    top: 0;
+    left: 50%;
+  }
 }

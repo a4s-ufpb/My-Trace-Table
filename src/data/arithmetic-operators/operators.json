@@ -1,7 +1,7 @@
 [
   {
     "id": 1,
-    "imgPath": "/arithmetic-operators/ex1.webp",
+    "imgPath": "/arithmetic-operators/ex1.png",
     "header": ["Passo", "Linha", "base", "altura", "area"],
     "showTraceTable": [
       ["1", "?", "#", "#"],
@@ -16,7 +16,7 @@
   },
   {
     "id": 2,
-    "imgPath": "/arithmetic-operators/ex2.webp",
+    "imgPath": "/arithmetic-operators/ex2.png",
     "header": ["Passo", "A", "B", "C"],
     "showTraceTable": [
       ["?", "#", "#"],
@@ -35,7 +35,7 @@
   },
   {
     "id": 3,
-    "imgPath": "/arithmetic-operators/ex3.webp",
+    "imgPath": "/arithmetic-operators/ex3.png",
     "header": ["Passo", "A", "B", "C"],
     "showTraceTable": [
       ["#", "#", "?"],
@@ -54,7 +54,7 @@
   },
   {
     "id": 4,
-    "imgPath": "/arithmetic-operators/ex4.webp",
+    "imgPath": "/arithmetic-operators/ex4.png",
     "header": ["Passo", "A", "B", "C"],
     "showTraceTable": [
       ["?", "#", "#"],
@@ -73,7 +73,7 @@
   },
   {
     "id": 5,
-    "imgPath": "/arithmetic-operators/ex5.webp",
+    "imgPath": "/arithmetic-operators/ex5.png",
     "header": ["Passo", "A", "B", "C"],
     "showTraceTable": [
       ["?", "#", "#"],

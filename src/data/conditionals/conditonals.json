@@ -2,7 +2,7 @@
   {
     "id": 1,
     "header": ["Passo", "A", "B", "C"],
-    "imgPath": "/conditionals/ex1.webp",
+    "imgPath": "/conditionals/ex1.png",
     "showTraceTable": [
       ["?", "#", "#"],
       ["?", "?", "#"],
@@ -19,7 +19,7 @@
   {
     "id": 2,
     "header": ["Passo", "A", "B", "C", "print"],
-    "imgPath": "/conditionals/ex2.webp",
+    "imgPath": "/conditionals/ex2.png",
     "showTraceTable": [
       ["?", "#", "#", "#"],
       ["?", "?", "#", "#"],
@@ -38,7 +38,7 @@
   {
     "id": 3,
     "header": ["Passo", "A", "B", "C"],
-    "imgPath": "/conditionals/ex3.webp",
+    "imgPath": "/conditionals/ex3.png",
     "showTraceTable": [
       ["?", "#", "#"],
       ["?", "?", "#"],
