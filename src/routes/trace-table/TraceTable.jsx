@@ -9,13 +9,15 @@ function TraceTable() {
   const exercice = localStorage.getItem("exercice");
   const exerciceJson = JSON.parse(exercice);
 
-  const [userTraceTable, setUserTraceTable] = useState(exerciceJson.showTraceTable);
+  const [userTraceTable, setUserTraceTable] = useState(
+    exerciceJson.showTraceTable
+  );
   const [submitted, setSubmitted] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isCorrect, setIsCorrect] = useState(null);
 
   const [placeholders, setPlaceholders] = useState(
-    userTraceTable.map(row => row.map(() => "?"))
+    userTraceTable.map((row) => row.map(() => "?"))
   );
 
   const navigate = useNavigate();
@@ -24,7 +26,7 @@ function TraceTable() {
     if (value.includes("#")) {
       return;
     }
-    
+
     const newTable = userTraceTable.map((row, rIdx) =>
       row.map((col, cIdx) =>
         rIdx === rowIndex && cIdx === colIndex ? value : col
@@ -34,9 +36,9 @@ function TraceTable() {
   };
 
   const handleFocus = (rowIndex, colIndex) => {
-    setPlaceholders(prevPlaceholders => 
+    setPlaceholders((prevPlaceholders) =>
       prevPlaceholders.map((row, rIdx) =>
-        row.map((placeholder, cIdx) => 
+        row.map((placeholder, cIdx) =>
           rIdx === rowIndex && cIdx === colIndex ? "" : placeholder
         )
       )
@@ -44,9 +46,9 @@ function TraceTable() {
   };
 
   const handleBlur = (rowIndex, colIndex) => {
-    setPlaceholders(prevPlaceholders => 
+    setPlaceholders((prevPlaceholders) =>
       prevPlaceholders.map((row, rIdx) =>
-        row.map((placeholder, cIdx) => 
+        row.map((placeholder, cIdx) =>
           rIdx === rowIndex && cIdx === colIndex ? "?" : placeholder
         )
       )
@@ -145,11 +147,12 @@ function TraceTable() {
       </div>
 
       <div className="btn-container">
-        {!submitted ? (
-          <button onClick={handleSubmit}>Enviar</button>
-        ) : (
+        <button onClick={handleSubmit}>Enviar</button>
+        {submitted && (
           <>
-            <button onClick={() => window.location.reload()}><BsArrowRepeat/></button>
+            <button onClick={() => window.location.reload()}>
+              <BsArrowRepeat />
+            </button>
             <button onClick={() => navigate(-1)}>Exercícios</button>
           </>
         )}
@@ -158,9 +161,7 @@ function TraceTable() {
       {submitted && (
         <FeedbackBox
           title={
-            isCorrect
-              ? "Parabéns! Você acertou!"
-              : "Que pena! Tente novamente"
+            isCorrect ? "Parabéns! Você acertou!" : "Que pena! Tente novamente"
           }
           color={isCorrect ? "green" : "red"}
         />
