@@ -1,0 +1,9 @@
+version: '3.5'
+
+services:
+  my-trace-table:
+    container_name: container-my-trace-table
+    image: a4sufpb/my-trace-table
+    restart: always
+    ports:
+      - "9999:80"
