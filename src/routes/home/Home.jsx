@@ -6,7 +6,7 @@ function Home() {
 
   return (
     <div className="background">
-        <Button text="Exercícios" action={() => navigate("/exercices")}/>
+        <Button text="Exercícios" action={() => navigate("/users")}/>
         <Button text="Sobre" action={() => navigate("/about")}/>
     </div>
   );

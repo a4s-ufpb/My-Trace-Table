@@ -10,7 +10,7 @@ function TraceTable() {
   const exerciceJson = JSON.parse(exercice);
 
   const [userTraceTable, setUserTraceTable] = useState(
-    exerciceJson.showTraceTable
+    exerciceJson.shownTraceTable
   );
   const [submitted, setSubmitted] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -87,7 +87,7 @@ function TraceTable() {
     <div className="background-trace">
       <div className="trace-table-container">
         <div className="image-container">
-          <h2>Exercício {exerciceJson.id}</h2>
+          <h2>{exerciceJson.exerciseName}</h2>
           <img
             src={exerciceJson.imgPath}
             alt="Ilustração do exercício"
