@@ -3,7 +3,43 @@ version: '3.5'
 services:
   my-trace-table:
     container_name: container-my-trace-table
-    image: a4sufpb/my-trace-table
+    image: ronyabreu/my-trace-table
     restart: always
     ports:
       - "9999:80"
+    networks:
+      - trace-network
+
+  db:
+    container_name: container-database
+    image: postgres:16
+    restart: always
+    env_file:
+      - dev.env
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/app/data
+    networks:
+      - trace-network
+
+  trace-api:
+    container_name: container-api
+    depends_on:
+      - db
+    restart: always
+    image: ronyabreu/my-trace-table-manager-api
+    env_file:
+      - dev.env
+    ports:
+      - "8080:8080"
+    networks:
+      - trace-network
+
+volumes:
+  db_data: {}
+
+networks:
+  trace-network:
+    name: trace-network
+    driver: bridge

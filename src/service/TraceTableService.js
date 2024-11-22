@@ -1,4 +1,4 @@
-import { apiAxios } from "../axios/AxiosConfig";
+import { apiAxios } from "../axios/axiosConfig";
 
 export class TraceTableService {
   async handleRequest(method, url, data = null) {
