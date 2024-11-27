@@ -38,7 +38,7 @@ function Themes() {
 
   return (
     <div className="background">
-        <h1 className="title">Selecione o tema do seu Teste de Mesa</h1>
+        <h1 className="title">Selecione o tema dos Exercícios</h1>
         {themes && themes.length > 0 && themes.map((theme) => (
           <div key={theme.id}>
             <Button text={theme.name} action={() => navigate(`/exercices/${theme.id}`)}/>
