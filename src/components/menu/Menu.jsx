@@ -28,7 +28,6 @@ function Menu({ setMenu }) {
       
       <div className="menu-itens">
         <Link to="/" onClick={() => setMenu(false)}>Ínicio</Link>
-        <Link to="/exercices" onClick={() => setMenu(false)}>Exercícios</Link>
         <Link to="/about" onClick={() => setMenu(false)}>Sobre</Link>
       </div>
     </div>

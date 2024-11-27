@@ -38,9 +38,11 @@ function Exercices() {
     }
 
     function startExercice(exercice) {
-      localStorage.setItem("exercice", JSON.stringify(exercice));
-      navigate("/trace-table")
-    }
+      const exercicesList = JSON.stringify(exercices);
+      localStorage.setItem("exercices", exercicesList);
+      localStorage.setItem("currentExerciceIndex", exercices.findIndex(e => e.id === exercice.id));
+      navigate("/trace-table");
+    }    
 
   return (
     <div className="background">

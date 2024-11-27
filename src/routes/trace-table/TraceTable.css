@@ -126,6 +126,23 @@ input.success {
   gap: 2em;
 }
 
+.arrow-btn {
+  font-size: 40px;
+  margin-top: .5em;
+  color: #07433c;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.arrow-btn:hover {
+  color: #218838;
+}
+
+.arrow-btn.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
 .btn-container button {
   margin-top: 20px;
   background-color: #07433c;
@@ -145,7 +162,7 @@ input.success {
 }
 
 .btn-container button svg {
-  font-size: 1.3em;
+  font-size: 1.1em;
 }
 
 .success {
