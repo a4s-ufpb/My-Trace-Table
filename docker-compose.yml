@@ -3,12 +3,14 @@ version: '3.5'
 services:
   my-trace-table:
     container_name: container-my-trace-table
-    image: ronyabreu/my-trace-table
+    image: ronyabreu/my-trace-table:latest
     restart: always
     ports:
       - "9999:80"
     networks:
       - trace-network
+    volumes:
+      - shared-assets:/usr/share/nginx/html/assets
 
   db:
     container_name: container-database
@@ -28,16 +30,19 @@ services:
     depends_on:
       - db
     restart: always
-    image: ronyabreu/my-trace-table-manager-api
+    image: ronyabreu/my-trace-table-manager-api:latest
     env_file:
       - dev.env
     ports:
       - "8080:8080"
     networks:
       - trace-network
+    volumes:
+      - shared-assets:/app/assets
 
 volumes:
   db_data: {}
+  shared-assets: {}
 
 networks:
   trace-network:
