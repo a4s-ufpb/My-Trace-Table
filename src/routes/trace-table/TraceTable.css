@@ -38,26 +38,29 @@ body {
   border-radius: 10px;
 }
 
+.exercise-image {
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  object-fit: contain;
+  cursor: zoom-in;
+}
+
 .image-container {
-  min-width: 400px;
+  width: auto;
+  max-width: 90%;
   display: flex;
   align-items: start;
   justify-content: center;
   gap: 3em;
   flex-direction: column;
   background-color: var(--primary-white);
-  min-height: 300px;
   padding: 55px 30px;
   font-weight: 100;
   border-radius: 10px;
   animation: fadeIn 0.8s ease-in-out;
 }
 
-.exercise-image {
-  width: 100%;
-  object-fit: cover;
-  cursor: zoom-in;
-}
 
 table {
   width: 100%;
