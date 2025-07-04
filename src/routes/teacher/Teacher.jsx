@@ -41,7 +41,7 @@ function Teacher() {
 
             {users && users.length > 0 && users.map((user) => (
                 <div key={user.id}>
-                    <Button text={user.name} action={() => navigate(`/themes/${user.id}`)} />
+                    <Button text={user.name} action={() => navigate(`/themes/${user.id}?userName=${user.name}`)} />
                 </div>
             ))}
 

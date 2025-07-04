@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import Button from "../../components/button/Button";
 import { ThemeService } from "./../../service/ThemeService";
 import { useEffect, useState } from "react";
@@ -9,17 +9,19 @@ import InfoBox from "../../components/infoBox/InfoBox";
 function Themes() {
     const navigate = useNavigate();
     const { id: userId } = useParams();
+    const [searchParams] = useSearchParams();
 
     const [themes, setThemes] = useState([]);
+    const [loading, setLoading] = useState(false);
 
-    const [creatorName, setCreatorName] = useState("");
+    const creatorName = searchParams.get("userName") || "Não encontrado";
 
     const themeService = new ThemeService();
-    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         fetchThemes();
     }, []);
+
 
     async function fetchThemes() {
         try {
@@ -33,9 +35,7 @@ function Themes() {
             }
 
             const themesList = themeResponse.data.content;
-            const creatorName = themesList[0].creator.name
             setThemes(themesList);
-            setCreatorName(creatorName);
             setLoading(false);
         } catch (error) {
             console.log(error);
