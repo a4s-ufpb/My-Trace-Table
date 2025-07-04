@@ -1,0 +1,13 @@
+.home-title {
+    position: absolute;
+    top: 60px;
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--primary-green);
+    text-align: center;
+    margin-bottom: 20px;
+    line-height: 1.5;
+    background-color: var(--primary-white);
+    border-radius: 10px;
+    padding: 10px 20px;
+}

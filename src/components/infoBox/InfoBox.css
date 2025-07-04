@@ -1,0 +1,21 @@
+.info-box {
+    position: absolute;
+    top: 120px;
+    right: 20px;
+    background-color: var(--primary-green);
+    color: var(--primary-white);
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.info-box h2,
+p {
+    max-width: 100%;
+    word-wrap: break-word;
+    font-weight: bold;
+}
+
+.info-box p {
+    font-size: 1.3em;
+}

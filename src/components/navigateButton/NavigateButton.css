@@ -1,0 +1,14 @@
+.navigate-btn {
+    position: absolute;
+    left: 20px;
+    top: 120px;
+    color: var(--primary-green);
+    font-size: 3em;
+    cursor: pointer;
+    transition: all .2s ease-in-out;
+}
+
+.navigate-btn:hover {
+    transform: scale(1.1);
+    color: var(--primary-white);
+}

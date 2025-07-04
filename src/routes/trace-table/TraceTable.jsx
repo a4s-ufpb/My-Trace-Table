@@ -3,14 +3,22 @@ import { useNavigate } from "react-router-dom";
 import "./TraceTable.css";
 import ImageModal from "../../components/image-modal/ImageModal";
 import FeedbackBox from "../../components/feedback-box/FeedbackBox";
-import { BsArrowRepeat } from "react-icons/bs";
+import {
+  BsArrowLeftCircleFill,
+  BsArrowRepeat,
+  BsArrowRightCircleFill,
+} from "react-icons/bs";
 
 function TraceTable() {
-  const exercice = localStorage.getItem("exercice");
-  const exerciceJson = JSON.parse(exercice);
+  const exercices = JSON.parse(localStorage.getItem("exercices")) || [];
+  const [currentExerciceIndex, setCurrentExerciceIndex] = useState(
+    parseInt(localStorage.getItem("currentExerciceIndex")) || 0
+  );
+
+  const exerciceJson = exercices[currentExerciceIndex];
 
   const [userTraceTable, setUserTraceTable] = useState(
-    exerciceJson.showTraceTable
+    exerciceJson.shownTraceTable
   );
   const [submitted, setSubmitted] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -83,11 +91,35 @@ function TraceTable() {
     setIsModalOpen(false);
   };
 
+  const goToNextExercice = () => {
+    if (currentExerciceIndex < exercices.length - 1) {
+      const newIndex = currentExerciceIndex + 1;
+      setCurrentExerciceIndex(newIndex);
+      localStorage.setItem("currentExerciceIndex", newIndex);
+      resetExercice(exercices[newIndex]);
+    }
+  };
+
+  const goToPreviousExercice = () => {
+    if (currentExerciceIndex > 0) {
+      const newIndex = currentExerciceIndex - 1;
+      setCurrentExerciceIndex(newIndex);
+      localStorage.setItem("currentExerciceIndex", newIndex);
+      resetExercice(exercices[newIndex]);
+    }
+  };
+
+  const resetExercice = (newExercice) => {
+    setUserTraceTable(newExercice.shownTraceTable);
+    setSubmitted(false);
+    setIsCorrect(null);
+  };
+
   return (
     <div className="background-trace">
       <div className="trace-table-container">
         <div className="image-container">
-          <h2>Exercício {exerciceJson.id}</h2>
+          <h2>{exerciceJson.exerciseName}</h2>
           <img
             src={exerciceJson.imgPath}
             alt="Ilustração do exercício"
@@ -147,15 +179,24 @@ function TraceTable() {
       </div>
 
       <div className="btn-container">
+        <BsArrowLeftCircleFill
+          className={`arrow-btn ${currentExerciceIndex === 0 ? "disabled" : ""
+            }`}
+          onClick={goToPreviousExercice}
+        />
         <button onClick={handleSubmit}>Enviar</button>
         {submitted && (
-          <>
-            <button onClick={() => window.location.reload()}>
-              <BsArrowRepeat />
-            </button>
-            <button onClick={() => navigate(-1)}>Exercícios</button>
-          </>
+          <button
+            onClick={() => resetExercice(exercices[currentExerciceIndex])}
+          >
+            <BsArrowRepeat />
+          </button>
         )}
+        <BsArrowRightCircleFill
+          className={`arrow-btn ${currentExerciceIndex === exercices.length - 1 ? "disabled" : ""
+            }`}
+          onClick={goToNextExercice}
+        />
       </div>
 
       {submitted && (
