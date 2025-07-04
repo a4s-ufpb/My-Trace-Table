@@ -12,7 +12,8 @@ function SelectCode({ setSelectCode }) {
 
     const navigate = useNavigate();
 
-    const handleButtonClick = async () => {
+    const handleButtonClick = async (e) => {
+        e.preventDefault();
         try {
             const traceTableResponse =
                 await traceTableService.findAllTraceTablesByTheme(themeId);
