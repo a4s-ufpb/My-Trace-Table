@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./TraceTable.css";
 import ImageModal from "../../components/image-modal/ImageModal";
@@ -16,6 +16,7 @@ function TraceTable() {
   );
 
   const exerciceJson = exercices[currentExerciceIndex];
+  const [hasStep, setHasStep] = useState(false);
 
   const [userTraceTable, setUserTraceTable] = useState(
     exerciceJson.shownTraceTable
@@ -29,6 +30,15 @@ function TraceTable() {
   );
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (exerciceJson) {
+      const hasStep = exerciceJson.header.some(h => h.toLowerCase().includes("passo"));
+      setHasStep(hasStep);
+    } else {
+      navigate("/exercices");
+    }
+  })
 
   const handleInputChange = (rowIndex, colIndex, value) => {
     if (value.includes("#")) {
@@ -140,7 +150,7 @@ function TraceTable() {
             <tbody>
               {userTraceTable.map((row, rowIndex) => (
                 <tr key={rowIndex}>
-                  <td>{rowIndex + 1}°</td>
+                  {hasStep && <td className="step-cell">{rowIndex + 1}º</td>}
                   {row.map((cell, colIndex) => (
                     <td key={colIndex}>
                       {cell === "#" ? (

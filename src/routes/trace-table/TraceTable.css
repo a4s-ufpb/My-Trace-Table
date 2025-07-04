@@ -88,7 +88,7 @@ th {
   padding: 0px 8px;
 }
 
-td:first-child {
+.step-cell {
   font-weight: bold;
   color: white;
   font-size: 1.3em;
