@@ -121,7 +121,7 @@ function TraceTable() {
         <div className="image-container">
           <h2>{exerciceJson.exerciseName}</h2>
           <img
-            src={exerciceJson.imgPath}
+            src={exerciceJson.imgName}
             alt="Ilustração do exercício"
             className="exercise-image"
             onClick={handleImageClick}
