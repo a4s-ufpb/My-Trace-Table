@@ -19,18 +19,6 @@ export class ThemeService {
         return response;
     }
 
-    insertTheme(themeRequest, userId) {
-        return this.handleRequest("post", `/theme/${userId}`, themeRequest)
-    }
-
-    updateTheme(themeUpdate, userId, themeId) {
-        return this.handleRequest("put", `/theme/${themeId}/${userId}`, themeUpdate)
-    }
-
-    removeTheme(themeId, userId) {
-        return this.handleRequest("delete", `/theme/${themeId}/${userId}`)
-    }
-
     findAllThemes() {
         return this.handleRequest("get", "/theme")
     }

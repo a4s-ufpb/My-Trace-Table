@@ -19,40 +19,7 @@ export class UserService {
         return response;
     }
 
-    registerUser(user) {
-        return this.handleRequest("post", "/user/register", user);
-    }
-
-    loginUser(userLogin) {
-        return this.handleRequest("post", "/user/login", userLogin);
-    }
-
-    findUser() {
-        return this.handleRequest("get", `/user/find`);
-    }
-
     findAllUsers() {
         return this.handleRequest("get", `/user/all`);
-    }
-
-    async removeUser(userId, isAdmin = false) {
-        if (isAdmin) {
-            return this.handleRequest("delete", `/user/${userId}`);
-        }
-
-        const response = await this.handleRequest("delete", `/user/${userId}`);
-        if (response.success) {
-            localStorage.removeItem("token");
-            localStorage.removeItem("user");
-            window.location.href = "/login";
-        }
-    }
-
-    updateUser(userId, userUpdate) {
-        return this.handleRequest("patch", `/user/${userId}`, userUpdate);
-    }
-
-    validateIfUserIsAdmin(userId) {
-        return this.handleRequest("get", `/user/admin/${userId}`);
     }
 }

@@ -19,18 +19,6 @@ export class TraceTableService {
         return response;
     }
 
-    insertTraceTable(traceRequest, userId, traceId) {
-        return this.handleRequest("post", `/trace/${userId}/${traceId}`, traceRequest)
-    }
-
-    updateTraceTable(traceUpdate, userId, traceId) {
-        return this.handleRequest("put", `/trace/${traceId}/${userId}`, traceUpdate)
-    }
-
-    removeTraceTable(traceId, userId) {
-        return this.handleRequest("delete", `/trace/${traceId}/${userId}`)
-    }
-
     findAllTraceTablesByUser(userId) {
         return this.handleRequest("get", `/trace/user/${userId}`)
     }
