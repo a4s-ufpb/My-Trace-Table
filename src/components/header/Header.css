@@ -1,7 +1,7 @@
 .header {
   width: 100%;
   background: var(--primary-white);
-  height: 15%;
+  height: 3.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -14,11 +14,11 @@
   position: absolute;
   top: auto;
   left: 50px;
-  font-size: 40px;
+  font-size: 35px;
   cursor: pointer;
   color: var(--primary-black);
   transition: all 0.2s ease-in-out;
-  opacity: 0.9;
+  opacity: 0.8;
 }
 
 .header svg:hover {
@@ -26,13 +26,14 @@
 }
 
 .header h1 {
+  font-size: 1.5rem;
   color: var(--primary-black);
   cursor: pointer;
 }
 
 .header img {
-  width: 90px;
-  height: 90px;
+  width: 37px;
+  height: 37px;
   position: absolute;
   top: auto;
   right: 50px;
@@ -40,10 +41,15 @@
   border-radius: 50%;
   box-shadow: inset 0px 0px 10px #3dcfbc;
   cursor: pointer;
+  opacity: 0.8;
+}
+
+.header img:hover {
+  opacity: 1;
 }
 
 /* Responsividade */
-@media (max-width: 768px) {
+@media (max-width: 770px) {
   .header {
     justify-content: space-between;
     padding: 10px 20px;
@@ -70,7 +76,7 @@
 
 @media (max-width: 480px) {
   .header svg {
-    font-size: 25px; 
+    font-size: 25px;
   }
 
   .header h1 {

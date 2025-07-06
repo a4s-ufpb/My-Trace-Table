@@ -16,7 +16,7 @@ function Home() {
     <div className="background">
       <h2 className="home-title">Vamos praticar sua compreensão sobre códigos?</h2>
       <Button text="Escolher Professor" action={selectTeacher} />
-      <Button text="Digitar código" action={() => setShowSelectCode(true)} />
+      <Button text="Buscar Tema" action={() => setShowSelectCode(true)} />
 
       {showSelectCode && <SelectCode setSelectCode={setShowSelectCode} />}
     </div>
