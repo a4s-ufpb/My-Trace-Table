@@ -117,6 +117,12 @@ input.success {
   background-color: #d0fcd0;
 }
 
+input.type-error {
+  border-color: #9b6a00;
+  background-color: #fae49b;
+  animation: shake 0.5s ease-in-out;
+}
+
 .btn-container {
   width: 100%;
   display: flex;

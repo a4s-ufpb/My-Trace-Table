@@ -13,7 +13,12 @@ export class TraceTableService {
             response.data = asyncResponse.data;
             response.success = true;
         } catch (error) {
-            response.message = error.response?.data.message || "Tente novamente mais tarde!";
+            if (error.response?.data) {
+                response.data = error.response.data;
+                response.message = error.response.data.message || "Erro na resposta do servidor";
+            } else {
+                response.message = "Erro de conexão com o servidor";
+            }
         }
 
         return response;
@@ -25,5 +30,9 @@ export class TraceTableService {
 
     findAllTraceTablesByTheme(themeId) {
         return this.handleRequest("get", `/trace/theme/${themeId}`)
+    }
+
+    checkUserAnswer(traceTableId, userAnswer) {
+        return this.handleRequest("post", `/trace/check/${traceTableId}`, userAnswer);
     }
 }

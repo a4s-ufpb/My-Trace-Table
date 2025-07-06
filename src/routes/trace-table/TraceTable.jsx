@@ -8,6 +8,7 @@ import {
   BsArrowRepeat,
   BsArrowRightCircleFill,
 } from "react-icons/bs";
+import { TraceTableService } from "../../service/TraceTableService";
 
 function TraceTable() {
   const exercices = JSON.parse(localStorage.getItem("exercices")) || [];
@@ -25,11 +26,19 @@ function TraceTable() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isCorrect, setIsCorrect] = useState(null);
 
+  const [errorMessage, setErrorMessage] = useState("");
+  const [cellErrors, setCellErrors] = useState([]);
+
   const [placeholders, setPlaceholders] = useState(
     userTraceTable.map((row) => row.map(() => "?"))
   );
 
   const navigate = useNavigate();
+
+  const traceTableService = new TraceTableService();
+
+  const valueError = "Valor incorreto";
+  const typeError = "Tipo inválido";
 
   useEffect(() => {
     if (exerciceJson) {
@@ -38,7 +47,7 @@ function TraceTable() {
     } else {
       navigate("/exercices");
     }
-  })
+  }, [exerciceJson, navigate]);
 
   const handleInputChange = (rowIndex, colIndex, value) => {
     if (value.includes("#")) {
@@ -73,23 +82,44 @@ function TraceTable() {
     );
   };
 
-  const handleSubmit = () => {
-    const errorList = [];
-    userTraceTable.forEach((row, rowIndex) => {
-      row.forEach((cell, colIndex) => {
-        if (cell !== exerciceJson.expectedTraceTable[rowIndex][colIndex]) {
-          errorList.push({ rowIndex, colIndex });
-        }
-      });
-    });
+  const handleSubmit = async () => {
+    const response = await traceTableService.checkUserAnswer(
+      exerciceJson.id,
+      userTraceTable
+    );
+
     setSubmitted(true);
-    setIsCorrect(errorList.length === 0);
+
+    if (response.success) {
+      setIsCorrect(true);
+      setErrorMessage("");
+      setCellErrors([]);
+    } else {
+      setIsCorrect(false);
+
+      if (Array.isArray(response.data)) {
+        setCellErrors(response.data);
+
+        const typeErrors = response.data.filter(err => err.errorMessage === typeError).length;
+        const valueErrors = response.data.filter(err => err.errorMessage === valueError).length;
+
+        if (typeErrors > 0 && valueErrors === 0) {
+          setErrorMessage("Atenção! Existem erro(s) de tipo.");
+        } else if (valueErrors > 0 && typeErrors === 0) {
+          setErrorMessage("Existem valor(es) incorreto(s).");
+        } else {
+          setErrorMessage("Há erro(s) de tipo e de valor. Verifique a tabela.");
+        }
+
+      } else {
+        setErrorMessage(response.message || "Erro ao validar exercício.");
+      }
+    }
   };
 
-  const checkIfCorrect = (rowIndex, colIndex) => {
-    return (
-      userTraceTable[rowIndex][colIndex] ===
-      exerciceJson.expectedTraceTable[rowIndex][colIndex]
+  const getCellError = (rowIndex, colIndex) => {
+    return cellErrors.find(
+      (err) => err.row === rowIndex && err.column === colIndex
     );
   };
 
@@ -170,11 +200,17 @@ function TraceTable() {
                             )
                           }
                           disabled={cell === "#"}
+                          title={getCellError(rowIndex, colIndex)?.errorMessage === typeError
+                            ? "Tipo inválido: valor não permitido"
+                            : getCellError(rowIndex, colIndex)?.errorMessage === valueError
+                              ? "Valor incorreto: diferente do esperado"
+                              : ""}
                           className={
                             submitted
-                              ? checkIfCorrect(rowIndex, colIndex)
-                                ? "success"
-                                : "error"
+                              ? getCellError(rowIndex, colIndex)?.errorMessage === typeError ? "type-error"
+                                : getCellError(rowIndex, colIndex)
+                                  ? "error"
+                                  : "success"
                               : ""
                           }
                         />
@@ -212,7 +248,7 @@ function TraceTable() {
       {submitted && (
         <FeedbackBox
           title={
-            isCorrect ? "Parabéns! Você acertou!" : "Que pena! Tente novamente"
+            isCorrect ? "Parabéns! Você acertou!" : errorMessage || "Que pena! Tente novamente"
           }
           color={isCorrect ? "green" : "red"}
         />
@@ -221,7 +257,7 @@ function TraceTable() {
       <ImageModal
         isOpen={isModalOpen}
         onClose={handleCloseModal}
-        imageSrc={exerciceJson.imgPath}
+        imageSrc={exerciceJson.imgName}
       />
     </div>
   );
