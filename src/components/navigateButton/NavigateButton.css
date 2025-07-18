@@ -1,11 +1,12 @@
 .navigate-btn {
     position: absolute;
     left: 20px;
-    top: 120px;
-    color: var(--primary-green);
-    font-size: 3em;
+    top: 20px;
+    color: var(--primary-white);
+    font-size: 2rem;
     cursor: pointer;
     transition: all .2s ease-in-out;
+    z-index: 1;
 }
 
 .navigate-btn:hover {

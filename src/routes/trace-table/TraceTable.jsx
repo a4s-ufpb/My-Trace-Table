@@ -108,7 +108,7 @@ function TraceTable() {
         } else if (valueErrors > 0 && typeErrors === 0) {
           setErrorMessage("Existem valor(es) incorreto(s).");
         } else {
-          setErrorMessage("Há erro(s) de tipo e de valor. Verifique a tabela.");
+          setErrorMessage("Há erro(s) de tipo e de valor. Corrija os valores em sua tabela.");
         }
 
       } else {

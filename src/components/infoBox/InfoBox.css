@@ -1,8 +1,7 @@
 .info-box {
     position: absolute;
-    top: 120px;
+    top: 0px;
     right: 20px;
-    background-color: var(--primary-green);
     color: var(--primary-white);
     padding: 15px;
     border-radius: 10px;
@@ -14,8 +13,5 @@ p {
     max-width: 100%;
     word-wrap: break-word;
     font-weight: bold;
-}
-
-.info-box p {
-    font-size: 1.3em;
+    font-size: 1rem;
 }

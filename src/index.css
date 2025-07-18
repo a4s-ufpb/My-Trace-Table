@@ -28,11 +28,11 @@
 
 .title {
   width: 100%;
+  font-size: 25px;
   background-color: var(--primary-green);
   color: #fff;
   padding: 20px 80px;
   text-align: center;
-  text-transform: uppercase;
   position: absolute;
   top: 0px;
 }

@@ -2,7 +2,6 @@ import { useNavigate } from "react-router-dom";
 import Button from "../../components/button/Button";
 import { useState } from "react";
 import SelectCode from "../../components/selectCode/SelectCode";
-import "./Home.css"
 
 function Home() {
   const navigate = useNavigate();
@@ -14,7 +13,7 @@ function Home() {
 
   return (
     <div className="background">
-      <h2 className="home-title">Vamos praticar sua compreensão sobre códigos?</h2>
+      <h2 className="title">Vamos praticar sua compreensão sobre códigos?</h2>
       <Button text="Escolher Professor" action={selectTeacher} />
       <Button text="Buscar Tema" action={() => setShowSelectCode(true)} />
 
