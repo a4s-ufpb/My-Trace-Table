@@ -26,17 +26,6 @@
   position: relative;
 }
 
-.title {
-  width: 100%;
-  font-size: 25px;
-  background-color: var(--primary-green);
-  color: #fff;
-  padding: 20px 80px;
-  text-align: center;
-  position: absolute;
-  top: 0px;
-}
-
 .container-data {
   width: 100%;
   display: flex;
@@ -47,17 +36,7 @@
   padding: 10px;
 }
 
-@media (max-width: 780px) {
-  .title {
-    position: static;
-    margin-top: 1em;
-    font-size: 1.5em;
-  }
-}
-
-@media (max-width: 550px) {
-  .title {
-    width: 90%;
-    font-size: 1.2em;
-  }
+h3 {
+  color: var(--primary-black);
+  font-size: 24px;
 }

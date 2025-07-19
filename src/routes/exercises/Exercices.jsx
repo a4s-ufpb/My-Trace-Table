@@ -3,9 +3,8 @@ import Button from "../../components/button/Button";
 import { useEffect, useState } from "react";
 import Loading from "../../components/loading/Loading";
 import { TraceTableService } from "./../../service/TraceTableService";
-import NavigateButton from "../../components/navigateButton/NavigateButton";
-import InfoBox from "./../../components/infoBox/InfoBox";
 import { ThemeService } from "./../../service/ThemeService";
+import SecondaryHeader from "../../components/secondary-header/SecondaryHeader";
 
 function Exercices() {
   const navigate = useNavigate();
@@ -61,8 +60,7 @@ function Exercices() {
 
   return (
     <div className="background">
-      <NavigateButton />
-      <h1 className="title">Selecione o exercício</h1>
+      <SecondaryHeader showBackButton={true} title="Selecione o exercício" rightText={`Tema: ${themeName}`} />
       {exercices &&
         exercices.length > 0 &&
         exercices.map((exercice) => (
@@ -77,10 +75,9 @@ function Exercices() {
       {loading && <Loading />}
 
       {!loading && exercices.length == 0 && (
-        <h2 className="title">O tema não possui exercícios cadastrados!</h2>
+        <h3>O tema não possui exercícios cadastrados!</h3>
       )}
 
-      <InfoBox title="Tema" content={themeName} />
     </div>
   );
 }

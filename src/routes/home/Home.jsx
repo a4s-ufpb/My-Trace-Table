@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import Button from "../../components/button/Button";
 import { useState } from "react";
 import SelectCode from "../../components/selectCode/SelectCode";
+import SecondaryHeader from "../../components/secondary-header/SecondaryHeader";
 
 function Home() {
   const navigate = useNavigate();
@@ -13,7 +14,7 @@ function Home() {
 
   return (
     <div className="background">
-      <h2 className="title">Vamos praticar sua compreensão sobre códigos?</h2>
+      <SecondaryHeader title="Vamos praticar sua compreensão sobre códigos?" />
       <Button text="Escolher Professor" action={selectTeacher} />
       <Button text="Buscar Tema" action={() => setShowSelectCode(true)} />
 

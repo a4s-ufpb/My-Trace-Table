@@ -3,8 +3,7 @@ import Button from "../../components/button/Button";
 import { ThemeService } from "./../../service/ThemeService";
 import { useEffect, useState } from "react";
 import Loading from "../../components/loading/Loading";
-import NavigateButton from "../../components/navigateButton/NavigateButton";
-import InfoBox from "../../components/infoBox/InfoBox";
+import SecondaryHeader from "../../components/secondary-header/SecondaryHeader";
 
 function Themes() {
     const navigate = useNavigate();
@@ -45,8 +44,11 @@ function Themes() {
 
     return (
         <div className="background">
-            <NavigateButton />
-            <h1 className="title">Selecione o tema dos Exercícios</h1>
+            <SecondaryHeader
+                showBackButton={true} 
+                title="Selecione o tema dos Exercícios"
+                rightText={`Professor: ${creatorName}`}
+            />
             {themes &&
                 themes.length > 0 &&
                 themes.map((theme) => (
@@ -61,10 +63,9 @@ function Themes() {
             {loading && <Loading />}
 
             {!loading && themes.length == 0 && (
-                <h2>O usuário não possui temas cadastrados!</h2>
+                <h3>O usuário não possui temas cadastrados!</h3>
             )}
 
-            <InfoBox title="Professor" content={creatorName} />
         </div>
     );
 }
