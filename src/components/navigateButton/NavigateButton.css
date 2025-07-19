@@ -1,6 +1,6 @@
 .navigate-btn {
     color: var(--primary-white);
-    font-size: 2rem;
+    font-size: 1.5rem;
     cursor: pointer;
     transition: all .2s ease-in-out;
 }
