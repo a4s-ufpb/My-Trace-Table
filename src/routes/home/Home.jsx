@@ -15,10 +15,13 @@ function Home() {
   return (
     <div className="background">
       <SecondaryHeader title="Vamos praticar sua compreensão sobre códigos?" />
-      <Button text="Escolher Professor" action={selectTeacher} />
-      <Button text="Buscar Tema" action={() => setShowSelectCode(true)} />
 
-      {showSelectCode && <SelectCode setSelectCode={setShowSelectCode} />}
+      <div className="center-content">
+        <Button text="Escolher Professor" action={selectTeacher} />
+        <Button text="Buscar Tema" action={() => setShowSelectCode(true)} />
+
+        {showSelectCode && <SelectCode setSelectCode={setShowSelectCode} />}
+      </div>
     </div>
   );
 }
