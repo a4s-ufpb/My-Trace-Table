@@ -41,9 +41,11 @@ function Teacher() {
 
             <div className="center-content">
                 {users && users.length > 0 && users.map((user) => (
-                    <div key={user.id}>
-                        <Button text={user.name} action={() => navigate(`/themes/${user.id}?userName=${user.name}`)} />
-                    </div>
+                    <Button 
+                        key={user.id} 
+                        text={user.name} 
+                        action={() => navigate(`/themes/${user.id}?userName=${user.name}`)} 
+                    />
                 ))}
 
                 {loading && <Loading />}

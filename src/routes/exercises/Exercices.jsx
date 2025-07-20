@@ -65,12 +65,11 @@ function Exercices() {
         {exercices &&
           exercices.length > 0 &&
           exercices.map((exercice) => (
-            <div key={exercice.id}>
-              <Button
-                text={exercice.exerciseName}
-                action={() => startExercice(exercice)}
-              />
-            </div>
+            <Button
+              key={exercice.id}
+              text={exercice.exerciseName}
+              action={() => startExercice(exercice)}
+            />
           ))}
 
         {loading && <Loading />}

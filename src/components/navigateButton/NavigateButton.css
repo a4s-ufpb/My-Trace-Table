@@ -1,6 +1,6 @@
 .navigate-btn {
     color: var(--primary-white);
-    font-size: 1.5rem;
+    font-size: 2rem;
     cursor: pointer;
     transition: all .2s ease-in-out;
 }
@@ -8,4 +8,10 @@
 .navigate-btn:hover {
     transform: scale(1.1);
     color: var(--primary-white);
+}
+
+@media (max-width: 400px) {
+    .navigate-btn {
+      font-size: 1.8rem;
+    }
 }

@@ -54,12 +54,11 @@ function Themes() {
                 {themes &&
                     themes.length > 0 &&
                     themes.map((theme) => (
-                        <div key={theme.id}>
-                            <Button
-                                text={theme.name}
-                                action={() => navigate(`/exercices/${theme.id}`)}
-                            />
-                        </div>
+                        <Button
+                            key={theme.id}
+                            text={theme.name}
+                            action={() => navigate(`/exercices/${theme.id}`)}
+                        />
                     ))}
 
                 {loading && <Loading />}

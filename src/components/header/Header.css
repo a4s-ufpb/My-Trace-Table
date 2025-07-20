@@ -73,7 +73,7 @@
 
 @media (max-width: 480px) {
   .header svg {
-    font-size: 25px;
+    font-size: 30px;
   }
 
   .header h1 {
@@ -81,7 +81,7 @@
   }
 
   .header img {
-    width: 27px;
-    height: 27px;
+    width: 30px;
+    height: 30px;
   }
 }
