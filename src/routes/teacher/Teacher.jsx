@@ -39,15 +39,17 @@ function Teacher() {
         <div className='background'>
             <SecondaryHeader showBackButton={true} title="Selecione o Professor abaixo" />
 
-            {users && users.length > 0 && users.map((user) => (
-                <div key={user.id}>
-                    <Button text={user.name} action={() => navigate(`/themes/${user.id}?userName=${user.name}`)} />
-                </div>
-            ))}
+            <div className="center-content">
+                {users && users.length > 0 && users.map((user) => (
+                    <div key={user.id}>
+                        <Button text={user.name} action={() => navigate(`/themes/${user.id}?userName=${user.name}`)} />
+                    </div>
+                ))}
 
-            {loading && <Loading />}
+                {loading && <Loading />}
 
-            {!loading && users.length == 0 && <h3>Nenhum usuário cadastrado!</h3>}
+                {!loading && users.length == 0 && <h3>Nenhum usuário cadastrado!</h3>}
+            </div>
         </div>
     )
 }

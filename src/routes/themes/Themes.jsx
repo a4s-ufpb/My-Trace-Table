@@ -45,26 +45,29 @@ function Themes() {
     return (
         <div className="background">
             <SecondaryHeader
-                showBackButton={true} 
+                showBackButton={true}
                 title="Selecione o tema dos Exercícios"
                 rightText={`Professor: ${creatorName}`}
             />
-            {themes &&
-                themes.length > 0 &&
-                themes.map((theme) => (
-                    <div key={theme.id}>
-                        <Button
-                            text={theme.name}
-                            action={() => navigate(`/exercices/${theme.id}`)}
-                        />
-                    </div>
-                ))}
 
-            {loading && <Loading />}
+            <div className="center-content">
+                {themes &&
+                    themes.length > 0 &&
+                    themes.map((theme) => (
+                        <div key={theme.id}>
+                            <Button
+                                text={theme.name}
+                                action={() => navigate(`/exercices/${theme.id}`)}
+                            />
+                        </div>
+                    ))}
 
-            {!loading && themes.length == 0 && (
-                <h3>O usuário não possui temas cadastrados!</h3>
-            )}
+                {loading && <Loading />}
+
+                {!loading && themes.length == 0 && (
+                    <h3>O usuário não possui temas cadastrados!</h3>
+                )}
+            </div>
 
         </div>
     );

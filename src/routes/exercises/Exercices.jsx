@@ -61,22 +61,24 @@ function Exercices() {
   return (
     <div className="background">
       <SecondaryHeader showBackButton={true} title="Selecione o exercício" rightText={`Tema: ${themeName}`} />
-      {exercices &&
-        exercices.length > 0 &&
-        exercices.map((exercice) => (
-          <div key={exercice.id}>
-            <Button
-              text={exercice.exerciseName}
-              action={() => startExercice(exercice)}
-            />
-          </div>
-        ))}
+      <div className="center-content">
+        {exercices &&
+          exercices.length > 0 &&
+          exercices.map((exercice) => (
+            <div key={exercice.id}>
+              <Button
+                text={exercice.exerciseName}
+                action={() => startExercice(exercice)}
+              />
+            </div>
+          ))}
 
-      {loading && <Loading />}
+        {loading && <Loading />}
 
-      {!loading && exercices.length == 0 && (
-        <h3>O tema não possui exercícios cadastrados!</h3>
-      )}
+        {!loading && exercices.length == 0 && (
+          <h3>O tema não possui exercícios cadastrados!</h3>
+        )}
+      </div>
 
     </div>
   );
