@@ -180,43 +180,50 @@ function TraceTable() {
             <tbody>
               {userTraceTable.map((row, rowIndex) => (
                 <tr key={rowIndex}>
-                  {hasStep && <td className="step-cell">{rowIndex + 1}º</td>}
-                  {row.map((cell, colIndex) => (
-                    <td key={colIndex}>
-                      {cell === "#" ? (
-                        <div className="disabled-cell"></div>
-                      ) : (
-                        <input
-                          type="text"
-                          value={cell === "?" ? "" : cell}
-                          placeholder={placeholders[rowIndex][colIndex]}
-                          onFocus={() => handleFocus(rowIndex, colIndex)}
-                          onBlur={() => handleBlur(rowIndex, colIndex)}
-                          onChange={(e) =>
-                            handleInputChange(
-                              rowIndex,
-                              colIndex,
-                              e.target.value
-                            )
-                          }
-                          disabled={cell === "#"}
-                          title={getCellError(rowIndex, colIndex)?.errorMessage === typeError
-                            ? "Tipo inválido: valor não permitido"
-                            : getCellError(rowIndex, colIndex)?.errorMessage === valueError
-                              ? "Valor incorreto: diferente do esperado"
-                              : ""}
-                          className={
-                            submitted
-                              ? getCellError(rowIndex, colIndex)?.errorMessage === typeError ? "type-error"
-                                : getCellError(rowIndex, colIndex)
-                                  ? "error"
-                                  : "success"
-                              : ""
-                          }
-                        />
-                      )}
-                    </td>
-                  ))}
+                  {row.map((cell, colIndex) => {
+                    const isStepCol = hasStep && colIndex === 0;
+
+                    return (
+                      <td key={colIndex} className={isStepCol ? "step-cell" : ""}>
+                        {isStepCol ? (
+                          `${rowIndex + 1}º`
+                        ) : (
+                          cell === "#" ? (
+                            <div className="disabled-cell"></div>
+                          ) : (
+                            <input
+                              type="text"
+                              value={cell === "?" ? "" : cell}
+                              placeholder={placeholders[rowIndex][colIndex]}
+                              onFocus={() => handleFocus(rowIndex, colIndex)}
+                              onBlur={() => handleBlur(rowIndex, colIndex)}
+                              onChange={(e) =>
+                                handleInputChange(
+                                  rowIndex,
+                                  colIndex,
+                                  e.target.value
+                                )
+                              }
+                              disabled={cell === "#"}
+                              title={getCellError(rowIndex, colIndex)?.errorMessage === typeError
+                                ? "Tipo inválido: valor não permitido"
+                                : getCellError(rowIndex, colIndex)?.errorMessage === valueError
+                                  ? "Valor incorreto: diferente do esperado"
+                                  : ""}
+                              className={
+                                submitted
+                                  ? getCellError(rowIndex, colIndex)?.errorMessage === typeError ? "type-error"
+                                    : getCellError(rowIndex, colIndex)
+                                      ? "error"
+                                      : "success"
+                                  : ""
+                              }
+                            />
+                          )
+                        )}
+                      </td>
+                    )
+                  })}
                 </tr>
               ))}
             </tbody>
