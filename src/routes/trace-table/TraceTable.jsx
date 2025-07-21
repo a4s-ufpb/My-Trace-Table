@@ -9,6 +9,7 @@ import {
   BsArrowRightCircleFill,
 } from "react-icons/bs";
 import { TraceTableService } from "../../service/TraceTableService";
+import AttentionPopUp from "../../components/attention-popUp/AttentionPopUp";
 
 function TraceTable() {
   const exercices = JSON.parse(localStorage.getItem("exercices")) || [];
@@ -32,6 +33,8 @@ function TraceTable() {
   const [placeholders, setPlaceholders] = useState(
     userTraceTable.map((row) => row.map(() => "?"))
   );
+
+  const [openPopUp, setOpenPopUp] = useState(false);
 
   const navigate = useNavigate();
 
@@ -155,6 +158,10 @@ function TraceTable() {
     setIsCorrect(null);
   };
 
+  const shownPopUp = () => {
+    setOpenPopUp(true);
+  }
+
   return (
     <div className="background-trace">
       <div className="trace-table-container">
@@ -233,19 +240,23 @@ function TraceTable() {
 
       <div className="btn-container">
         <BsArrowLeftCircleFill
+          title="Navegar para o exercício anterior"
           className={`arrow-btn ${currentExerciceIndex === 0 ? "disabled" : ""
             }`}
           onClick={goToPreviousExercice}
         />
-        <button onClick={handleSubmit}>Enviar</button>
+        <button title="Enviar exercício para correção" onClick={handleSubmit}>Enviar</button>
         {submitted && (
           <button
+            title="Reiniciar exercício"
             onClick={() => resetExercice(exercices[currentExerciceIndex])}
           >
             <BsArrowRepeat />
           </button>
         )}
+        <button title="Sair dessa dela" className="btn-sair" onClick={shownPopUp}>Sair</button>
         <BsArrowRightCircleFill
+          title="Navegar para o próximo exercício"
           className={`arrow-btn ${currentExerciceIndex === exercices.length - 1 ? "disabled" : ""
             }`}
           onClick={goToNextExercice}
@@ -258,6 +269,14 @@ function TraceTable() {
             isCorrect ? "Parabéns! Você acertou!" : errorMessage || "Que pena! Tente novamente"
           }
           color={isCorrect ? "green" : "red"}
+        />
+      )}
+
+      {openPopUp && (
+        <AttentionPopUp
+          text="Tem certeza que deseja sair? Você perderá o progresso atual."
+          confirmAction={() => navigate(-1)}
+          cancelAction={() => setOpenPopUp(false)}
         />
       )}
 

@@ -15,7 +15,7 @@
   position: absolute;
   top: 20%;
   right: 50px;
-  color: white;
+  color: var(--secondary-blue);
   font-size: 40px;
   font-weight: bold;
   cursor: pointer;

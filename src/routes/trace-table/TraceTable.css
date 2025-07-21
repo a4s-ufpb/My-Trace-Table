@@ -19,6 +19,7 @@ body {
 
 .trace-table-container {
   width: 90%;
+  max-width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -39,15 +40,16 @@ body {
 }
 
 .image-container {
-  min-width: 400px;
+  min-width: 500px;
+  max-width: 100%;
   display: flex;
   align-items: start;
   justify-content: center;
-  gap: 3em;
+  gap: 10px;
   flex-direction: column;
   background-color: var(--primary-white);
   min-height: 300px;
-  padding: 55px 30px;
+  padding: 10px;
   font-weight: 100;
   border-radius: 10px;
   animation: fadeIn 0.8s ease-in-out;
@@ -71,8 +73,6 @@ table {
 
 thead {
   color: white;
-  text-transform: uppercase;
-  font-size: 1rem;
 }
 
 th,
@@ -91,7 +91,6 @@ th {
 .step-cell {
   font-weight: bold;
   color: white;
-  font-size: 1.3em;
 }
 
 input {
@@ -102,7 +101,7 @@ input {
   border: 1px solid white;
   text-align: center;
   transition: 0.3s;
-  font-size: 1.3em;
+  font-size: 1rem;
   font-weight: bold;
 }
 
@@ -129,19 +128,19 @@ input.type-error {
   align-items: center;
   justify-content: center;
   margin-bottom: 20px;
-  gap: 2em;
+  gap: 1rem;
 }
 
 .arrow-btn {
   font-size: 40px;
   margin-top: .5em;
-  color: #07433c;
+  color: var(--primary-green);
   cursor: pointer;
   transition: 0.3s ease;
 }
 
 .arrow-btn:hover {
-  color: #218838;
+  color: #fff;
 }
 
 .arrow-btn.disabled {
@@ -149,9 +148,10 @@ input.type-error {
   pointer-events: none;
 }
 
-.btn-container button {
+.btn-container button,
+.btn-sair {
   margin-top: 20px;
-  background-color: #07433c;
+  background-color: var(--primary-green);
   color: white;
   padding: 10px 30px;
   border: none;
@@ -163,8 +163,10 @@ input.type-error {
   font-weight: 100;
 }
 
-.btn-container button:hover {
-  background-color: #218838;
+.btn-container button:hover,
+.btn-sair:hover {
+  background-color: #fff;
+  color: var(--primary-green);
 }
 
 .btn-container button svg {
@@ -208,9 +210,9 @@ input.type-error {
   }
 }
 
-@media(max-width: 1000px) {
+@media(max-width: 1230px) {
   .trace-table-container {
-    width: 100%;
+    width: 95%;
     flex-direction: column;
   }
 
@@ -220,12 +222,30 @@ input.type-error {
 }
 
 @media(max-width: 550px) {
-  .image-container {
-    min-width: 90%;
+  .background-trace {
+    padding: 7px;
   }
 
-  th {
-    font-size: .9em;
+  .trace-table-container {
+    width: 100%;
+  }
+
+  .image-container {
+    min-width: 200px;
+    max-width: 90%;
+  }
+
+  .image-container h2 {
+    font-size: 1rem;
+  }
+
+  th,
+  td {
+    font-size: 10px;
+  }
+
+  input {
+    font-size: 10px;
   }
 
   .btn-container {
