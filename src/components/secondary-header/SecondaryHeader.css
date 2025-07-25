@@ -29,12 +29,8 @@
 
 @media (max-width: 780px) {
     .secondary-header {
-        flex-direction: column;
         padding: 10px;
-    }
-
-    .secondary-header {
-        display: flex;
+        flex-direction: column;
         align-items: center;
         justify-content: center;
         position: relative;
@@ -52,7 +48,6 @@
     }
 
     .secondary-header .right {
-        margin-top: 8px;
         width: 100%;
         text-align: center;
         font-size: 0.9rem;

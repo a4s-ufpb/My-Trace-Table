@@ -10,8 +10,8 @@
     color: var(--primary-white);
 }
 
-@media (max-width: 400px) {
+@media (max-width: 780px) {
     .navigate-btn {
-      font-size: 1.8rem;
+      font-size: 1.6rem;
     }
 }
