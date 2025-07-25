@@ -35,6 +35,8 @@ function TraceTable() {
   );
 
   const [openPopUp, setOpenPopUp] = useState(false);
+  const [isValid, setIsValid] = useState(false);
+
 
   const navigate = useNavigate();
 
@@ -51,6 +53,14 @@ function TraceTable() {
       navigate("/exercices");
     }
   }, [exerciceJson, navigate]);
+
+  useEffect(() => {
+    const allFilled = userTraceTable.every(row => 
+      row.every(cell => cell.trim() !== '' && cell !== '?')
+    );
+
+    setIsValid(allFilled);
+  }, [userTraceTable]);
 
   const handleInputChange = (rowIndex, colIndex, value) => {
     if (value.includes("#")) {
@@ -187,50 +197,43 @@ function TraceTable() {
             <tbody>
               {userTraceTable.map((row, rowIndex) => (
                 <tr key={rowIndex}>
-                  {row.map((cell, colIndex) => {
-                    const isStepCol = hasStep && colIndex === 0;
-
-                    return (
-                      <td key={colIndex} className={isStepCol ? "step-cell" : ""}>
-                        {isStepCol ? (
-                          `${rowIndex + 1}º`
-                        ) : (
-                          cell === "#" ? (
-                            <div className="disabled-cell"></div>
-                          ) : (
-                            <input
-                              type="text"
-                              value={cell === "?" ? "" : cell}
-                              placeholder={placeholders[rowIndex][colIndex]}
-                              onFocus={() => handleFocus(rowIndex, colIndex)}
-                              onBlur={() => handleBlur(rowIndex, colIndex)}
-                              onChange={(e) =>
-                                handleInputChange(
-                                  rowIndex,
-                                  colIndex,
-                                  e.target.value
-                                )
-                              }
-                              disabled={cell === "#"}
-                              title={getCellError(rowIndex, colIndex)?.errorMessage === typeError
-                                ? "Tipo inválido: valor não permitido"
-                                : getCellError(rowIndex, colIndex)?.errorMessage === valueError
-                                  ? "Valor incorreto: diferente do esperado"
-                                  : ""}
-                              className={
-                                submitted
-                                  ? getCellError(rowIndex, colIndex)?.errorMessage === typeError ? "type-error"
-                                    : getCellError(rowIndex, colIndex)
-                                      ? "error"
-                                      : "success"
-                                  : ""
-                              }
-                            />
-                          )
-                        )}
-                      </td>
-                    )
-                  })}
+                  {hasStep && <td className="step-cell">{rowIndex + 1}º</td>}
+                  {row.map((cell, colIndex) => (
+                    <td key={colIndex}>
+                      {cell === "#" ? (
+                        <div className="disabled-cell"></div>
+                      ) : (
+                        <input
+                          type="text"
+                          value={cell === "?" ? "" : cell}
+                          placeholder={placeholders[rowIndex][colIndex]}
+                          onFocus={() => handleFocus(rowIndex, colIndex)}
+                          onBlur={() => handleBlur(rowIndex, colIndex)}
+                          onChange={(e) =>
+                            handleInputChange(
+                              rowIndex,
+                              colIndex,
+                              e.target.value
+                            )
+                          }
+                          disabled={cell === "#"}
+                          title={getCellError(rowIndex, colIndex)?.errorMessage === typeError
+                            ? "Tipo inválido: valor não permitido"
+                            : getCellError(rowIndex, colIndex)?.errorMessage === valueError
+                              ? "Valor incorreto: diferente do esperado"
+                              : ""}
+                          className={
+                            submitted
+                              ? getCellError(rowIndex, colIndex)?.errorMessage === typeError ? "type-error"
+                                : getCellError(rowIndex, colIndex)
+                                  ? "error"
+                                  : "success"
+                              : ""
+                          }
+                        />
+                      )}
+                    </td>
+                  ))}
                 </tr>
               ))}
             </tbody>
@@ -245,7 +248,12 @@ function TraceTable() {
             }`}
           onClick={goToPreviousExercice}
         />
-        <button title="Enviar exercício para correção" onClick={handleSubmit}>Enviar</button>
+        <button
+          title="Enviar exercício para correção"
+          className="btn-submit"
+          onClick={handleSubmit}
+          disabled={!isValid}
+        >Enviar</button>
         {submitted && (
           <button
             title="Reiniciar exercício"

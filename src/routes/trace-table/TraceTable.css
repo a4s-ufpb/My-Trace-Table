@@ -163,14 +163,24 @@ input.type-error {
   font-weight: 100;
 }
 
-.btn-container button:hover,
-.btn-sair:hover {
+.btn-container button:hover:not(.btn-submit),
+.btn-sair:hover:not(.btn-submit) {
   background-color: #fff;
   color: var(--primary-green);
 }
 
 .btn-container button svg {
   font-size: 1.1em;
+}
+
+.btn-submit:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.btn-submit:hover:not(:disabled) {
+    background-color: #fff;
+    color: var(--primary-green);
 }
 
 .success {
