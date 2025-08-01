@@ -49,7 +49,7 @@ function SelectCode({ setSelectCode }) {
                     onClick={handleButtonClick}
                     type="submit"
                 >
-                    Inserir
+                    Buscar
                 </button>
             </form>
 
