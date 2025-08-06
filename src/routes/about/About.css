@@ -1,14 +1,12 @@
 .wrapper {
-  max-width: 900px;
-  width: 90%;
-  background-color: var(--primary-white);
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  margin: .8rem 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+    max-width: 900px;
+    width: 90%;
+    background: var(--primary-white);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    margin: 1rem 0;
 }
 
 .description {
@@ -25,9 +23,57 @@
     color: var(--secondary-blue);
 }
 
+.participant-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: .1rem;
+}
+
+.participant-container div {
+    flex: 1 1 calc(25% - .1rem);
+    max-width: 250px;
+    min-width: 160px;
+    margin-top: 2rem;
+}
+
+.participant-container img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--secondary-blue);
+}
+
+.participant-name {
+    margin: .5rem 0 1.5rem;
+    font-size: 1.1rem;
+}
+
+.linkedin-icon {
+    font-size: 14px;
+    color: #0077b5;
+    margin-left: 5px;
+    transition: transform 0.2s ease;
+}
+
+.linkedin-icon:hover {
+    color: var(--secondary-blue);
+    transform: scale(1.1);
+}
+
 @media (max-width: 1025px) {
     .wrapper {
         padding: 20px;
+    }
+
+    .participant-name {
+        font-size: .9rem;
+    }
+
+    .participant-container img {
+        width: 120px;
+        height: 120px;
     }
 }
 
@@ -50,10 +96,36 @@
     .description {
         font-size: 1rem;
     }
+
+    .participant-name {
+        font-size: .8rem;
+    }
+
+    .participant-container img {
+        width: 100px;
+        height: 100px;
+    }
+
+    .linkedin-icon {
+        font-size: 10px;
+    }
 }
 
 @media (max-width: 400px) {
     .description {
         font-size: .9rem;
+    }
+
+    .participant-name {
+        font-size: .7rem;
+    }
+
+    .participant-container img {
+        width: 80px;
+        height: 80px;
+    }
+
+    .participant-container div {
+        margin-top: 0;
     }
 }
