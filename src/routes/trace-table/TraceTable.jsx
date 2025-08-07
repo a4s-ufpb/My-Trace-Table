@@ -117,11 +117,11 @@ function TraceTable() {
         const valueErrors = response.data.filter(err => err.errorMessage === valueError).length;
 
         if (typeErrors > 0 && valueErrors === 0) {
-          setErrorMessage("Atenção! Existem erro(s) de tipo.");
+          setErrorMessage("Atenção! Existem erro(s) de tipo");
         } else if (valueErrors > 0 && typeErrors === 0) {
-          setErrorMessage("Existem valor(es) incorreto(s).");
+          setErrorMessage("Existem valor(es) incorreto(s)");
         } else {
-          setErrorMessage("Há erro(s) de tipo e de valor. Corrija os valores em sua tabela.");
+          setErrorMessage("Há erro(s) de tipo e de valor. Corrija os campos em sua tabela");
         }
 
       } else {
@@ -274,9 +274,8 @@ function TraceTable() {
       {submitted && (
         <FeedbackBox
           title={
-            isCorrect ? "Parabéns! Você acertou!" : errorMessage || "Que pena! Tente novamente"
+            isCorrect ? "Parabéns! Você acertou" : errorMessage || "Que pena! Tente novamente"
           }
-          color={isCorrect ? "green" : "red"}
         />
       )}
 
