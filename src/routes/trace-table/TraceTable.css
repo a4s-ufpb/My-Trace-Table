@@ -39,6 +39,21 @@ body {
   border-radius: 10px;
 }
 
+.exercise-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.exercise-info span {
+  background-color: var(--primary-green);
+  color: #fff;
+  padding: 3px 7px;
+  border-radius: 20px;
+  font-size: 10px;
+  font-weight: 600;
+}
+
 .image-container {
   min-width: 500px;
   max-width: 100%;

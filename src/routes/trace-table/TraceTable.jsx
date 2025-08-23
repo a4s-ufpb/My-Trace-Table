@@ -55,7 +55,7 @@ function TraceTable() {
   }, [exerciceJson, navigate]);
 
   useEffect(() => {
-    const allFilled = userTraceTable.every(row => 
+    const allFilled = userTraceTable.every(row =>
       row.every(cell => cell.trim() !== '' && cell !== '?')
     );
 
@@ -172,11 +172,20 @@ function TraceTable() {
     setOpenPopUp(true);
   }
 
+  const capitalizeFirstLetter = (string) => {
+    if (!string) return "";
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  };
+
   return (
     <div className="background-trace">
       <div className="trace-table-container">
         <div className="image-container">
-          <h2>{exerciceJson.exerciseName}</h2>
+          <div className="exercise-info">
+            {console.log(exerciceJson)}
+            <h2>{exerciceJson.exerciseName}</h2>
+            <span>{capitalizeFirstLetter(exerciceJson.programmingLanguage)}</span>
+          </div>
           <img
             src={exerciceJson.imgName}
             alt="Ilustração do exercício"
