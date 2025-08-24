@@ -255,18 +255,14 @@ input.type-error {
   }
 }
 
-@media(max-width: 1230px) {
+@media(max-width: 1450px) {
   .trace-table-container {
     width: 95%;
     flex-direction: column;
   }
-
-  table {
-    border-spacing: 2px;
-  }
 }
 
-@media(max-width: 550px) {
+@media(max-width: 800px) {
   .background-trace {
     padding: 7px;
   }
@@ -279,18 +275,17 @@ input.type-error {
     min-width: 200px;
     max-width: 90%;
   }
-
-  .image-container h2 {
+  
+  table {
     font-size: 1rem;
   }
 
-  th,
-  td {
-    font-size: 10px;
+  input {
+    font-size: 1rem;
   }
 
-  input {
-    font-size: 10px;
+  .image-container h2 {
+   font-size: 1.5rem;
   }
 
   .btn-container {
@@ -298,7 +293,17 @@ input.type-error {
   }
 
   .btn-container button {
-    font-size: 1.1em;
+    font-size: 1.1rem;    
     padding: 10px 20px;
   }
+}
+@media(max-width: 400px) {
+  table {
+    font-size: .8rem;
+  }
+
+  input {
+    font-size: .8rem;
+  }
+
 }
