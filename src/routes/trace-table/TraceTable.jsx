@@ -182,7 +182,6 @@ function TraceTable() {
       <div className="trace-table-container">
         <div className="image-container">
           <div className="exercise-info">
-            {console.log(exerciceJson)}
             <h2>{exerciceJson.exerciseName}</h2>
             <span>{capitalizeFirstLetter(exerciceJson.programmingLanguage)}</span>
           </div>

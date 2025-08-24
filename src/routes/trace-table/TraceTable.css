@@ -70,6 +70,10 @@ body {
   animation: fadeIn 0.8s ease-in-out;
 }
 
+ .image-container h2 {
+    font-size: 2rem;
+  }
+
 .exercise-image {
   width: 100%;
   object-fit: cover;
@@ -84,6 +88,7 @@ table {
   font-family: "Arial", sans-serif;
   text-align: center;
   overflow-y: auto;
+  font-size: 1.2rem;
 }
 
 thead {
@@ -116,7 +121,7 @@ input {
   border: 1px solid white;
   text-align: center;
   transition: 0.3s;
-  font-size: 1rem;
+  font-size: 1.2rem;
   font-weight: bold;
 }
 
@@ -194,8 +199,8 @@ input.type-error {
 }
 
 .btn-submit:hover:not(:disabled) {
-    background-color: #fff;
-    color: var(--primary-green);
+  background-color: #fff;
+  color: var(--primary-green);
 }
 
 .success {
@@ -235,7 +240,7 @@ input.type-error {
   }
 }
 
-@media(max-width: 1230px) {
+@media(max-width: 1450px)  {
   .trace-table-container {
     width: 95%;
     flex-direction: column;
@@ -261,16 +266,7 @@ input.type-error {
   }
 
   .image-container h2 {
-    font-size: 1rem;
-  }
-
-  th,
-  td {
-    font-size: 10px;
-  }
-
-  input {
-    font-size: 10px;
+    font-size: 1.5rem;
   }
 
   .btn-container {
@@ -280,5 +276,10 @@ input.type-error {
   .btn-container button {
     font-size: 1.1em;
     padding: 10px 20px;
+  }
+
+  table,
+  input {
+    font-size: .9rem;
   }
 }
