@@ -93,12 +93,16 @@ td {
   width: 70px;
   height: 70px;
   text-align: center;
-  background-color: var(--primary-green);
   border-radius: 10px;
 }
 
 th {
   padding: 0px 8px;
+  background-color: var(--primary-green);
+}
+
+td {
+  background-color: #fff;
 }
 
 th.metadata-column {

@@ -222,18 +222,17 @@ function TraceTable() {
                 <tr key={rowIndex}>
                   {hasStep && <td className={`step-cell ${getColumnClasses('Passo')}`}>{rowIndex + 1}º</td>}
                   {row.map((cell, colIndex) => {
-                    const columnName = exerciceJson.header[colIndex + (hasStep ? 1 : 0)];
-                    const isDisabled = cell === "#";
+                    const originalCell = exerciceJson.shownTraceTable[rowIndex][colIndex];
 
+                    const columnName = exerciceJson.header[colIndex + (hasStep ? 1 : 0)];
                     const cellClasses = [
                       getColumnClasses(columnName),
-                      isDisabled ? 'disabled-cell' : ''
+                      originalCell === '#' ? 'disabled-cell' : ''
                     ].join(' ').trim();
+
                     return (
                       <td key={colIndex} className={cellClasses}>
-                        {cell === "#" ? (
-                          ""
-                        ) : (
+                        {originalCell === "?" ? (
                           <input
                             type="text"
                             value={cell === "?" ? "" : cell}
@@ -247,7 +246,6 @@ function TraceTable() {
                                 e.target.value
                               )
                             }
-                            disabled={cell === "#"}
                             title={getCellError(rowIndex, colIndex)?.errorMessage === typeError
                               ? "Tipo inválido: valor não permitido"
                               : getCellError(rowIndex, colIndex)?.errorMessage === valueError
@@ -262,7 +260,7 @@ function TraceTable() {
                                 : ""
                             }
                           />
-                        )}
+                        ) : originalCell === "#" ? "" : originalCell}
                       </td>
                     )
                   })}
