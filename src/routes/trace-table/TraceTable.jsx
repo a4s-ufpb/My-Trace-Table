@@ -177,6 +177,21 @@ function TraceTable() {
     return string.charAt(0).toUpperCase() + string.slice(1);
   };
 
+  const getColumnClasses = (columnName) => {
+    const lowerCaseName = columnName.toLowerCase();
+    const classes = [];
+
+    if (lowerCaseName.includes('passo') || lowerCaseName.includes('linha')) {
+      classes.push('metadata-column');
+    }
+
+    if (lowerCaseName.includes('linha')) {
+      classes.push('metadata-column-divider');
+    }
+
+    return classes.join(' ');
+  };
+
   return (
     <div className="background-trace">
       <div className="trace-table-container">
@@ -198,50 +213,59 @@ function TraceTable() {
             <thead>
               <tr>
                 {exerciceJson.header.map((header, index) => (
-                  <th key={index}>{header}</th>
+                  <th key={index} className={getColumnClasses(header)}>{header}</th>
                 ))}
               </tr>
             </thead>
             <tbody>
               {userTraceTable.map((row, rowIndex) => (
                 <tr key={rowIndex}>
-                  {hasStep && <td className="step-cell">{rowIndex + 1}º</td>}
-                  {row.map((cell, colIndex) => (
-                    <td key={colIndex}>
-                      {cell === "#" ? (
-                        <div className="disabled-cell"></div>
-                      ) : (
-                        <input
-                          type="text"
-                          value={cell === "?" ? "" : cell}
-                          placeholder={placeholders[rowIndex][colIndex]}
-                          onFocus={() => handleFocus(rowIndex, colIndex)}
-                          onBlur={() => handleBlur(rowIndex, colIndex)}
-                          onChange={(e) =>
-                            handleInputChange(
-                              rowIndex,
-                              colIndex,
-                              e.target.value
-                            )
-                          }
-                          disabled={cell === "#"}
-                          title={getCellError(rowIndex, colIndex)?.errorMessage === typeError
-                            ? "Tipo inválido: valor não permitido"
-                            : getCellError(rowIndex, colIndex)?.errorMessage === valueError
-                              ? "Valor incorreto: diferente do esperado"
-                              : ""}
-                          className={
-                            submitted
-                              ? getCellError(rowIndex, colIndex)?.errorMessage === typeError ? "type-error"
-                                : getCellError(rowIndex, colIndex)
-                                  ? "error"
-                                  : "success"
-                              : ""
-                          }
-                        />
-                      )}
-                    </td>
-                  ))}
+                  {hasStep && <td className={`step-cell ${getColumnClasses('Passo')}`}>{rowIndex + 1}º</td>}
+                  {row.map((cell, colIndex) => {
+                    const columnName = exerciceJson.header[colIndex + (hasStep ? 1 : 0)];
+                    const isDisabled = cell === "#";
+
+                    const cellClasses = [
+                      getColumnClasses(columnName),
+                      isDisabled ? 'disabled-cell' : ''
+                    ].join(' ').trim();
+                    return (
+                      <td key={colIndex} className={cellClasses}>
+                        {cell === "#" ? (
+                          ""
+                        ) : (
+                          <input
+                            type="text"
+                            value={cell === "?" ? "" : cell}
+                            placeholder={placeholders[rowIndex][colIndex]}
+                            onFocus={() => handleFocus(rowIndex, colIndex)}
+                            onBlur={() => handleBlur(rowIndex, colIndex)}
+                            onChange={(e) =>
+                              handleInputChange(
+                                rowIndex,
+                                colIndex,
+                                e.target.value
+                              )
+                            }
+                            disabled={cell === "#"}
+                            title={getCellError(rowIndex, colIndex)?.errorMessage === typeError
+                              ? "Tipo inválido: valor não permitido"
+                              : getCellError(rowIndex, colIndex)?.errorMessage === valueError
+                                ? "Valor incorreto: diferente do esperado"
+                                : ""}
+                            className={
+                              submitted
+                                ? getCellError(rowIndex, colIndex)?.errorMessage === typeError ? "type-error"
+                                  : getCellError(rowIndex, colIndex)
+                                    ? "error"
+                                    : "success"
+                                : ""
+                            }
+                          />
+                        )}
+                      </td>
+                    )
+                  })}
                 </tr>
               ))}
             </tbody>
