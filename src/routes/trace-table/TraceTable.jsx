@@ -96,6 +96,8 @@ function TraceTable() {
   };
 
   const handleSubmit = async () => {
+    setSubmitted(false);
+
     const response = await traceTableService.checkUserAnswer(
       exerciceJson.id,
       userTraceTable
