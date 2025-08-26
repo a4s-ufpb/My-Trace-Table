@@ -24,12 +24,12 @@ export class TraceTableService {
         return response;
     }
 
-    findAllTraceTablesByUser(userId) {
-        return this.handleRequest("get", `/trace/user/${userId}`)
+    findAllTraceTablesByUser(userId, page = 0, size = 1000) {
+        return this.handleRequest("get", `/trace/user/${userId}?page=${page}&size=${size}`)
     }
 
-    findAllTraceTablesByTheme(themeId) {
-        return this.handleRequest("get", `/trace/theme/${themeId}`)
+    findAllTraceTablesByTheme(themeId, page = 0, size = 1000) {
+        return this.handleRequest("get", `/trace/theme/${themeId}?page=${page}&size=${size}`)
     }
 
     checkUserAnswer(traceTableId, userAnswer) {

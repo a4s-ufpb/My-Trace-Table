@@ -10,33 +10,25 @@ import {
 } from "react-icons/bs";
 import { TraceTableService } from "../../service/TraceTableService";
 import AttentionPopUp from "../../components/attention-popUp/AttentionPopUp";
+import Loading from "../../components/loading/Loading";
 
 function TraceTable() {
-  const exercices = JSON.parse(localStorage.getItem("exercices")) || [];
-  const [currentExerciceIndex, setCurrentExerciceIndex] = useState(
-    parseInt(localStorage.getItem("currentExerciceIndex")) || 0
-  );
+  const [currentExerciceIndex, setCurrentExerciceIndex] = useState(() => {
+    return parseInt(localStorage.getItem("currentExerciceIndex")) || 0;
+  });
 
-  const exerciceJson = exercices[currentExerciceIndex];
+  const [exercice, setExercice] = useState(null);
+  const [userTraceTable, setUserTraceTable] = useState([]);
+  const [placeholders, setPlaceholders] = useState([]);
   const [hasStep, setHasStep] = useState(false);
-
-  const [userTraceTable, setUserTraceTable] = useState(
-    exerciceJson.shownTraceTable
-  );
+  const [isLoading, setIsLoading] = useState(true);
   const [submitted, setSubmitted] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [isCorrect, setIsCorrect] = useState(null);
-
   const [errorMessage, setErrorMessage] = useState("");
   const [cellErrors, setCellErrors] = useState([]);
-
-  const [placeholders, setPlaceholders] = useState(
-    userTraceTable.map((row) => row.map(() => "?"))
-  );
-
   const [openPopUp, setOpenPopUp] = useState(false);
   const [isValid, setIsValid] = useState(false);
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const navigate = useNavigate();
 
@@ -46,31 +38,41 @@ function TraceTable() {
   const typeError = "Tipo inválido";
 
   useEffect(() => {
-    if (exerciceJson) {
-      const hasStep = exerciceJson.header.some(h => h.toLowerCase().includes("passo"));
-      setHasStep(hasStep);
+    const allExercices = JSON.parse(localStorage.getItem("exercices")) || [];
+    const currentExerciseData = allExercices[currentExerciceIndex];
+
+    if (currentExerciseData) {
+      setExercice(currentExerciseData);
+      setUserTraceTable(currentExerciseData.shownTraceTable);
+      setPlaceholders(
+        currentExerciseData.shownTraceTable.map(row => row.map(() => "?"))
+      );
+      setHasStep(currentExerciseData.header.some(h => h.toLowerCase().includes("passo")));
+      setSubmitted(false);
+      setIsCorrect(null);
+      setCellErrors([]);
+      setErrorMessage("");
+      setIsLoading(false);
     } else {
       navigate("/exercices");
     }
-  }, [exerciceJson, navigate]);
+  }, [currentExerciceIndex, navigate]);
 
   useEffect(() => {
-    const allFilled = userTraceTable.every(row =>
-      row.every(cell => cell.trim() !== '' && cell !== '?')
-    );
-
-    setIsValid(allFilled);
+    if (userTraceTable.length > 0) {
+      const allFilled = userTraceTable.every(row =>
+        row.every(cell => cell.toString().trim() !== '' && cell !== '?')
+      );
+      setIsValid(allFilled);
+    } else {
+      setIsValid(false);
+    }
   }, [userTraceTable]);
 
   const handleInputChange = (rowIndex, colIndex, value) => {
-    if (value.includes("#")) {
-      return;
-    }
-
+    if (value.includes("#")) return;
     const newTable = userTraceTable.map((row, rIdx) =>
-      row.map((col, cIdx) =>
-        rIdx === rowIndex && cIdx === colIndex ? value : col
-      )
+      row.map((col, cIdx) => (rIdx === rowIndex && cIdx === colIndex ? value : col))
     );
     setUserTraceTable(newTable);
   };
@@ -96,34 +98,21 @@ function TraceTable() {
   };
 
   const handleSubmit = async () => {
-    const response = await traceTableService.checkUserAnswer(
-      exerciceJson.id,
-      userTraceTable
-    );
-
+    const response = await traceTableService.checkUserAnswer(exercice.id, userTraceTable);
     setSubmitted(true);
-
     if (response.success) {
       setIsCorrect(true);
       setErrorMessage("");
       setCellErrors([]);
     } else {
       setIsCorrect(false);
-
       if (Array.isArray(response.data)) {
         setCellErrors(response.data);
-
         const typeErrors = response.data.filter(err => err.errorMessage === typeError).length;
         const valueErrors = response.data.filter(err => err.errorMessage === valueError).length;
-
-        if (typeErrors > 0 && valueErrors === 0) {
-          setErrorMessage("Atenção! Existem erro(s) de tipo");
-        } else if (valueErrors > 0 && typeErrors === 0) {
-          setErrorMessage("Existem valor(es) incorreto(s)");
-        } else {
-          setErrorMessage("Há erro(s) de tipo e de valor. Corrija os campos em sua tabela");
-        }
-
+        if (typeErrors > 0 && valueErrors === 0) setErrorMessage("Atenção! Existem erro(s) de tipo");
+        else if (valueErrors > 0 && typeErrors === 0) setErrorMessage("Existem valor(es) incorreto(s)");
+        else setErrorMessage("Há erro(s) de tipo e de valor. Corrija os campos em sua tabela");
       } else {
         setErrorMessage(response.message || "Erro ao validar exercício.");
       }
@@ -145,27 +134,32 @@ function TraceTable() {
   };
 
   const goToNextExercice = () => {
-    if (currentExerciceIndex < exercices.length - 1) {
+    const allExercices = JSON.parse(localStorage.getItem("exercices")) || [];
+    if (currentExerciceIndex < allExercices.length - 1) {
+      setIsLoading(true);
       const newIndex = currentExerciceIndex + 1;
-      setCurrentExerciceIndex(newIndex);
       localStorage.setItem("currentExerciceIndex", newIndex);
-      resetExercice(exercices[newIndex]);
+      setCurrentExerciceIndex(newIndex);
     }
   };
 
   const goToPreviousExercice = () => {
     if (currentExerciceIndex > 0) {
+      setIsLoading(true);
       const newIndex = currentExerciceIndex - 1;
-      setCurrentExerciceIndex(newIndex);
       localStorage.setItem("currentExerciceIndex", newIndex);
-      resetExercice(exercices[newIndex]);
+      setCurrentExerciceIndex(newIndex);
     }
   };
 
-  const resetExercice = (newExercice) => {
-    setUserTraceTable(newExercice.shownTraceTable);
-    setSubmitted(false);
-    setIsCorrect(null);
+  const resetCurrentExercice = () => {
+    if (exercice) {
+      setUserTraceTable(exercice.shownTraceTable);
+      setSubmitted(false);
+      setIsCorrect(null);
+      setCellErrors([]);
+      setErrorMessage("");
+    }
   };
 
   const shownPopUp = () => {
@@ -177,31 +171,33 @@ function TraceTable() {
     return string.charAt(0).toUpperCase() + string.slice(1);
   };
 
-  const getColumnClasses = (columnName) => {
-    const lowerCaseName = columnName.toLowerCase();
+  const getColumnClasses = (colName) => {
+    if (!colName) return '';
+    const lower = colName.toLowerCase();
     const classes = [];
-
-    if (lowerCaseName.includes('passo') || lowerCaseName.includes('linha')) {
-      classes.push('metadata-column');
-    }
-
-    if (lowerCaseName.includes('linha')) {
-      classes.push('metadata-column-divider');
-    }
-
+    if (lower.includes('passo') || lower.includes('linha')) classes.push('metadata-column');
+    if (lower.includes('linha')) classes.push('metadata-column-divider');
     return classes.join(' ');
   };
+
+  if (isLoading) {
+    return (
+      <div className="background-trace">
+        <Loading />
+      </div>
+    );
+  }
 
   return (
     <div className="background-trace">
       <div className="trace-table-container">
         <div className="image-container">
           <div className="exercise-info">
-            <h2>{exerciceJson.exerciseName}</h2>
-            <span>{capitalizeFirstLetter(exerciceJson.programmingLanguage)}</span>
+            <h2>{exercice.exerciseName}</h2>
+            <span>{capitalizeFirstLetter(exercice.programmingLanguage)}</span>
           </div>
           <img
-            src={exerciceJson.imgName}
+            src={exercice.imgName}
             alt="Ilustração do exercício"
             className="exercise-image"
             onClick={handleImageClick}
@@ -212,7 +208,7 @@ function TraceTable() {
           <table>
             <thead>
               <tr>
-                {exerciceJson.header.map((header, index) => (
+                {exercice.header.map((header, index) => (
                   <th key={index} className={getColumnClasses(header)}>{header}</th>
                 ))}
               </tr>
@@ -222,9 +218,9 @@ function TraceTable() {
                 <tr key={rowIndex}>
                   {hasStep && <td className={`step-cell ${getColumnClasses('Passo')}`}>{rowIndex + 1}º</td>}
                   {row.map((cell, colIndex) => {
-                    const originalCell = exerciceJson.shownTraceTable[rowIndex][colIndex];
+                    const originalCell = exercice.shownTraceTable[rowIndex][colIndex];
 
-                    const columnName = exerciceJson.header[colIndex + (hasStep ? 1 : 0)];
+                    const columnName = exercice.header[colIndex + (hasStep ? 1 : 0)];
                     const cellClasses = [
                       getColumnClasses(columnName),
                       originalCell === '#' ? 'disabled-cell' : ''
@@ -236,7 +232,7 @@ function TraceTable() {
                           <input
                             type="text"
                             value={cell === "?" ? "" : cell}
-                            placeholder={placeholders[rowIndex][colIndex]}
+                            placeholder={placeholders[rowIndex]?.[colIndex]}
                             onFocus={() => handleFocus(rowIndex, colIndex)}
                             onBlur={() => handleBlur(rowIndex, colIndex)}
                             onChange={(e) =>
@@ -287,7 +283,7 @@ function TraceTable() {
         {submitted && (
           <button
             title="Reiniciar exercício"
-            onClick={() => resetExercice(exercices[currentExerciceIndex])}
+            onClick={resetCurrentExercice}
           >
             <BsArrowRepeat />
           </button>
@@ -295,8 +291,7 @@ function TraceTable() {
         <button title="Sair dessa dela" className="btn-sair" onClick={shownPopUp}>Sair</button>
         <BsArrowRightCircleFill
           title="Navegar para o próximo exercício"
-          className={`arrow-btn ${currentExerciceIndex === exercices.length - 1 ? "disabled" : ""
-            }`}
+          className={`arrow-btn ${currentExerciceIndex >= (JSON.parse(localStorage.getItem("exercices")) || []).length - 1 ? "disabled" : ""}`}
           onClick={goToNextExercice}
         />
       </div>
@@ -320,7 +315,7 @@ function TraceTable() {
       <ImageModal
         isOpen={isModalOpen}
         onClose={handleCloseModal}
-        imageSrc={exerciceJson.imgName}
+        imageSrc={exercice.imgName}
       />
     </div>
   );
