@@ -98,7 +98,9 @@ function TraceTable() {
   };
 
   const handleSubmit = async () => {
+    setSubmitted(false);
     const response = await traceTableService.checkUserAnswer(exercice.id, userTraceTable);
+
     setSubmitted(true);
     if (response.success) {
       setIsCorrect(true);
