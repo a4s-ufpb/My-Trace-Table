@@ -99,7 +99,12 @@ function TraceTable() {
 
   const handleSubmit = async () => {
     setSubmitted(false);
-    const response = await traceTableService.checkUserAnswer(exercice.id, userTraceTable);
+
+    const trimmedUserTraceTable = userTraceTable.map(row =>
+      row.map(cell => cell.toString().trim())
+    );
+
+    const response = await traceTableService.checkUserAnswer(exercice.id, trimmedUserTraceTable);
 
     setSubmitted(true);
     if (response.success) {
