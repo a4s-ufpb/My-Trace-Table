@@ -1,5 +1,3 @@
-version: '3.5'
-
 services:
   my-trace-table:
     container_name: container-my-trace-table
