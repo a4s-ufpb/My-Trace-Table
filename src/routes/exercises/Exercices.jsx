@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import Button from "../../components/button/Button";
 import { useEffect, useState } from "react";
 import Loading from "../../components/loading/Loading";
@@ -9,6 +9,7 @@ import SecondaryHeader from "../../components/secondary-header/SecondaryHeader";
 function Exercices() {
   const navigate = useNavigate();
   const { name: theName } = useParams();
+  const creatorId = useLocation().state?.creatorId;
   
   const [exercices, setExercices] = useState([]);
   const [themeName, setThemeName] = useState("");
@@ -25,9 +26,7 @@ function Exercices() {
     try {
       setLoading(true);
 
-      const traceTableList = await traceTableService.findAllTraceTablesByThemeName(
-        theName
-      );
+      const traceTableList = await traceTableService.findAllTraceTablesByThemeName(theName, 0, 1000, creatorId);
 
       const themeResponse = await themeService.findThemeByName(theName);
 
