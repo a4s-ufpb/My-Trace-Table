@@ -57,7 +57,7 @@ function Themes() {
                         <Button
                             key={theme.id}
                             text={theme.name}
-                            action={() => navigate(`/exercices/${theme.id}`)}
+                            action={() => navigate(`/exercices/${theme.name}`)}
                         />
                     ))}
 
