@@ -30,4 +30,8 @@ export class ThemeService {
     findThemeById(themeId) {
         return this.handleRequest("get", `/theme/${themeId}`)
     }
+
+    findThemeByName(themeName) {
+        return this.handleRequest("get", `/theme/name/${themeName}`)
+    }
 }

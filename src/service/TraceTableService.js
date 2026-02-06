@@ -32,6 +32,10 @@ export class TraceTableService {
         return this.handleRequest("get", `/trace/theme/${themeId}?page=${page}&size=${size}`)
     }
 
+    findAllTraceTablesByThemeName(themeName, page = 0, size = 1000) {
+        return this.handleRequest("get", `/trace/theme/name/${themeName}?page=${page}&size=${size}`)
+    }
+
     checkUserAnswer(traceTableId, userAnswer) {
         return this.handleRequest("post", `/trace/check/${traceTableId}`, userAnswer);
     }
