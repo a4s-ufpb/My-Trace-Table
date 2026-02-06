@@ -19,7 +19,7 @@ createRoot(document.getElementById("root")).render(
           <Route path="/teacher" element={<Teacher />} />
           <Route path="/about" element={<About />} />
           <Route path="/themes/:id" element={<Themes />} />
-          <Route path="/exercices/:id" element={<Exercices />} />
+          <Route path="/exercices/:name" element={<Exercices />} />
           <Route path="/trace-table" element={<TraceTable />} />
         </Route>
       </Routes>
