@@ -5,7 +5,7 @@ import { TraceTableService } from "./../../service/TraceTableService";
 import AlertBox from "../alertBox/AlertBox";
 
 function SelectCode({ setSelectCode }) {
-    const [themeId, setThemeId] = useState("");
+    const [themeName, setThemeName] = useState("");
     const [showAlertBox, setAlertBox] = useState(false);
 
     const traceTableService = new TraceTableService();
@@ -16,14 +16,14 @@ function SelectCode({ setSelectCode }) {
         e.preventDefault();
         try {
             const traceTableResponse =
-                await traceTableService.findAllTraceTablesByTheme(themeId);
+                await traceTableService.findAllTraceTablesByThemeName(themeName);
 
             if (!traceTableResponse.success) {
                 setAlertBox(true);
                 return;
             }
 
-            navigate(`/exercices/${themeId}`);
+            navigate(`/exercices/${themeName}`);
         } catch (error) {
             console.error(error);
         }
@@ -31,22 +31,21 @@ function SelectCode({ setSelectCode }) {
 
     return (
         <div className="container-select-code">
-            <form className="select-code-content">
-                <button className="close-button" onClick={() => setSelectCode(false)}>
+            <form className="select-code-content" onSubmit={handleButtonClick}>
+                <button className="close-button" onClick={() => setSelectCode(false)} type="button">
                     &times;
                 </button>
-                <h2>Digite o código do tema</h2>
+                <h2>Digite o nome do tema</h2>
                 <input
                     min={1}
-                    type="number"
-                    placeholder="Insira o código aqui"
-                    value={themeId}
+                    type="text"
+                    placeholder="Insira o nome do tema aqui"
+                    value={themeName}
                     required
-                    onChange={(e) => setThemeId(e.target.value)}
+                    onChange={(e) => setThemeName(e.target.value)}
                 />
                 <button
                     className="insert-button"
-                    onClick={handleButtonClick}
                     type="submit"
                 >
                     Buscar
