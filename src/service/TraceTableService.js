@@ -32,8 +32,8 @@ export class TraceTableService {
         return this.handleRequest("get", `/trace/theme/${themeId}?page=${page}&size=${size}`)
     }
 
-    findAllTraceTablesByThemeName(themeName, page = 0, size = 1000) {
-        return this.handleRequest("get", `/trace/theme/name/${themeName}?page=${page}&size=${size}`)
+    findAllTraceTablesByThemeName(themeName, page = 0, size = 1000, creatorId) {
+        return this.handleRequest("get", `/trace/theme/name/${themeName}?page=${page}&size=${size}&prof=${creatorId}`)
     }
 
     checkUserAnswer(traceTableId, userAnswer) {
