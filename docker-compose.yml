@@ -1,5 +1,3 @@
-version: '3.5'
-
 services:
   my-trace-table:
     container_name: container-my-trace-table
@@ -9,12 +7,11 @@ services:
     ports:
       - "9999:80"
     networks:
-      - trace-network
+      - tracetable-network
     env_file:
       - .env
 
 networks:
-  trace-network:
-    name: trace-network
-    driver: bridge
+  tracetable-network:
+    name: tracetable-network
     external: true
