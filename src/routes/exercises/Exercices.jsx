@@ -8,7 +8,7 @@ import SecondaryHeader from "../../components/secondary-header/SecondaryHeader";
 
 function Exercices() {
   const navigate = useNavigate();
-  const { name: theName } = useParams();
+  const { info: info } = useParams();
   const creatorId = useLocation().state?.creatorId;
   
   const [exercices, setExercices] = useState([]);
@@ -26,9 +26,23 @@ function Exercices() {
     try {
       setLoading(true);
 
-      const traceTableList = await traceTableService.findAllTraceTablesByThemeName(theName, 0, 1000, creatorId);
+      let traceTableList;
+      let themeResponse; 
 
-      const themeResponse = await themeService.findThemeByName(theName);
+      const isNumeric = (value) => {
+        return !isNaN(value) && value !== null && value !== undefined && value !== "";
+      }
+
+      if (isNumeric(info)) {
+        traceTableList = await traceTableService.findAllTraceTablesByTheme(info);
+
+        themeResponse = await themeService.findThemeById(info);
+        
+      } else {
+        traceTableList = await traceTableService.findAllTraceTablesByThemeName(info, 0, 1000, creatorId);
+
+        themeResponse = await themeService.findThemeByName(info);
+      }
 
       if (!traceTableList.success || !themeResponse.success) {
         setExercices([]);

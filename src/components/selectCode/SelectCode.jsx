@@ -9,6 +9,7 @@ import { UserService } from "../../service/UserService";
 
 function SelectCode({ setSelectCode }) {
     const [themeName, setThemeName] = useState("");
+    const [themeId, setThemeId] = useState();
     const [showAlertBoxThemeNotFound, setAlertBoxThemeNotFound] = useState(false);
     const [showAlertBoxNoUser, setAlertBoxNoUser] = useState(false);
     const [selectedUser, setSelectedUser] = useState(null);
@@ -32,6 +33,20 @@ function SelectCode({ setSelectCode }) {
 
     const handleButtonClick = async (e) => {
         e.preventDefault();
+
+        if (themeId) {
+            try {
+            const traceTableResponse = await traceTableService.findAllTraceTablesByTheme(themeId);
+            if (!traceTableResponse.success) {
+                setAlertBoxThemeNotFound(true);
+                return;
+            }
+
+            navigate(`/exercices/${themeId}`)
+        } catch (error) {
+            console.error(error);
+        }
+    }
 
         if (selectedUser == null) {
             setAlertBoxNoUser(true);
@@ -63,13 +78,19 @@ function SelectCode({ setSelectCode }) {
                 <button className="close-button" onClick={() => setSelectCode(false)} type="button">
                     &times;
                 </button>
-                <h2>Digite o nome do tema</h2>
+                <h2>Digite o nome ou id do tema</h2>
+                <input
+                    min={1}
+                    type="number"
+                    placeholder="Insira o código do tema aqui"
+                    value={themeId}
+                    onChange={(e) => setThemeId(e.target.value)}
+                />
                 <input
                     min={1}
                     type="text"
                     placeholder="Insira o nome do tema aqui"
                     value={themeName}
-                    required
                     onChange={(e) => setThemeName(e.target.value)}
                 />
                 <MultiSelect
