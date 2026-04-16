@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
 import { useEffect, useRef } from "react";
 import "./Menu.css";
-import { BsArrowRightCircleFill } from "react-icons/bs";
 
 function Menu({ setMenu }) {
   const menuRef = useRef(null);
+  const role = localStorage.getItem("userRole") || "user";
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -27,8 +27,24 @@ function Menu({ setMenu }) {
       </div>
 
       <div className="menu-itens">
-        <Link to="/" onClick={() => setMenu(false)}>Ínicio</Link>
-        <Link to="/about" onClick={() => setMenu(false)}>Sobre</Link>
+        <Link to="/" onClick={() => setMenu(false)}>Início</Link>
+
+        {role === "admin" &&
+          <Link to="new-professor" onClick={() => setMenu(false)}>Cadastrar/Ver Professor(es)</Link>
+        }
+        {role === "professor" || role === "admin" &&
+          <Link to="new-exercise" onClick={() => setMenu(false)}>Cadastrar Exercício</Link>
+        }
+        {role === "professor" || role === "admin" &&
+          <Link to="list-exercises" onClick={() => setMenu(false)}>Ver Exercícios</Link>
+        }
+        {role === "professor" || role === "admin" &&
+          <Link to="new-theme" onClick={() => setMenu(false)}>Cadastrar/Ver Tema(s)</Link>
+        }
+        {role === "professor" || role === "admin" &&
+          <Link to="help-page" onClick={() => setMenu(false)}>Ajuda</Link>
+        }
+        <Link to="about" onClick={() => setMenu(false)}>Sobre</Link>
       </div>
     </div>
   );

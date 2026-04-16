@@ -1,7 +1,21 @@
 import { apiAxios } from "../axios/axiosConfig";
+import { formatFieldErrors } from "../utils/errorUtils";
 
 export class ThemeService {
+    getToken() {
+        return localStorage.getItem("token");
+    }
+
+    getUserId() {
+        return localStorage.getItem("userId");
+    }
+
     async handleRequest(method, url, data = null) {
+        const token = this.getToken();
+        const headers = {
+            Authorization: `Bearer ${token}`,
+        };
+
         const response = {
             data: {},
             message: "",
@@ -9,24 +23,28 @@ export class ThemeService {
         };
 
         try {
-            const asyncResponse = await apiAxios[method](url, data);
-            response.data = asyncResponse.data;
+            const res = await apiAxios({
+                method,
+                url,
+                data,
+                headers,
+            });
+
+            response.data = res.data;
             response.success = true;
         } catch (error) {
-            response.message = error.response?.data.message || "Tente novamente mais tarde!";
+            const responseData = error.response?.data;
+            
+            response.message = formatFieldErrors(responseData);
         }
-
+        
         return response;
     }
-
+    
     findAllThemes() {
         return this.handleRequest("get", "/theme")
     }
-
-    findThemesByUser(userId) {
-        return this.handleRequest("get", `/theme/user/${userId}`)
-    }
-
+    
     findThemeById(themeId) {
         return this.handleRequest("get", `/theme/${themeId}`)
     }
@@ -34,4 +52,35 @@ export class ThemeService {
     findThemeByName(themeName) {
         return this.handleRequest("get", `/theme/name/${themeName}`)
     }
+    
+    findAllThemesByUser() {
+        const userId = this.getUserId();
+        return this.handleRequest("get", `/theme/user/${userId}`);
+    }
+
+    findThemesPaginatedByUser(page, size) {
+        const userId = this.getUserId();
+        return this.handleRequest("get", `/theme/user/${userId}?page=${page}&size=${size}`);
+    }
+    
+    createTheme(name) {
+        const userId = this.getUserId();
+        const body = { name };
+        return this.handleRequest("post", `/theme/${userId}`, body);
+    }
+
+    deleteTheme(themeId) {
+        const userId = this.getUserId();
+        return this.handleRequest("delete", `/theme/${themeId}/${userId}`);
+    }
+
+    updateTheme(themeId, data) {
+        const userId = this.getUserId();
+        return this.handleRequest("put", `/theme/${themeId}/${userId}`, data);
+    }
+
+    getThemesByExercise(traceId) {
+        return this.handleRequest("get", `/theme/trace/${traceId}`);
+    }
+
 }

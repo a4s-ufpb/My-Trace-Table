@@ -1,0 +1,83 @@
+.home-container {
+  min-height: 100vh;
+  background: radial-gradient(circle at center, #0f2a40 0%, #050d14 100%);
+  background-image: linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
+  color: white;
+  font-family: 'Inter', sans-serif;
+}
+
+.main-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 40px;
+  align-items: center;
+}
+
+.hero-title {
+  text-align: center;
+  font-size: 3.5rem;
+  font-weight: 800;
+  margin: 60px 0;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  text-shadow: 0 4px 10px rgba(0,0,0,0.5);
+}
+
+.cards-grid {
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+  padding: 20px;
+}
+
+.option-card {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 255, 255, 0.2);
+  border-radius: 24px;
+  padding: 40px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+}
+
+.option-card:hover {
+  transform: translateY(-10px);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(0, 255, 255, 0.5);
+  box-shadow: 0 0 30px rgba(0, 255, 255, 0.15);
+}
+
+.image-container {
+  background: #4a8a8a; /* Cor de fundo das imagens no seu mock */
+  width: 100%;
+  height: 100px;
+  border-radius: 12px;
+  margin-bottom: 25px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image-container img {
+  width: 100%;
+  height: 100%;
+}
+
+.card-info h3 {
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+  color: whitesmoke;
+}
+
+.card-info p {
+  color: #023374;
+  font-size: 1.1rem;
+}

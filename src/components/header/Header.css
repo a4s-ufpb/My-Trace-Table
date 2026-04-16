@@ -1,81 +1,232 @@
 .header {
-  width: 100%;
-  background: var(--primary-white);
-  height: 3.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.6);
-  z-index: 2;
+    width: 100%;
+    background: var(--primary-white);
+    height: 3.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.6);
+    z-index: 2;
 }
 
-.header svg {
-  margin-left: 30px;
-  font-size: 35px;
-  cursor: pointer;
-  color: var(--primary-black);
-  transition: all 0.2s ease-in-out;
-  opacity: 0.8;
+.btnMenu {
+    position: absolute;
+    left: 1rem;
 }
 
-.header svg:hover {
-  opacity: 1;
+.btnMenu,
+.btnPerson {
+    font-size: 35px;
+    cursor: pointer;
+    color: var(--primary-black);
+    transition: all 0.2s ease-in-out;
+    opacity: 0.8;
+}
+
+.btnMenu:hover,
+.btnPerson:hover {
+    opacity: 1;
 }
 
 .header h1 {
-  font-size: 1.5rem;
-  color: var(--primary-black);
-  cursor: pointer;
+    font-size: 1.5rem;
+    color: var(--primary-black);
+    cursor: pointer;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.rightOptionsContainer {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    gap: 10px;
+    right: 1rem;
 }
 
 .header img {
-  margin-right: 30px;
-  width: 37px;
-  height: 37px;
-  background-color: #fff;
-  border-radius: 50%;
-  box-shadow: inset 0px 0px 10px #3dcfbc;
-  cursor: pointer;
-  opacity: 0.8;
+    width: 37px;
+    height: 37px;
+    background-color: #fff;
+    border-radius: 50%;
+    box-shadow: inset 0px 0px 10px #3dcfbc;
+    cursor: pointer;
+    opacity: 0.8;
+    transition: opacity 0.2s ease-in-out;
 }
 
 .header img:hover {
-  opacity: 1;
+    opacity: 1;
+}
+
+.personOptions {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 1px;
+    background-color: var(--primary-white);
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 0px 0px 0px 6px;
+    display: flex;
+    flex-direction: column;
+    width: 220px;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    z-index: 10;
+}
+
+.personOptions.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.personOption {
+    color: var(--primary-black);
+    padding: 10px;
+    width: 100%;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.personOption:hover {
+    background-color: var(--secondary-blue);
+    color: #fff;
+}
+
+.personIconAndName {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid #ccc;
+    border-radius: 25px;
+    padding: 3px 12px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.personInfo {
+    padding: 10px 12px;
+    font-weight: bold;
+    background-color: #dceaeb;
+    color: #333;
+    cursor: default;
+}
+
+.separator {
+    border: none;
+    border-top: 1px solid #eee;
+    margin: 0;
 }
 
 @media (max-width: 770px) {
-  .header {
-    padding: 10px 20px;
-  }
+    .header {
+        height: auto;
+        padding: 10px 1rem;
+        justify-content: center;
+    }
 
-  .header svg {
-    font-size: 30px;
-    margin-left: 5px;
-  }
+    .btnContainer {
+        left: 1rem;
+    }
 
-  .header h1 {
-    font-size: 1.5rem;
-    margin: 10px 0;
-  }
+    .btnMenu,
+    .btnPerson {
+        font-size: 30px;
+    }
 
-  .header img {
-    width: 32px;
-    height: 32px;
-    margin-right: 5px;
-  }
+    .header h1 {
+        font-size: 1.25rem;
+    }
+
+    .header img {
+        width: 32px;
+        height: 32px;
+    }
+
+    .welcomeMessage {
+        display: none;
+    }
+
+    .personIconAndName {
+        border: none;
+        padding: 0;
+        gap: 0;
+        background-color: transparent;
+    }
+
+    .personIconAndName:hover {
+        background-color: transparent;
+    }
+
+    .personOptions {
+        width: 150px;
+    }
+}
+
+@media (max-width: 550px) {
+    .header img {
+        width: 32px;
+        height: 32px;
+    }
 }
 
 @media (max-width: 480px) {
-  .header svg {
-    font-size: 30px;
-  }
 
-  .header h1 {
-    font-size: 1.2rem;
-  }
+    .btnMenu,
+    .btnPerson {
+        font-size: 25px;
+    }
 
-  .header img {
-    width: 30px;
-    height: 30px;
-  }
+    .header h1 {
+        font-size: 1rem;
+        max-width: calc(100% - 110px);
+    }
+
+    .header img {
+        width: 27px;
+        height: 27px;
+    }
+}
+
+@media (max-width: 420px) {
+    .btnMenu {
+        left: 0.7rem;
+    }
+
+    .rightOptionsContainer {
+        gap: 7px;
+        right: .7rem;
+    }
+}
+
+@media (max-width: 380px) {
+    .header h1 {
+        font-size: .9rem;
+    }
+
+    .btnMenu,
+    .btnPerson {
+        font-size: 22px;
+    }
+
+    .header img {
+        width: 24px;
+        height: 24px;
+    }
+}
+
+@media (max-width: 345px) {
+
+    .btnMenu,
+    .btnPerson {
+        font-size: 20px;
+    }
+
+    .header img {
+        width: 25px;
+        height: 25px;
+    }
 }

@@ -26,7 +26,7 @@ function Themes() {
         try {
             setLoading(true);
 
-            const themeResponse = await themeService.findThemesByUser(userId);
+            const themeResponse = await themeService.findAllThemesByUser(userId);
 
             if (!themeResponse.success) {
                 setThemes([]);

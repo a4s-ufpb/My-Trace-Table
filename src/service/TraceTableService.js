@@ -1,7 +1,25 @@
 import { apiAxios } from "../axios/axiosConfig";
+import { formatFieldErrors } from "../utils/errorUtils";
 
 export class TraceTableService {
-    async handleRequest(method, url, data = null) {
+    getToken() {
+        return localStorage.getItem("token");
+    }
+
+    getUserId() {
+        return localStorage.getItem("userId");
+    }
+
+    async handleRequest(method, url, data = null, isMultipart = false) {
+        const token = this.getToken();
+        const headers = {
+            Authorization: `Bearer ${token}`,
+        };
+
+        if (!isMultipart) {
+            headers["Content-Type"] = "application/json";
+        }
+        
         const response = {
             data: {},
             message: "",
@@ -9,8 +27,14 @@ export class TraceTableService {
         };
 
         try {
-            const asyncResponse = await apiAxios[method](url, data);
-            response.data = asyncResponse.data;
+            const res = await apiAxios({
+                method,
+                url,
+                data,
+                headers,
+            });
+
+            response.data = res.data;
             response.success = true;
         } catch (error) {
             if (error.response?.data) {
@@ -38,5 +62,60 @@ export class TraceTableService {
 
     checkUserAnswer(traceTableId, userAnswer) {
         return this.handleRequest("post", `/trace/check/${traceTableId}`, userAnswer);
+    }
+
+    async getById(id) {
+        return this.handleRequest("get", `/trace/${id}`);
+    }
+
+    async addTraceTable(traceTable, imageFile, themesIds = []) {
+        const userId = this.getUserId();
+        const token = this.getToken();
+
+        const formData = new FormData();
+        const blob = new Blob([JSON.stringify(traceTable)], { type: "application/json" });
+        formData.append("traceTableRequest", blob);
+        formData.append("image", imageFile);
+
+        const queryParams = themesIds.map(id => `themesIds=${id}`).join("&");
+        const url = `/trace/${userId}?${queryParams}`;
+
+        const response = {
+            data: {},
+            message: "",
+            success: false,
+        };
+
+        try {
+            const res = await apiAxios.post(url, formData, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            response.data = res.data;
+            response.success = true;
+        } catch (error) {
+            const responseData = error.response?.data;
+
+            response.message = formatFieldErrors(responseData);
+        }
+
+        return response;
+    }
+
+    async editTraceTable(traceTableId, updatedData, themesIds) {
+        const userId = this.getUserId();
+
+        const queryParams = themesIds.map(id => `themesIds=${id}`).join("&");
+        const url = `/trace/${traceTableId}/${userId}?${queryParams}`;
+
+        return this.handleRequest("put", url, updatedData);
+    }
+
+
+    async deleteTraceTable(traceTableId) {
+        const userId = this.getUserId();
+        return this.handleRequest("delete", `/trace/${traceTableId}/${userId}`);
     }
 }

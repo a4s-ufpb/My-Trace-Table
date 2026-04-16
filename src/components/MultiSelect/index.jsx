@@ -40,18 +40,22 @@ export default function MultiSelect({ items, title, typeItem, selectedItems, set
 
     const filteredItems = items.filter(item => {
         const matchesSearch = item.name.toLowerCase().includes(search.toLowerCase());
-        const isNotSelected = selectedItems ? selectedItems.id !== item.id : true;
+        const isNotSelected = !selectedItems.some(selected => selected.id === item.id);
 
         return matchesSearch && isNotSelected;
     });
 
     const addItem = (item) => {
-        setSelectedItems(item);
+        setSelectedItems(prev => [...prev, item]);
         setSearch("");
         setDropdownOpen(false);
         if (inputRef.current) {
             inputRef.current.blur();
         }
+    };
+
+    const removeItem = (itemId) => {
+        setSelectedItems(prev => prev.filter(item => item.id !== itemId));
     };
 
     function handleKeyDown(e) {
@@ -88,8 +92,6 @@ export default function MultiSelect({ items, title, typeItem, selectedItems, set
     return (
         <div className={styles.container} ref={containerRef} data-testid="multi-select">
             <label>{title}</label>
-
-
             <div className={styles.inputWrapper}>
                 <input
                     ref={inputRef}
@@ -142,18 +144,17 @@ export default function MultiSelect({ items, title, typeItem, selectedItems, set
             )}
 
             <div className={styles.selectedContainer}>
-                {selectedItems && (
-                    <div className={styles.selectedTag} data-testid={`multi-select-selected-${selectedItems.id}`}>
-                        {selectedItems.name}
+                {selectedItems && selectedItems.map(item => (
+                    <div key={item.id} className={styles.selectedTag} data-testid={`multi-select-selected-${item.id}`}>
+                        {item.name}
                         <button
-                            type="button"
-                            onClick={() => setSelectedItems(null)}
+                            onClick={() => removeItem(item.id)}
                             className={styles.removeButton}
                         >
                             x
                         </button>
                     </div>
-                )}
+                ))}
             </div>
         </div>
     )

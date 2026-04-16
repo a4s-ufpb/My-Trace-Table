@@ -14,4 +14,3 @@ function ImageModal({ isOpen, onClose, imageSrc}) {
 }
 
 export default ImageModal;
-

@@ -12,7 +12,7 @@ function SelectCode({ setSelectCode }) {
     const [themeId, setThemeId] = useState();
     const [showAlertBoxThemeNotFound, setAlertBoxThemeNotFound] = useState(false);
     const [showAlertBoxNoUser, setAlertBoxNoUser] = useState(false);
-    const [selectedUser, setSelectedUser] = useState(null);
+    const [selectedUser, setSelectedUser] = useState([]);
     const [allUsers, setAllUsers] = useState([])
 
     const traceTableService = new TraceTableService();
@@ -36,25 +36,25 @@ function SelectCode({ setSelectCode }) {
 
         if (themeId) {
             try {
-            const traceTableResponse = await traceTableService.findAllTraceTablesByTheme(themeId);
-            if (!traceTableResponse.success) {
-                setAlertBoxThemeNotFound(true);
-                return;
+                const traceTableResponse = await traceTableService.findAllTraceTablesByTheme(themeId);
+                if (!traceTableResponse.success) {
+                    setAlertBoxThemeNotFound(true);
+                    return;
+                }
+
+                navigate(`/exercices/${themeId}`)
+            } catch (error) {
+                console.error(error);
             }
-
-            navigate(`/exercices/${themeId}`)
-        } catch (error) {
-            console.error(error);
         }
-    }
 
-        if (selectedUser == null) {
+        if (selectedUser.length === 0) {
             setAlertBoxNoUser(true);
-            return;
+            return; 
         }
 
         try {
-            const creatorId = selectedUser.id;
+            const creatorId = selectedUser[0].id;;
 
             const traceTableResponse =
                 await traceTableService.findAllTraceTablesByThemeName(themeName, 0, 1000, creatorId);

@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/button/Button";
 import { useState } from "react";
+import "./index.css";
 import SelectCode from "../../components/selectCode/SelectCode";
 import SecondaryHeader from "../../components/secondary-header/SecondaryHeader";
 

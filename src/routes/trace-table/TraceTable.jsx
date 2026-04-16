@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./TraceTable.css";
-import ImageModal from "../../components/image-modal/ImageModal";
+import ImageModal from "../../components/image-modal/";
 import FeedbackBox from "../../components/feedback-box/FeedbackBox";
 import {
   BsArrowLeftCircleFill,
@@ -9,7 +9,7 @@ import {
   BsArrowRightCircleFill,
 } from "react-icons/bs";
 import { TraceTableService } from "../../service/TraceTableService";
-import AttentionPopUp from "../../components/attention-popUp/AttentionPopUp";
+import AttentionPopUp from "../../components/AttentionPopUp";
 import Loading from "../../components/loading/Loading";
 
 function TraceTable() {

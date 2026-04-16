@@ -1,0 +1,288 @@
+.form-bg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 500px;
+    max-width: 95%;
+    margin: 20px 0;
+    padding: 30px 20px 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: var(--primary-white);
+}
+
+form {
+    width: 100%;
+    max-width: 500px;
+    margin-top: 20px;
+}
+
+h2 {
+    color: var(--primary-black);
+}
+
+form div {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.selection-themes {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+}
+
+.options-theme {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0 60px;
+    width: 100%;
+}
+
+label {
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--primary-black);
+}
+
+.form-input {
+    padding: 10px;
+    border: 1px solid var(--primary-green);
+    border-radius: 4px;
+    font-size: 14px;
+    text-align: start;
+}
+
+.checkbox-label input[type="checkbox"] {
+    flex-shrink: 0;
+    width: auto;
+}
+
+.img-container {
+    width: 90%;
+    max-width: 600px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--primary-white);
+    padding: 10px;
+    border-radius: 10px;
+    animation: fadeIn 0.8s ease-in-out;
+}
+
+.img-container img {
+    width: 100%;
+    object-fit: cover;
+    cursor: zoom-in;
+}
+
+.btn-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.btn {
+    width: 110px;
+    height: 35px;
+    background-color: var(--primary-green);
+    color: var(--primary-white);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.btn:hover:not(.btn-next) {
+    border: solid .1rem var(--primary-green);
+    background-color: #fff;
+    color: #07433C;
+}
+
+.btn-next:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+.btn-next:hover:not(:disabled) {
+    border: solid .1rem var(--primary-green);
+    background-color: #fff;
+    color: #07433C;
+}
+
+.content-with-help {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: .3rem;
+}
+
+.icon-question {
+    font-size: 15px;
+    cursor: pointer;
+    color: var(--primary-green);
+    transition: color 0.3s ease;
+    opacity: 0.7;
+}
+
+.icon-question:hover {
+    opacity: 1;
+}
+
+.icon-trash,
+.icon-pencil {
+    cursor: pointer;
+    font-size: 1.2rem;
+    opacity: 0.8;
+}
+
+.icon-check {
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: var(--primary-green);
+    opacity: 1;
+}
+
+.icon-check:hover {
+    transform: scale(1.1);
+}
+
+.icon-trash:hover,
+.icon-pencil:hover {
+    opacity: 1;
+}
+
+.span-items {
+    font-size: 1rem;
+    color: var(--primary-black);
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+h4 {
+    font-size: 1.2rem;
+    color: var(--primary-black);
+    text-align: center;
+}
+
+.password-container {
+    position: relative;
+    margin: 0;
+}
+
+.password-toggle {
+    position: absolute;
+    top: 50%;
+    right: 0.75rem;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: var(--primary-green);
+}
+
+.without-registration {
+    text-align: center;
+    margin: 5px 0px;
+    font-size: 0.9rem;
+    color: var(--primary-black);
+    opacity: 0.8;
+}
+
+@media (max-width: 1025px) {
+    h2 {
+        font-size: 1.6rem;
+    }
+
+    h4 {
+        font-size: 1.3rem;
+    }
+}
+
+@media (max-width: 900px) {
+    .form-bg {
+        max-width: 90%;
+        margin: 10px 0;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    h4 {
+        font-size: 1.2rem;
+    }
+
+}
+
+@media (max-width: 600px) {
+    .form-bg {
+        padding: 20px 20px 10px;
+    }
+
+    form div {
+        margin-bottom: 15px;
+    }
+
+    .btn {
+        width: 100px;
+        height: 30px;
+        font-size: 14px;
+    }
+
+    .icon-trash {
+        font-size: 1rem;
+    }
+
+    h4 {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    form {
+        max-width: 90%;
+    }
+
+    h2 {
+        font-size: 1.2rem;
+    }
+
+    .btn {
+        width: 90px;
+        font-size: 13px;
+    }
+
+    h4 {
+        font-size: 0.9rem;
+    }
+
+    input[type="file"] {
+        font-size: 9px;
+    }
+
+    .without-registration {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 400px) {
+    form {
+        max-width: 100%;
+    }
+
+    h2 {
+        font-size: 1rem;
+    }
+
+    label {
+        font-size: 0.9rem;
+    }
+}

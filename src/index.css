@@ -15,10 +15,14 @@
 }
 
 .background {
-  height: 85%;
-  background-color: var(--primary-blue);
-  display: flex;
-  flex-direction: column;
+  min-height: 100vh;
+    background-color: var(--primary-blue);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1em;
+    position: relative;
 }
 
 .center-content {
@@ -29,6 +33,25 @@
   align-items: center;
   padding: 1em;
   gap: 1em;
+}
+
+.title {
+    background-color: var(--primary-green);
+    color: #fff;
+    padding: 20px 80px;
+    text-align: center;
+    border-radius: 20px;
+    text-transform: uppercase;
+    position: absolute;
+    top: 40px;
+}
+
+.stage {
+    position: absolute;
+    top: 2rem;
+    left: 1rem;
+    color: var(--primary-green);
+    font-weight: 600;
 }
 
 .container-data {
@@ -42,7 +65,7 @@
 }
 
 h3 {
-  color: var(--primary-black);
+  color: var(--primary-white);
   font-size: 24px;
   text-align: center;
 }

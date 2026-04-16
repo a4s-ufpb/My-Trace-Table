@@ -1,0 +1,30 @@
+.nav {
+    background-color: var(--primary-white);
+    padding: 3px 20px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.nav ul {
+    list-style: none;
+    display: flex;
+    gap: 10px;
+    flex-wrap: nowrap;
+}
+
+.active {
+    opacity: 1;
+    border-bottom: 2px solid var(--primary-green);
+}
+
+.span {
+    font-size: 14px;
+    color: var(--primary-green);
+    font-weight: 600;
+    margin: -20px 0 20px;
+}
