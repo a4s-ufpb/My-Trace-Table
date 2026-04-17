@@ -5,6 +5,7 @@ import "./Menu.css";
 function Menu({ setMenu }) {
   const menuRef = useRef(null);
   const role = localStorage.getItem("userRole") || "user";
+  const creatorId = localStorage.getItem("userId");
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -39,7 +40,7 @@ function Menu({ setMenu }) {
             (<Link to="new-exercise" onClick={() => setMenu(false)}>Cadastrar Exercicio</Link>)
           }
           {(role === "professor" || role === "admin") &&
-            (<Link to="list-exercises" onClick={() => setMenu(false)}>Ver Exercicios</Link>)
+            (<Link to={`/exercises/all?creatorId=${creatorId}`} onClick={() => setMenu(false)}>Ver Exercicios</Link>)
           }
           {(role === "professor" || role === "admin") &&
             (<Link to="new-theme" onClick={() => setMenu(false)}>Cadastrar/Ver Tema(s)</Link>)

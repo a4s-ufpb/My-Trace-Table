@@ -53,8 +53,7 @@ export class ThemeService {
         return this.handleRequest("get", `/theme/name/${themeName}`)
     }
     
-    findAllThemesByUser() {
-        const userId = this.getUserId();
+    findAllThemesByUser(userId = this.getUserId()) {
         return this.handleRequest("get", `/theme/user/${userId}`);
     }
 

@@ -1,4 +1,4 @@
-import { useParams, useNavigate, useSearchParams } from "react-router-dom";
+import { useParams, useNavigate, useSearchParams, useLocation } from "react-router-dom";
 import styles from "./styles.module.css";
 import { useEffect, useState } from "react";
 import { BsQuestionCircleFill } from "react-icons/bs";
@@ -17,6 +17,8 @@ export default function ExerciseDetails() {
     const isEditing = searchParams.get("edit") === "true";
     const { id } = useParams();
     const navigate = useNavigate();
+    const location = useLocation();
+    const creatorId = location.state?.creatorId || localStorage.getItem("userId");
 
     const [exercise, setExercise] = useState(null);
     const [originalExercise, setOriginalExercise] = useState(null);
@@ -641,7 +643,7 @@ export default function ExerciseDetails() {
                             Editar
                         </button>
                     )}
-                    <button className="btn" onClick={() => navigate("/list-exercises")}>
+                    <button className="btn" onClick={() => navigate(`/exercises/all?creatorId=${creatorId}`)}>
                         Voltar
                     </button>
                 </div>

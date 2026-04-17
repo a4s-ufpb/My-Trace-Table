@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Button from "../../components/button/Button";
 import { useState } from "react";
 import "./index.css";
@@ -7,6 +7,7 @@ import SecondaryHeader from "../../components/secondary-header/SecondaryHeader";
 
 function Home() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [showSelectCode, setShowSelectCode] = useState(false);
   const role = localStorage.getItem("userRole") || "user";
   const creatorId = location.state?.creatorId || localStorage.getItem("userId");
@@ -46,7 +47,10 @@ function Home() {
             <>
               <Button text="Cadastrar Tema" action={() => navigate("/new-theme")} />
               <Button text="Cadastrar Exercicio" action={() => navigate("/new-exercise")} />
-              <Button text="Ver Exercicios" action={() => navigate(`/exercises/all`)} />
+              <Button
+                text="Ver Exercicios"
+                action={() => navigate(`/exercises/all?creatorId=${creatorId}`)}
+              />
               <Button text="Ajuda" action={() => navigate("/help-page")} />
             </>
           )}
