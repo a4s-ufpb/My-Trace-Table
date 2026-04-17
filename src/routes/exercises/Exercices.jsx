@@ -1,99 +1,148 @@
-import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
+import Button from "../../components/button/Button";
 import Loading from "../../components/loading/Loading";
-import PageChanging from "../../components/PageChanging";
 import MessagePopUp from "../../components/MessagePopUp";
+import PageChanging from "../../components/PageChanging";
 import SecondaryHeader from "../../components/secondary-header/SecondaryHeader";
-import styles from "./styles.module.css";
 import { ThemeService } from "../../service/ThemeService";
 import { TraceTableService } from "../../service/TraceTableService";
-import Button from "../../components/button/Button";
+import styles from "./styles.module.css";
 
 export default function Exercises() {
   const navigate = useNavigate();
   const location = useLocation();
   const { info } = useParams();
-  const creatorId = location.state?.creatorId || localStorage.getItem("userId");
+  const [searchParams] = useSearchParams();
+
+  const creatorId =
+    location.state?.creatorId ||
+    searchParams.get("creatorId") ||
+    localStorage.getItem("userId");
+  const creatorName =
+    location.state?.creatorName ||
+    searchParams.get("creatorName") ||
+    "";
+  const stateInitialTheme = location.state?.initialTheme;
+  const queryThemeName = searchParams.get("themeName");
 
   const userRole = localStorage.getItem("userRole") || "aluno";
   const canManage = userRole === "admin" || userRole === "professor";
 
+  const themeService = new ThemeService();
+  const traceTableService = new TraceTableService();
+
+  function resolveInitialTheme() {
+    if (stateInitialTheme?.name) {
+      return stateInitialTheme;
+    }
+
+    if (!info) {
+      return { id: null, name: "todos" };
+    }
+
+    const parsedThemeId = Number(info);
+    const hasNumericThemeId = !Number.isNaN(parsedThemeId);
+
+    return {
+      id: hasNumericThemeId ? parsedThemeId : null,
+      name: queryThemeName || info,
+    };
+  }
+
   const [exercises, setExercises] = useState([]);
   const [allThemes, setAllThemes] = useState([]);
-  const [filteredTheme, setFilteredTheme] = useState({ id: null, name: info || "todos" });
-
+  const [filteredTheme, setFilteredTheme] = useState(resolveInitialTheme);
   const [themesMap, setThemesMap] = useState({});
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const [loading, setLoading] = useState(true);
-
   const [showMessagePopUp, setShowMessagePopUp] = useState(false);
   const [popUpMessage, setPopUpMessage] = useState("");
-
-  const themeService = new ThemeService();
-  const traceTableService = new TraceTableService();
 
   useEffect(() => {
     if (location.state?.refresh) {
       loadExercises();
-      navigate(location.pathname, { replace: true });
+      navigate(`${location.pathname}${location.search}`, { replace: true });
     }
-  }, [location]);
+  }, [location.pathname, location.search, location.state?.refresh]);
+
+  useEffect(() => {
+    setFilteredTheme(resolveInitialTheme());
+    setCurrentPage(0);
+  }, [info, queryThemeName, stateInitialTheme?.id, stateInitialTheme?.name]);
 
   useEffect(() => {
     loadThemes();
-  }, []);
+  }, [creatorId]);
 
   useEffect(() => {
     loadExercises();
-  }, [currentPage, filteredTheme]);
+  }, [creatorId, currentPage, filteredTheme]);
 
   useEffect(() => {
-    if (exercises.length > 0) {
-      loadThemesPerExercise();
+    if (exercises.length === 0) {
+      setThemesMap({});
+      return;
     }
+
+    loadThemesPerExercise();
   }, [exercises]);
 
   const loadThemes = async () => {
-    const response = await themeService.findAllThemesByUser();
+    if (!creatorId) {
+      setAllThemes([]);
+      return;
+    }
+
+    const response = await themeService.findAllThemesByUser(creatorId);
+
     if (response.success) {
       setAllThemes(response.data.content || []);
+      return;
     }
+
+    setAllThemes([]);
   };
 
   const loadThemesPerExercise = async () => {
     const newMap = {};
+
     for (const trace of exercises) {
       const response = await themeService.getThemesByExercise(trace.id);
       if (response.success) {
-        newMap[trace.id] = response.data.content.map(t => t.name);
+        newMap[trace.id] = response.data.content.map((theme) => theme.name);
       }
     }
+
     setThemesMap(newMap);
   };
 
   const loadExercises = async () => {
     setLoading(true);
+
     try {
       let response;
-      if (filteredTheme.name === "todos") {
-        response = await traceTableService.getAllByUser(creatorId, currentPage);
-      } else {
-        const themeId = filteredTheme.id || info;
-        const isNumeric = !isNaN(themeId) && themeId !== null && themeId !== undefined;
 
-        if (isNumeric) {
-          response = await traceTableService.getAllByTheme(themeId, currentPage);
-        } else {
-          response = await traceTableService.findAllTraceTablesByThemeName(themeId, currentPage, 10, creatorId);
-        }
+      if (filteredTheme.name === "todos") {
+        response = await traceTableService.findAllTraceTablesByUser(creatorId, currentPage, 10);
+      } else if (filteredTheme.id !== null && filteredTheme.id !== undefined) {
+        response = await traceTableService.findAllTraceTablesByTheme(filteredTheme.id, currentPage, 10);
+      } else {
+        response = await traceTableService.findAllTraceTablesByThemeName(
+          filteredTheme.name,
+          currentPage,
+          10,
+          creatorId
+        );
       }
 
-      if (response && response.success) {
+      if (response?.success) {
         setExercises(response.data.content || []);
         setTotalPages(response.data.totalPages || 0);
       } else {
         setExercises([]);
+        setTotalPages(0);
       }
     } catch (error) {
       setPopUpMessage("Erro ao carregar os exercicios. Tente novamente.");
@@ -104,29 +153,31 @@ export default function Exercises() {
   };
 
   const startExercise = (exercise) => {
-    const exercisesList = JSON.stringify(exercises);
-    localStorage.setItem("exercices", exercisesList);
+    localStorage.setItem("exercices", JSON.stringify(exercises));
     localStorage.setItem(
       "currentExerciceIndex",
-      exercises.findIndex((e) => e.id === exercise.id).toString()
+      exercises.findIndex((currentExercise) => currentExercise.id === exercise.id).toString()
     );
     navigate("/trace-table");
   };
 
   const editExercise = (id) => {
-    navigate(`/edit-trace-table/${id}`);
+    navigate(`/exercicio/${id}`);
   };
 
   const removeExercise = async (id) => {
-    if (!window.confirm("Tem certeza que deseja excluir este exercicio?")) return;
+    if (!window.confirm("Tem certeza que deseja excluir este exercicio?")) {
+      return;
+    }
 
     const response = await traceTableService.deleteTraceTable(id);
+
     if (response.success) {
       setPopUpMessage("Exercicio removido com sucesso!");
-      const updated = exercises.filter((trace) => trace.id !== id);
-      setExercises(updated);
+      const updatedExercises = exercises.filter((trace) => trace.id !== id);
+      setExercises(updatedExercises);
 
-      if (updated.length === 0 && currentPage > 0) {
+      if (updatedExercises.length === 0 && currentPage > 0) {
         setCurrentPage(currentPage - 1);
       } else {
         loadExercises();
@@ -134,6 +185,7 @@ export default function Exercises() {
     } else {
       setPopUpMessage(response.message || "Erro ao remover exercicio");
     }
+
     setShowMessagePopUp(true);
   };
 
@@ -153,7 +205,11 @@ export default function Exercises() {
       <SecondaryHeader
         showBackButton={true}
         title="Exercicios"
-        rightText={`Tema atual: ${filteredTheme.name}`}
+        rightText={
+          creatorName
+            ? `Professor: ${creatorName} | Tema atual: ${filteredTheme.name}`
+            : `Tema atual: ${filteredTheme.name}`
+        }
       />
 
       <nav className={styles.nav}>
@@ -166,17 +222,16 @@ export default function Exercises() {
               Todos
             </button>
           </li>
-          {allThemes.length > 0 &&
-            allThemes.map((theme) => (
-              <li key={theme.id}>
-                <button
-                  onClick={() => setFilteredThemeAndResetPage(theme)}
-                  className={`${styles.button} ${filteredTheme.name === theme.name ? styles.active : ""}`}
-                >
-                  {theme.name}
-                </button>
-              </li>
-            ))}
+          {allThemes.map((theme) => (
+            <li key={theme.id}>
+              <button
+                onClick={() => setFilteredThemeAndResetPage(theme)}
+                className={`${styles.button} ${filteredTheme.name === theme.name ? styles.active : ""}`}
+              >
+                {theme.name}
+              </button>
+            </li>
+          ))}
         </ul>
       </nav>
 
@@ -195,12 +250,24 @@ export default function Exercises() {
                 <p>Temas: {themesMap[exercise.id]?.join(", ") || "Carregando..."}</p>
 
                 <div className={styles.actions}>
-                  <Button text="Responder" action={() => startExercise(exercise)} className={styles.actionButton} />
+                  <Button
+                    text="Responder"
+                    action={() => startExercise(exercise)}
+                    className={styles.actionButton}
+                  />
 
                   {canManage && (
                     <>
-                      <Button text="Editar" action={() => editExercise(exercise.id)} className={styles.actionButton} />
-                      <Button text="Excluir" action={() => removeExercise(exercise.id)} className={styles.actionButtonDanger} />
+                      <Button
+                        text="Editar"
+                        action={() => editExercise(exercise.id)}
+                        className={styles.actionButton}
+                      />
+                      <Button
+                        text="Excluir"
+                        action={() => removeExercise(exercise.id)}
+                        className={styles.actionButtonDanger}
+                      />
                     </>
                   )}
                 </div>

@@ -33,19 +33,19 @@ function Menu({ setMenu }) {
           <Link to="/" onClick={() => setMenu(false)}>Inicio</Link>
 
           {role === "admin" &&
-            <Link to="new-professor" onClick={() => setMenu(false)}>Cadastrar/Ver Professor(es)</Link>
+            (<Link to="new-professor" onClick={() => setMenu(false)}>Cadastrar/Ver Professor(es)</Link>)
           }
-          {role === "professor" || role === "admin" &&
-            <Link to="new-exercise" onClick={() => setMenu(false)}>Cadastrar Exercicio</Link>
+          {(role === "professor" || role === "admin") &&
+            (<Link to="new-exercise" onClick={() => setMenu(false)}>Cadastrar Exercicio</Link>)
           }
-          {role === "professor" || role === "admin" &&
-            <Link to="list-exercises" onClick={() => setMenu(false)}>Ver Exercicios</Link>
+          {(role === "professor" || role === "admin") &&
+            (<Link to="list-exercises" onClick={() => setMenu(false)}>Ver Exercicios</Link>)
           }
-          {role === "professor" || role === "admin" &&
-            <Link to="new-theme" onClick={() => setMenu(false)}>Cadastrar/Ver Tema(s)</Link>
+          {(role === "professor" || role === "admin") &&
+            (<Link to="new-theme" onClick={() => setMenu(false)}>Cadastrar/Ver Tema(s)</Link>)
           }
-          {role === "professor" || role === "admin" &&
-            <Link to="help-page" onClick={() => setMenu(false)}>Ajuda</Link>
+          {(role === "professor" || role === "admin") &&
+            (<Link to="help-page" onClick={() => setMenu(false)}>Ajuda</Link>)
           }
           <Link to="about" onClick={() => setMenu(false)}>Sobre</Link>
         </div>

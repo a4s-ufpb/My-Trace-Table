@@ -74,7 +74,7 @@ const router = createHashRouter([
             path: "expectedtable",
             element: <ExpectedTable />
         }, {
-            path: "list-exercises",
+            path: "exercises/all",
             element: <Exercises />
         }, {
             path: "exercicio/:id",
