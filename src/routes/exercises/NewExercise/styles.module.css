@@ -10,18 +10,20 @@
 }
 
 .btnNewTheme {
-    width: 200px;
-    color: var(--secondary-blue);
+    width: auto;
+    color: var(--accent-strong);
     border: none;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 0.96rem;
     text-decoration: underline;
-    margin-bottom: 20px;
-    transition: 0.2s;
+    margin-bottom: 0;
+    transition: color 0.2s ease, transform 0.2s ease;
+    font-weight: 700;
 }
 
 .btnNewTheme:hover {
     color: var(--primary-green);
+    transform: translateY(-1px);
 }
 
 .spanTheme {

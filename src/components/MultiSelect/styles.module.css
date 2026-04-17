@@ -4,39 +4,53 @@
 
 .searchInput {
     flex-grow: 1;
-    padding: 10px;
-    font-weight: 500;
+    min-height: 3.15rem;
+    padding: 0.85rem 1rem;
+    font-weight: 600;
     font-size: .9rem;
-    border: 1px solid var(--primary-black);
+    border: 1px solid rgba(18, 32, 50, 0.12);
+    border-radius: 16px;
     text-align: start;
+    background: rgba(248, 251, 254, 0.96);
+    color: var(--text-primary);
 }
 
 .dropdown {
-    border: 1px solid var(--primary-black);
-    max-height: 150px;
-    border-radius: 6px;
-    background-color: #fff;
-    box-shadow: 0 2px 5px rgba(170, 88, 88, 0.1);
+    border: 1px solid rgba(18, 32, 50, 0.08);
+    max-height: 180px;
+    border-radius: 18px;
+    background-color: rgba(255, 255, 255, 0.98);
+    box-shadow: var(--shadow-card);
     overflow-y: auto;
-    margin-bottom: 0;
+    margin-top: 0.55rem;
 }
 
 .dropdownItem {
-    padding: 4px;
+    padding: 0.8rem 0.9rem;
     cursor: pointer;
     margin-bottom: 0;
-    color: var(--primary-black);
+    color: var(--text-primary);
+    transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .dropdownItem:hover {
-    border-radius: 4px;
-    background-color: #0078D7;
-    color: #fff;
+    background-color: rgba(65, 205, 196, 0.14);
+    color: var(--accent-strong);
+}
+
+.dropdownItem:first-child {
+    border-top-left-radius: 18px;
+    border-top-right-radius: 18px;
+}
+
+.dropdownItem:last-child {
+    border-bottom-left-radius: 18px;
+    border-bottom-right-radius: 18px;
 }
 
 .noResults {
-    padding: 5px;
-    color: #999;
+    padding: 0.9rem;
+    color: var(--text-secondary);
     font-style: italic;
 }
 
@@ -44,16 +58,15 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 0px;
-    margin-top: 10px;
+    gap: 0.65rem;
+    margin-top: 0.9rem;
 }
 
 .selectedTag {
     width: fit-content;
-    border-radius: 20px;
-    padding: 6px 10px;
-    background-color: var(--primary-green);
+    border-radius: 999px;
+    padding: 0.5rem 0.8rem;
+    background: rgba(15, 65, 72, 0.9);
     color: #fff;
     font-weight: 600;
     display: flex;
@@ -61,8 +74,9 @@
     align-items: center;
     justify-content: center;
     gap: 6px;
-    font-size: 12px;
+    font-size: 0.8rem;
     margin-bottom: 0;
+    box-shadow: 0 14px 22px rgba(9, 30, 44, 0.16);
 }
 
 .removeButton {
@@ -82,17 +96,20 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin-bottom: 0;
+    margin-bottom: 0.2rem;
 }
 
 .toggleButton {
     position: absolute;
-    right: 1px;
-    background: transparent;
+    right: 0.75rem;
+    width: 2rem;
+    height: 2rem;
+    background: rgba(65, 205, 196, 0.12);
     border: none;
+    border-radius: 999px;
     cursor: pointer;
-    color: var(--primary-black);
-    font-size: 16px;
+    color: var(--primary-green);
+    font-size: 1rem;
 }
 
 .toggleButton:hover {
@@ -100,6 +117,6 @@
 }
 
 .highlighted {
-    background-color: #0078D7;
-    color: #fff;
+    background-color: rgba(65, 205, 196, 0.14);
+    color: var(--accent-strong);
 }

@@ -1,17 +1,19 @@
 .navigate-btn {
     color: var(--primary-white);
-    font-size: 2rem;
+    font-size: 1.9rem;
     cursor: pointer;
-    transition: all .2s ease-in-out;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+    opacity: 0.92;
 }
 
 .navigate-btn:hover {
-    transform: scale(1.1);
+    transform: translateX(-2px);
     color: var(--primary-white);
+    opacity: 1;
 }
 
 @media (max-width: 780px) {
     .navigate-btn {
-      font-size: 1.6rem;
+      font-size: 1.55rem;
     }
 }

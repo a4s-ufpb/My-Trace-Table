@@ -8,6 +8,7 @@ import SecondaryHeader from "../../components/secondary-header/SecondaryHeader";
 function Home() {
   const navigate = useNavigate();
   const [showSelectCode, setShowSelectCode] = useState(false);
+  
 
   function selectTeacher() {
     navigate("/teacher");
@@ -17,12 +18,23 @@ function Home() {
     <div className="background">
       <SecondaryHeader title="Vamos praticar sua compreensão sobre códigos?" />
 
-      <div className="center-content">
-        <Button text="Escolher Professor" action={selectTeacher} />
-        <Button text="Buscar Tema" action={() => setShowSelectCode(true)} />
+      <section className="homeHero">
+        <div className="homeCopy">
+          <span className="homeEyebrow">Seus Estudos</span>
+          <h2>Escolha como quer começar sua jornada nos estudos.</h2>
+          <p>
+            Navegue por professores ou encontre um tema específico para responder
+            os exercícios propostos
+          </p>
+        </div>
 
-        {showSelectCode && <SelectCode setSelectCode={setShowSelectCode} />}
-      </div>
+        <div className="homeActions">
+          <Button text="Escolher Professor" action={selectTeacher} />
+          <Button text="Buscar Tema" action={() => setShowSelectCode(true)} />
+        </div>
+      </section>
+
+      {showSelectCode && <SelectCode setSelectCode={setShowSelectCode} />}
     </div>
   );
 }

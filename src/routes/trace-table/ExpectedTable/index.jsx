@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react"
-import "../traceTable.css";
+import "../TraceTable.css";
 import { useNavigate } from "react-router-dom";
 import { BsQuestionCircleFill } from "react-icons/bs";
 import AttentionPopUp from "../../../components/AttentionPopUp";
@@ -34,25 +34,20 @@ export default function ExpectedTable() {
 
     const { traceData, clearExerciseDraft } = useContext(TraceTableContext);
     const traceService = new TraceTableService();
-    const defaultString = traceData.programmingLanguage === 'java' ? 'String' : 'str';
+    const defaultString = traceData.programmingLanguage === "java" ? "String" : "str";
 
     useEffect(() => {
         setExpectedTableData(traceData.shownTable || []);
         setTableInfo(traceData);
 
-        const linhaIndex = (traceData.headerTable || []).findIndex(h => h.toLowerCase().includes('linha'));
+        const linhaIndex = (traceData.headerTable || []).findIndex(h => h.toLowerCase().includes("linha"));
         const linhaDataIndex = traceData.showSteps ? linhaIndex - 1 : linhaIndex;
-
         const isInteger = /^-?\d+$/;
 
         const initializedTypeTable = (traceData.shownTable || []).map(row =>
             row.map((cell, colIndex) => {
                 if (cell === "#") return "#";
-
-                if (colIndex === linhaDataIndex && isInteger.test(cell)) {
-                    return 'int';
-                }
-
+                if (colIndex === linhaDataIndex && isInteger.test(cell)) return "int";
                 return defaultString;
             })
         );
@@ -62,7 +57,7 @@ export default function ExpectedTable() {
 
     useEffect(() => {
         const allFilled = expectedTableData.every(row =>
-            row.every(cell => cell.trim() !== '' && cell !== '?')
+            row.every(cell => cell.trim() !== "" && cell !== "?")
         );
 
         setIsValid(allFilled)
@@ -86,9 +81,7 @@ export default function ExpectedTable() {
         });
 
         setTypeTableData(prevData => {
-            const validTypes = getValidTypesForValue(value, traceData.programmingLanguage);
-
-            const bestGuessType = validTypes[0];
+            const bestGuessType = getValidTypesForValue(value, traceData.programmingLanguage)[0];
 
             return prevData.map((row, rIndex) =>
                 rIndex === rowIndex
@@ -104,9 +97,7 @@ export default function ExpectedTable() {
 
             for (let i = rowIndex; i < newTableData.length; i++) {
                 if (traceData.shownTable[i][colIndex] !== "#") {
-
                     const cellValue = expectedTableData[i][colIndex];
-
                     const possibleTypes = getValidTypesForValue(cellValue, traceData.programmingLanguage);
 
                     if (possibleTypes.includes(newType)) {
@@ -140,25 +131,16 @@ export default function ExpectedTable() {
         if (response.success) {
             clearExerciseDraft();
 
-            setPopUpMessage("Exercício salvo com sucesso!");
+            setPopUpMessage("Exercicio salvo com sucesso!");
             setShowMessagePopUp(true);
             setTimeout(() => {
                 navigate("/");
             }, 1200);
         } else {
-            setPopUpMessage(response.message || "Erro ao salvar exercício");
+            setPopUpMessage(response.message || "Erro ao salvar exercicio");
             setShowMessagePopUp(true);
         }
     };
-
-    const shownPopUpCancel = () => setOpenPopUpCancel(true);
-
-    const shownPopUpEdit = () => setOpenPopUpEdit(true);
-
-    const cancelOperation = () => navigate("/");
-
-    const handleImageClick = () => setIsModalOpen(true);
-    const handleCloseModal = () => setIsModalOpen(false);
 
     const showHelpPopUp = (text) => {
         setHelpText(text);
@@ -169,26 +151,26 @@ export default function ExpectedTable() {
         const lowerCaseName = columnName.toLowerCase();
         const classes = [];
 
-        if (lowerCaseName.includes('passo') || lowerCaseName.includes('linha')) {
-            classes.push('metadata-column');
+        if (lowerCaseName.includes("passo") || lowerCaseName.includes("linha")) {
+            classes.push("metadata-column");
         }
 
-        if (lowerCaseName.includes('linha')) {
-            classes.push('metadata-column-divider');
+        if (lowerCaseName.includes("linha")) {
+            classes.push("metadata-column-divider");
         }
 
-        return classes.join(' ');
+        return classes.join(" ");
     };
 
     return (
         <div className="background">
-            <div className="wrapper">
+            <div className="trace-editor-shell">
                 {imageURL && (
                     <div className="img-container">
                         <img
                             src={imageURL}
-                            alt="Código do exercício"
-                            onClick={handleImageClick}
+                            alt="Codigo do exercicio"
+                            onClick={() => setIsModalOpen(true)}
                         />
                     </div>
                 )}
@@ -196,54 +178,52 @@ export default function ExpectedTable() {
                     <div className="title-container">
                         <div className="content-with-help">
                             <h2>Tabela Esperada</h2>
-                            <BsQuestionCircleFill className="icon-question" onClick={() => showHelpPopUp("O professor deve preencher a tabela com os valores esperados para a resposta do aluno. Essa tabela servirá como referência para a correção, comparando as respostas fornecidas com os resultados esperados.")} />
+                            <BsQuestionCircleFill className="icon-question" onClick={() => showHelpPopUp("Preencha a tabela com os valores esperados para a resposta do aluno.")} />
                         </div>
-                        <span className="table-subtitle">Preencha as respostas esperadas para essa Trace Table</span>
+                        <span className="table-subtitle">Defina as respostas corretas para a atividade.</span>
                     </div>
-                    <div>
-                        {tableInfo && (
-                            <table>
-                                <thead>
-                                    <tr>
-                                        {tableInfo?.headerTable?.map((variable, variableIndex) => (
-                                            <th key={variableIndex} className={getColumnClasses(variable)}>{variable}</th>
-                                        ))}
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {expectedTableData?.map((row, i) => (
-                                        <tr key={i}>
-                                            {traceData.showSteps &&
-                                                <td className={`step-cell ${getColumnClasses('Passo')}`}>{i + 1}º</td>
-                                            }
-                                            {row.map((cell, j) => {
-                                                const columnName = tableInfo?.headerTable[j + (traceData.showSteps ? 1 : 0)];
-                                                const isDisabled = cell === "#";
-
-                                                const cellClasses = [
-                                                    getColumnClasses(columnName),
-                                                    isDisabled ? 'disabled-cell' : ''
-                                                ].join(' ').trim();
-
-                                                return (
-                                                    <td key={j} className={cellClasses}>
-                                                        {(traceData.shownTable[i][j] === "?") ? (
-                                                            <input
-                                                                type="text"
-                                                                value={cell === "?" ? "" : cell}
-                                                                maxLength={10}
-                                                                onChange={(e) => handleInputChange(i, j, e.target.value)}
-                                                            />
-                                                        ) : cell === "#" ? "" : cell}
-                                                    </td>
-                                                )
-                                            })}
-                                        </tr>
+                    {tableInfo && (
+                        <table>
+                            <thead>
+                                <tr>
+                                    {tableInfo?.headerTable?.map((variable, variableIndex) => (
+                                        <th key={variableIndex} className={getColumnClasses(variable)}>{variable}</th>
                                     ))}
-                                </tbody>
-                            </table>
-                        )}
-                    </div>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {expectedTableData?.map((row, i) => (
+                                    <tr key={i}>
+                                        {traceData.showSteps &&
+                                            <td className={`step-cell ${getColumnClasses("Passo")}`}>{i + 1}o</td>
+                                        }
+                                        {row.map((cell, j) => {
+                                            const columnName = tableInfo?.headerTable[j + (traceData.showSteps ? 1 : 0)];
+                                            const isDisabled = cell === "#";
+
+                                            const cellClasses = [
+                                                getColumnClasses(columnName),
+                                                isDisabled ? "disabled-cell" : ""
+                                            ].join(" ").trim();
+
+                                            return (
+                                                <td key={j} className={cellClasses}>
+                                                    {(traceData.shownTable[i][j] === "?") ? (
+                                                        <input
+                                                            type="text"
+                                                            value={cell === "?" ? "" : cell}
+                                                            maxLength={10}
+                                                            onChange={(e) => handleInputChange(i, j, e.target.value)}
+                                                        />
+                                                    ) : cell === "#" ? "" : cell}
+                                                </td>
+                                            )
+                                        })}
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    )}
                 </div>
                 <div>
                     <div className="content-with-help">
@@ -255,11 +235,11 @@ export default function ExpectedTable() {
                                 checked={showValueType}
                                 onChange={() => setShowValueType(!showValueType)}
                             />
-                            Preencher tabela com o tipo do valor de cada célula
+                            Preencher tabela com o tipo do valor de cada celula
                             <BsQuestionCircleFill className="icon-question" onClick={(e) => {
                                 e.stopPropagation();
                                 e.preventDefault();
-                                showHelpPopUp("O professor pode preencher a tabela de tipos com o respectivo tipo de valor esperado em cada célula. Caso opte em não preencher a tabela de tipos, todas as células serão consideradas 'String' por padrão. A tipagem é interessante para a correção, pois permite que o sistema verifique se o tipo de dado enviado pelo aluno corresponde ao esperado, fornecendo um feedback mais preciso.")
+                                showHelpPopUp("A tabela de tipos ajuda a validar se o aluno enviou um valor no tipo esperado.")
                             }} />
                         </label>
                     </div>
@@ -281,16 +261,15 @@ export default function ExpectedTable() {
                                 {typeTableData?.map((row, i) => (
                                     <tr key={i}>
                                         {traceData.showSteps &&
-                                            <td className={`step-cell ${getColumnClasses('Passo')}`}>{i + 1}º</td>
+                                            <td className={`step-cell ${getColumnClasses("Passo")}`}>{i + 1}o</td>
                                         }
                                         {row.map((cell, j) => {
                                             const columnName = tableInfo?.headerTable[j + (traceData.showSteps ? 1 : 0)];
                                             const isDisabled = cell === "#";
-
                                             const cellClasses = [
                                                 getColumnClasses(columnName),
-                                                isDisabled ? 'disabled-cell' : ''
-                                            ].join(' ').trim();
+                                                isDisabled ? "disabled-cell" : ""
+                                            ].join(" ").trim();
 
                                             return (
                                                 <td key={j} className={cellClasses}>
@@ -311,7 +290,6 @@ export default function ExpectedTable() {
                                                     ) : cell === "#" ? "" : cell}
                                                 </td>
                                             )
-
                                         })}
                                     </tr>
                                 ))}
@@ -323,19 +301,19 @@ export default function ExpectedTable() {
 
             <div className="btn-container">
                 <button onClick={saveTableData} disabled={!isValid} className="btn btn-next">Salvar</button>
-                <button onClick={shownPopUpEdit} className="btn">Editar</button>
-                <button onClick={shownPopUpCancel} className="btn">Cancelar</button>
+                <button onClick={() => setOpenPopUpEdit(true)} className="btn">Editar</button>
+                <button onClick={() => setOpenPopUpCancel(true)} className="btn">Cancelar</button>
             </div>
             {openPopUpCancel && (
                 <AttentionPopUp
-                    text="Tem certeza que deseja cancelar a operação? Seus dados não serão salvos!"
-                    confirmAction={cancelOperation}
+                    text="Tem certeza que deseja cancelar a operacao? Seus dados nao serao salvos."
+                    confirmAction={() => navigate("/")}
                     cancelAction={() => setOpenPopUpCancel(false)}
                 />
             )}
             {openPopUpEdit && (
                 <AttentionPopUp
-                    text="Tem certeza que deseja voltar para a tela da Tabela Mostrada? Seus dados da tela atual não serão salvos!"
+                    text="Tem certeza que deseja voltar para a tela da tabela mostrada? Seus dados da tela atual nao serao salvos."
                     confirmAction={() => navigate("/showntable")}
                     cancelAction={() => setOpenPopUpEdit(false)}
                 />
@@ -354,7 +332,7 @@ export default function ExpectedTable() {
             )}
             <ImageModal
                 isOpen={isModalOpen}
-                onClose={handleCloseModal}
+                onClose={() => setIsModalOpen(false)}
                 imageSrc={imageURL}
             />
         </div>

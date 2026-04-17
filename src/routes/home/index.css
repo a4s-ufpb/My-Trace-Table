@@ -1,83 +1,92 @@
-.home-container {
-  min-height: 100vh;
-  background: radial-gradient(circle at center, #0f2a40 0%, #050d14 100%);
-  background-image: linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-  background-size: 40px 40px;
-  color: white;
-  font-family: 'Inter', sans-serif;
+.homeHero {
+  width: min(1120px, 100%);
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 1.5rem;
+  align-items: stretch;
+  padding: clamp(1rem, 2vw, 1.5rem) 0;
 }
 
-.main-header {
-  display: flex;
-  justify-content: space-between;
-  padding: 20px 40px;
-  align-items: center;
+.homeCopy,
+.homeActions {
+  border-radius: 32px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: var(--shadow-soft);
+  backdrop-filter: blur(18px);
 }
 
-.hero-title {
-  text-align: center;
-  font-size: 3.5rem;
-  font-weight: 800;
-  margin: 60px 0;
-  max-width: 800px;
-  margin-left: auto;
-  margin-right: auto;
-  text-shadow: 0 4px 10px rgba(0,0,0,0.5);
-}
-
-.cards-grid {
-  display: flex;
-  gap: 30px;
-  justify-content: center;
-  padding: 20px;
-}
-
-.option-card {
-  background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(0, 255, 255, 0.2);
-  border-radius: 24px;
-  padding: 40px;
-  cursor: pointer;
-  transition: all 0.3s ease;
+.homeCopy {
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+  background:
+    linear-gradient(140deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.04)),
+    linear-gradient(135deg, rgba(11, 40, 54, 0.92), rgba(24, 74, 92, 0.82));
+  color: var(--primary-white);
   display: flex;
   flex-direction: column;
-  align-items: center;
-  color: white;
-}
-
-.option-card:hover {
-  transform: translateY(-10px);
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(0, 255, 255, 0.5);
-  box-shadow: 0 0 30px rgba(0, 255, 255, 0.15);
-}
-
-.image-container {
-  background: #4a8a8a; /* Cor de fundo das imagens no seu mock */
-  width: 100%;
-  height: 100px;
-  border-radius: 12px;
-  margin-bottom: 25px;
-  overflow: hidden;
-  display: flex;
   justify-content: center;
-  align-items: center;
+  gap: 1rem;
 }
 
-.image-container img {
-  width: 100%;
-  height: 100%;
+.homeEyebrow {
+  width: fit-content;
+  padding: 0.5rem 0.9rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.78rem;
+  font-weight: 800;
 }
 
-.card-info h3 {
-  font-size: 1.8rem;
-  margin-bottom: 10px;
-  color: whitesmoke;
+.homeCopy h2 {
+  color: var(--primary-white);
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  line-height: 1.08;
+  max-width: 12ch;
 }
 
-.card-info p {
-  color: #023374;
-  font-size: 1.1rem;
+.homeCopy p {
+  color: rgba(255, 255, 255, 0.82);
+  max-width: 52ch;
+  line-height: 1.7;
+  font-size: 1rem;
+}
+
+.homeActions {
+  padding: clamp(1.25rem, 3vw, 2rem);
+  background: rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+}
+
+@media (max-width: 900px) {
+  .homeHero {
+    grid-template-columns: 1fr;
+  }
+
+  .homeCopy h2 {
+    max-width: none;
+  }
+}
+
+@media (max-width: 540px) {
+  .homeCopy,
+  .homeActions {
+    border-radius: 24px;
+  }
+
+  .homeCopy {
+    padding: 1.3rem;
+  }
+
+  .homeActions {
+    padding: 1rem;
+  }
+
+  .homeCopy p {
+    font-size: 0.95rem;
+  }
 }

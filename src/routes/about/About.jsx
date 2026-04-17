@@ -8,7 +8,7 @@ import imgJosinaldo from "/josinaldo.jpg";
 import imgDiego from "/diego.jpg";
 import imgVanessa from "/vanessa.jpg";
 import imgPedro from "/pedro.jpg";
-import imgKawe from "/kawe.png";
+import imgKawe from "/kawe.jpg";
 import Student from "../../components/Student";
 
 function About() {

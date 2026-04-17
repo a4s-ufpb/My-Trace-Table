@@ -8,9 +8,11 @@ export default function SecondaryHeader({ showBackButton, title, rightText }) {
                 {showBackButton ? <NavigateButton /> : null}
             </div>
             <h2>{title}</h2>
-            <div className="right">
-                {rightText ? <p>{rightText}</p> : null}
-            </div>
+            {rightText ?
+                <div className="right">
+                    <p>{rightText}</p>
+                </div>
+                : null}
         </div>
     );
 }

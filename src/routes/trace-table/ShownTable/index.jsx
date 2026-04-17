@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { TraceTableContext } from "../../../contexts/TraceTableContext";
 import { useNavigate } from "react-router-dom";
-import "../traceTable.css";
+import "../TraceTable.css";
 import { BsQuestionCircleFill } from "react-icons/bs";
 import AttentionPopUp from "../../../components/AttentionPopUp";
 import HelpPopUp from "../../../components/help-popUp/HelpPopUp";
@@ -20,10 +20,10 @@ export default function ShownTable() {
     const { traceData, setTraceData } = useContext(TraceTableContext);
 
     const [headerTable, setHeaderTable] = useState(traceData.showSteps && traceData.showRowsCol ?
-        ["Passo", "Linha", ...Array(traceData.qtdVariables).fill('')]
+        ["Passo", "Linha", ...Array(traceData.qtdVariables).fill("")]
         : traceData.showRowsCol ?
-            ["Linha", ...Array(traceData.qtdVariables).fill('')]
-            : ["Passo", ...Array(traceData.qtdVariables).fill('')]
+            ["Linha", ...Array(traceData.qtdVariables).fill("")]
+            : ["Passo", ...Array(traceData.qtdVariables).fill("")]
     );
 
     useUnloadWarning(true);
@@ -35,7 +35,7 @@ export default function ShownTable() {
     const [shownTableData, setShownTableData] = useState(
         Array(traceData.qtdSteps)
             .fill()
-            .map(() => Array(traceData.showRowsCol ? traceData.qtdVariables + 1 : traceData.qtdVariables).fill(''))
+            .map(() => Array(traceData.showRowsCol ? traceData.qtdVariables + 1 : traceData.qtdVariables).fill(""))
     );
 
     const [isValid, setIsValid] = useState(false)
@@ -57,7 +57,7 @@ export default function ShownTable() {
 
     useEffect(() => {
         const allFilled = shownTableData.every(row =>
-            row.every(cell => cell.trim() !== '')
+            row.every(cell => cell.trim() !== "")
         );
         setIsValid(allFilled)
     }, [shownTableData])
@@ -76,12 +76,6 @@ export default function ShownTable() {
         }
         fetchLastTable();
     }, [traceData.id]);
-
-    const shownPopUp = () => setOpenPopUp(true);
-    const shownPopUpEdit = () => setOpenPopUpEdit(true);
-
-    const showHelpPopUp = () => setOpenHelpPopUp(true);
-    const cancelOperation = () => navigate("/");
 
     const handleInputChange = (row, col, value) => {
         setShownTableData(prevData => {
@@ -104,29 +98,26 @@ export default function ShownTable() {
         const lowerCaseName = columnName.toLowerCase();
         const classes = [];
 
-        if (lowerCaseName.includes('passo') || lowerCaseName.includes('linha')) {
-            classes.push('metadata-column');
+        if (lowerCaseName.includes("passo") || lowerCaseName.includes("linha")) {
+            classes.push("metadata-column");
         }
 
-        if (lowerCaseName.includes('linha')) {
-            classes.push('metadata-column-divider');
+        if (lowerCaseName.includes("linha")) {
+            classes.push("metadata-column-divider");
         }
 
-        return classes.join(' ');
+        return classes.join(" ");
     };
-
-    const handleImageClick = () => setIsModalOpen(true);
-    const handleCloseModal = () => setIsModalOpen(false);
 
     return (
         <div className="background">
-            <div className="wrapper">
+            <div className="trace-editor-shell">
                 {imageURL && (
                     <div className="img-container">
                         <img
                             src={imageURL}
-                            alt="Código do exercício"
-                            onClick={handleImageClick}
+                            alt="Codigo do exercicio"
+                            onClick={() => setIsModalOpen(true)}
                         />
                     </div>
                 )}
@@ -134,10 +125,10 @@ export default function ShownTable() {
                     <div className="title-container">
                         <div className="content-with-help">
                             <h2>Tabela Mostrada</h2>
-                            <BsQuestionCircleFill className="icon-question" onClick={showHelpPopUp} />
+                            <BsQuestionCircleFill className="icon-question" onClick={() => setOpenHelpPopUp(true)} />
                         </div>
 
-                        <span className="table-subtitle">Configure a tabela a ser mostrada no exercício</span>
+                        <span className="table-subtitle">Configure a tabela que sera exibida para o aluno.</span>
                     </div>
                     <table>
                         <thead>
@@ -162,7 +153,7 @@ export default function ShownTable() {
                             {shownTableData.map((row, i) => (
                                 <tr key={i}>
                                     {traceData.showSteps &&
-                                        <td className={`step-cell ${getColumnClasses('Passo')}`}>{i + 1}º</td>
+                                        <td className={`step-cell ${getColumnClasses("Passo")}`}>{i + 1}o</td>
                                     }
                                     {row.map((cell, j) => {
                                         const columnName = headerTable[j + (traceData.showSteps ? 1 : 0)];
@@ -170,8 +161,8 @@ export default function ShownTable() {
 
                                         const cellClasses = [
                                             getColumnClasses(columnName),
-                                            isDisabled ? 'disabled-cell' : ''
-                                        ].join(' ').trim();
+                                            isDisabled ? "disabled-cell" : ""
+                                        ].join(" ").trim();
                                         return (
                                             <td key={j} className={cellClasses}>
                                                 <input
@@ -199,42 +190,35 @@ export default function ShownTable() {
                             headerTable: headerTable,
                         });
                         navigate("/expectedtable")
-                    }
-                    }
+                    }}
                     disabled={!isValid}
                 >Prosseguir</button>
-                <button onClick={shownPopUpEdit} className="btn">Editar</button>
-                <button onClick={shownPopUp} className="btn">Cancelar</button>
+                <button onClick={() => setOpenPopUpEdit(true)} className="btn">Editar</button>
+                <button onClick={() => setOpenPopUp(true)} className="btn">Cancelar</button>
             </div>
-            {
-                openPopUp && (
-                    <AttentionPopUp
-                        text="Tem certeza que deseja cancelar a operação? Seus dados não serão salvos!"
-                        confirmAction={cancelOperation}
-                        cancelAction={() => setOpenPopUp(false)}
-                    />
-                )
-            }
+            {openPopUp && (
+                <AttentionPopUp
+                    text="Tem certeza que deseja cancelar a operacao? Seus dados nao serao salvos."
+                    confirmAction={() => navigate("/")}
+                    cancelAction={() => setOpenPopUp(false)}
+                />
+            )}
             {openPopUpEdit && (
                 <AttentionPopUp
-                    text="Tem certeza que deseja voltar para a tela de configurações do exercício? Seus dados da tela atual não serão salvos!"
+                    text="Tem certeza que deseja voltar para a tela de configuracoes do exercicio? Seus dados da tela atual nao serao salvos."
                     confirmAction={() => navigate("/new-exercise")}
                     cancelAction={() => setOpenPopUpEdit(false)}
                 />
             )}
-            {
-                openHelpPopUp && (
-                    <HelpPopUp
-                        text="O professor deve marcar as células que o aluno pode editar com '?'. 
-                    As células que não podem ser alteradas devem ser preenchidas com '#'. Se quiser, também pode
-                    já deixar valores preenchidos nas células."
-                        onClose={() => setOpenHelpPopUp(false)}
-                    />
-                )
-            }
+            {openHelpPopUp && (
+                <HelpPopUp
+                    text="O professor deve marcar as celulas que o aluno pode editar com ?. As celulas que nao podem ser alteradas devem ser preenchidas com #. Se quiser, tambem pode deixar valores preenchidos."
+                    onClose={() => setOpenHelpPopUp(false)}
+                />
+            )}
             <ImageModal
                 isOpen={isModalOpen}
-                onClose={handleCloseModal}
+                onClose={() => setIsModalOpen(false)}
                 imageSrc={imageURL}
             />
         </div >

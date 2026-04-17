@@ -1,41 +1,46 @@
 .container-select-code {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.5);
+    inset: 0;
+    background: rgba(2, 10, 17, 0.56);
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 3;
+    padding: 1rem;
+    z-index: 30;
+    backdrop-filter: blur(6px);
 }
 
 .select-code-content {
-    background: var(--primary-white);
-    border-top: 5px solid var(--primary-green);
-    padding: 20px 30px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background: rgba(255, 255, 255, 0.97);
+    padding: 1.4rem;
+    border-radius: 28px;
+    box-shadow: var(--shadow-soft);
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    width: 300px;
+    width: min(92vw, 390px);
+    max-height: min(88vh, 720px);
+    margin-top: 0;
     position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.74);
+    overflow-y: auto;
 }
 
 .close-button {
-    width: 100%;
-    text-align: end;
+    width: 2.5rem;
+    height: 2.5rem;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
     background: transparent;
-    border: none;
-    font-size: 20px;
+    border: 1px solid rgba(18, 32, 50, 0.08);
+    border-radius: 14px;
+    font-size: 1.2rem;
     font-weight: bold;
     color: var(--primary-black);
     cursor: pointer;
-    margin-bottom: .5em;
-    opacity: 0.6;
+    opacity: 0.72;
 }
 
 .close-button:hover {
@@ -43,32 +48,38 @@
 }
 
 .select-code-content h2 {
-    margin-bottom: 20px;
-    font-size: 18px;
+    margin-bottom: 1.2rem;
+    margin-top: 1rem;
+    font-size: 1.2rem;
     color: var(--primary-black);
+    text-align: center;
 }
 
 .select-code-content input {
     width: 100%;
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 14px;
+    min-height: 3.15rem;
+    padding: 0.9rem 1rem;
+    margin-bottom: 1rem;
+    border: 1px solid rgba(18, 32, 50, 0.12);
+    border-radius: 16px;
+    font-size: 0.95rem;
+    background: rgba(248, 251, 254, 0.96);
 }
 
 .insert-button {
     width: 100%;
-    padding: 10px;
-    background: var(--primary-green);
+    padding: 0.9rem 1rem;
+    background: linear-gradient(135deg, var(--primary-green), #1d7a87);
     color: #fff;
     border: none;
-    border-radius: 4px;
-    font-size: 14px;
+    border-radius: 999px;
+    font-size: 0.95rem;
     font-weight: 600;
     cursor: pointer;
+    box-shadow: var(--shadow-button);
+    transition: transform 0.2s ease;
 }
 
 .insert-button:hover {
-    background: #026164;
+    transform: translateY(-1px);
 }

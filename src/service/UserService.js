@@ -19,7 +19,7 @@ export class UserService {
         return response;
     }
 
-    findAllUsers() {
-        return this.handleRequest("get", `/user/all`);
+    findAllProfessors() {
+        return this.handleRequest("get", `/user/allProfessors`);
     }
 }

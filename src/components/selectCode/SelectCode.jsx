@@ -23,7 +23,7 @@ function SelectCode({ setSelectCode }) {
 
     useEffect(() => {
         const fetchThemes = async () => {
-            const response = await userService.findAllUsers();
+            const response = await userService.findAllProfessors();
             if (response.success) {
                 setAllUsers(response.data.content || []);;
             }
@@ -50,7 +50,7 @@ function SelectCode({ setSelectCode }) {
 
         if (selectedUser.length === 0) {
             setAlertBoxNoUser(true);
-            return; 
+            return;
         }
 
         try {

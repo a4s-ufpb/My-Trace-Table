@@ -15,14 +15,13 @@ export default function Exercises() {
   const { info } = useParams();
   const creatorId = location.state?.creatorId || localStorage.getItem("userId");
 
-  // Identificação do papel do usuário (Ajuste a chave do localStorage conforme seu projeto)
   const userRole = localStorage.getItem("userRole") || "aluno";
   const canManage = userRole === "admin" || userRole === "professor";
 
   const [exercises, setExercises] = useState([]);
   const [allThemes, setAllThemes] = useState([]);
   const [filteredTheme, setFilteredTheme] = useState({ id: null, name: info || "todos" });
-  
+
   const [themesMap, setThemesMap] = useState({});
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
@@ -80,10 +79,9 @@ export default function Exercises() {
       if (filteredTheme.name === "todos") {
         response = await traceTableService.getAllByUser(creatorId, currentPage);
       } else {
-        // Se temos um ID, busca por ID, senão busca pelo nome do tema vindo dos parâmetros
-        const themeId = filteredTheme.id || info; 
+        const themeId = filteredTheme.id || info;
         const isNumeric = !isNaN(themeId) && themeId !== null && themeId !== undefined;
-        
+
         if (isNumeric) {
           response = await traceTableService.getAllByTheme(themeId, currentPage);
         } else {
@@ -98,14 +96,12 @@ export default function Exercises() {
         setExercises([]);
       }
     } catch (error) {
-      setPopUpMessage("Erro ao carregar os exercícios. Tente novamente.");
+      setPopUpMessage("Erro ao carregar os exercicios. Tente novamente.");
       setShowMessagePopUp(true);
     } finally {
       setLoading(false);
     }
   };
-
-  // --- Ações do Usuário ---
 
   const startExercise = (exercise) => {
     const exercisesList = JSON.stringify(exercises);
@@ -118,15 +114,15 @@ export default function Exercises() {
   };
 
   const editExercise = (id) => {
-    navigate(`/edit-trace-table/${id}`); // Ajuste a rota de edição conforme seu projeto
+    navigate(`/edit-trace-table/${id}`);
   };
 
   const removeExercise = async (id) => {
-    if (!window.confirm("Tem certeza que deseja excluir este exercício?")) return;
-    
+    if (!window.confirm("Tem certeza que deseja excluir este exercicio?")) return;
+
     const response = await traceTableService.deleteTraceTable(id);
     if (response.success) {
-      setPopUpMessage("Exercício removido com sucesso!");
+      setPopUpMessage("Exercicio removido com sucesso!");
       const updated = exercises.filter((trace) => trace.id !== id);
       setExercises(updated);
 
@@ -136,12 +132,10 @@ export default function Exercises() {
         loadExercises();
       }
     } else {
-      setPopUpMessage(response.message || "Erro ao remover exercício");
+      setPopUpMessage(response.message || "Erro ao remover exercicio");
     }
     setShowMessagePopUp(true);
   };
-
-  // --- Controles de Interface ---
 
   const setFilteredThemeAndResetPage = (theme) => {
     setFilteredTheme(theme);
@@ -156,10 +150,10 @@ export default function Exercises() {
 
   return (
     <div className="background">
-      <SecondaryHeader 
-        showBackButton={true} 
-        title="Exercícios" 
-        rightText={`Tema atual: ${filteredTheme.name}`} 
+      <SecondaryHeader
+        showBackButton={true}
+        title="Exercicios"
+        rightText={`Tema atual: ${filteredTheme.name}`}
       />
 
       <nav className={styles.nav}>
@@ -193,18 +187,20 @@ export default function Exercises() {
           <div className={styles.exerciseList}>
             {exercises.map((exercise) => (
               <div key={exercise.id} className={styles.exerciseCard}>
-                <h4>{exercise.exerciseName}</h4>
+                <div className={styles.cardHeader}>
+                  <h4>{exercise.exerciseName}</h4>
+                  <span className={styles.exerciseCode}>ID {exercise.id}</span>
+                </div>
+
                 <p>Temas: {themesMap[exercise.id]?.join(", ") || "Carregando..."}</p>
-                
+
                 <div className={styles.actions}>
-                  {/* Usuário Padrão ou Admin/Professor podem responder */}
-                  <Button text="Responder" action={() => startExercise(exercise)} />
-                  
-                  {/* Apenas Admin ou Professor podem editar e excluir */}
+                  <Button text="Responder" action={() => startExercise(exercise)} className={styles.actionButton} />
+
                   {canManage && (
                     <>
-                      <Button text="Editar" action={() => editExercise(exercise.id)} />
-                      <Button text="Excluir" action={() => removeExercise(exercise.id)} />
+                      <Button text="Editar" action={() => editExercise(exercise.id)} className={styles.actionButton} />
+                      <Button text="Excluir" action={() => removeExercise(exercise.id)} className={styles.actionButtonDanger} />
                     </>
                   )}
                 </div>
@@ -212,7 +208,7 @@ export default function Exercises() {
             ))}
           </div>
         ) : (
-          <h3 className={styles.span}>Nenhum exercício foi encontrado para este tema!</h3>
+          <h3 className={styles.span}>Nenhum exercicio foi encontrado para este tema.</h3>
         )}
 
         {showMessagePopUp && (

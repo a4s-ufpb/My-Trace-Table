@@ -5,10 +5,10 @@ function ImageModal({ isOpen, onClose, imageSrc}) {
 
   return (
     <div className="modal">
-      <span className="close" onClick={onClose}>
+      <button className="close" onClick={onClose} type="button" aria-label="Fechar imagem ampliada">
         X
-      </span>
-      <img className="modal-content" src={imageSrc}/>
+      </button>
+      <img className="modal-content" src={imageSrc} alt="Imagem ampliada" />
     </div>
   );
 }

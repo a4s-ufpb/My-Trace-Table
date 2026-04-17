@@ -1,10 +1,15 @@
 .secondary-header {
-    width: 100%;
-    background-color: var(--primary-green);
-    display: flex;
+    width: min(1120px, 100%);
+    background: linear-gradient(135deg, rgba(12, 55, 63, 0.92), rgba(22, 89, 102, 0.88));
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
     align-items: center;
-    justify-content: space-between;
-    padding: 10px 20px;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    border-radius: 28px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: var(--shadow-soft);
+    backdrop-filter: blur(18px);
 }
 
 .secondary-header .left {
@@ -14,53 +19,58 @@
 }
 
 .secondary-header h2 {
-    font-size: 1.3rem;
+    font-size: clamp(1.1rem, 2.4vw, 1.45rem);
     color: var(--primary-white);
-    margin-left: 80px;
+    justify-content: center;
+    display: flex;
+    text-align: center;
 }
 
 .secondary-header .right {
-    color: var(--primary-white);
+    color: rgba(255, 255, 255, 0.9);
     text-align: center;
-    width: 100px;
+    min-width: 120px;
     white-space: pre-line;
-    font-size: 0.9rem;
+    font-size: 0.88rem;
+    padding: 0.6rem 0.9rem;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    justify-self: end;
 }
 
 @media (max-width: 780px) {
     .secondary-header {
-        padding: 10px;
+        padding: 0.95rem;
+        display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
         position: relative;
+        border-radius: 24px;
     }
 
     .secondary-header .left {
         position: absolute;
-        left: 10px;
+        left: 0.9rem;
     }
 
     .secondary-header h2 {
         margin: 0 auto;
-        font-size: 1.2rem;
         text-align: center;
+        padding-inline: 2rem;
     }
 
     .secondary-header .right {
-        width: 100%;
+        width: auto;
         text-align: center;
-        font-size: 0.9rem;
     }
 }
 
 @media (max-width: 550px) {
-    .secondary-header h2 {
-        font-size: 1rem;
-    }
-
     .secondary-header .right {
-        font-size: 0.85rem;
+        font-size: 0.82rem;
+        min-width: auto;
     }
 }
 
@@ -70,6 +80,6 @@
     }
 
     .secondary-header .right {
-        font-size: 0.75rem;
+        font-size: 0.76rem;
     }
 }

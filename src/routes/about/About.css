@@ -1,53 +1,63 @@
 .wrapper {
-    max-width: 900px;
-    width: 90%;
-    background: var(--primary-white);
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 980px;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.93);
+    padding: clamp(1.4rem, 4vw, 2.2rem);
+    border-radius: 32px;
+    box-shadow: var(--shadow-soft);
     text-align: center;
-    margin: 1rem 0;
+    margin: 0.5rem 0;
+    border: 1px solid rgba(255, 255, 255, 0.74);
 }
 
 .description {
-    padding: 0 15px;
+    padding: 0;
     text-align: justify;
-    font-size: 1.3rem;
-    line-height: 1.3;
+    font-size: 1.04rem;
+    line-height: 1.8;
     margin-bottom: 1rem;
-    color: var(--primary-black);
-    margin-top: 1rem;
+    color: var(--text-secondary);
+    margin-top: 0;
 }
 
-.description span {
-    color: var(--secondary-blue);
+.description span,
+.description a {
+    color: var(--accent-strong);
+    font-weight: 700;
 }
 
 .participant-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: .1rem;
+    gap: 1rem;
+    margin-top: 1.5rem;
 }
 
-.participant-container div {
-    flex: 1 1 calc(25% - .1rem);
-    max-width: 250px;
-    min-width: 160px;
-    margin-top: 2rem;
+.participant-container > div {
+    flex: 1 1 calc(25% - 1rem);
+    max-width: 220px;
+    min-width: 170px;
+    margin-top: 0;
+    padding: 1.15rem 0.9rem;
+    border-radius: 24px;
+    background: rgba(248, 251, 254, 0.92);
+    border: 1px solid rgba(18, 32, 50, 0.08);
+    box-shadow: var(--shadow-card);
 }
 
 .participant-container img {
-    width: 150px;
-    height: 150px;
+    width: 132px;
+    height: 132px;
     border-radius: 50%;
     object-fit: cover;
-    border: 2px solid var(--secondary-blue);
+    border: 3px solid rgba(65, 205, 196, 0.24);
+    margin: 0 auto;
 }
 
 .participant-name {
-    margin: .5rem 0 1.5rem;
-    font-size: 1.1rem;
+    margin: .85rem 0 0;
+    font-size: 1rem;
 }
 
 .linkedin-icon {
@@ -62,70 +72,29 @@
     transform: scale(1.1);
 }
 
-@media (max-width: 1025px) {
-    .wrapper {
-        padding: 20px;
-    }
-
-    .participant-name {
-        font-size: .9rem;
-    }
-
-    .participant-container img {
-        width: 120px;
-        height: 120px;
-    }
-}
-
 @media (max-width: 900px) {
-    .wrapper {
-        padding: 15px;
-    }
-
     .description {
-        font-size: 1.1rem;
+        font-size: 0.98rem;
     }
 }
 
 @media (max-width: 600px) {
     .wrapper {
-        width: 90%;
-        padding: 10px;
+        padding: 1rem;
+        border-radius: 24px;
     }
 
     .description {
-        font-size: 1rem;
+        font-size: 0.94rem;
     }
 
-    .participant-name {
-        font-size: .8rem;
-    }
-
-    .participant-container img {
-        width: 100px;
-        height: 100px;
-    }
-
-    .linkedin-icon {
-        font-size: 10px;
-    }
-}
-
-@media (max-width: 400px) {
-    .description {
-        font-size: .9rem;
-    }
-
-    .participant-name {
-        font-size: .7rem;
+    .participant-container > div {
+        min-width: 145px;
+        padding: 1rem 0.75rem;
     }
 
     .participant-container img {
-        width: 80px;
-        height: 80px;
-    }
-
-    .participant-container div {
-        margin-top: 0;
+        width: 108px;
+        height: 108px;
     }
 }

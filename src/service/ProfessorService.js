@@ -38,7 +38,7 @@ export class ProfessorService {
     }
 
     getAllPaginated(page = 0, size = 5) {
-        return this.handleRequest("get", `/user/all?page=${page}&size=${size}`);
+        return this.handleRequest("get", `/user/allProfessors?page=${page}&size=${size}`);
     }
 
     registerProfessor({ name, email, password, role }) {

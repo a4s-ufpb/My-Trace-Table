@@ -19,7 +19,7 @@ function Teacher() {
     async function fetchUsers() {
         try {
             setLoading(true);
-            const usersResponse = await userService.findAllUsers();
+            const usersResponse = await userService.findAllProfessors();
             setLoading(false);
 
             if (!usersResponse.success) {

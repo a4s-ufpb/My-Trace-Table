@@ -1,15 +1,18 @@
 .invalidPopUp {
     position: fixed;
-    top: 20px;
+    top: 1.2rem;
     left: 50%;
     transform: translateX(-50%);
-    background-color: var(--primary-green);
+    background: rgba(10, 33, 44, 0.92);
     color: var(--primary-white);
-    padding: 10px 20px;
-    border-radius: 5px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-    font-size: 16px;
-    z-index: 1000;
+    padding: 0.9rem 1.2rem;
+    border-radius: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: var(--shadow-card);
+    font-size: 0.95rem;
+    z-index: 1001;
+    min-width: min(92vw, 360px);
+    backdrop-filter: blur(14px);
 }
 
 .invalidPopUp ul {

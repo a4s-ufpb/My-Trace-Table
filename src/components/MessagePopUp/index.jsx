@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import ReactDOM from "react-dom"; // Importe o ReactDOM
 import "./MessagePopUp.css";
 
 function MessagePopUp({ message, showPopUp }) {
@@ -17,7 +18,8 @@ function MessagePopUp({ message, showPopUp }) {
 
     if (!visible) return null;
 
-    return (
+    // Criamos o conteúdo do popup
+    const popupContent = (
         <div className="invalidPopUp" data-testid="message-popup">
             {Array.isArray(message) ? (
                 <ul>
@@ -30,6 +32,9 @@ function MessagePopUp({ message, showPopUp }) {
             )}
         </div>
     );
+
+    // Usamos o Portal para renderizar no document.body
+    return ReactDOM.createPortal(popupContent, document.body);
 }
 
 export default MessagePopUp;

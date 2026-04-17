@@ -113,7 +113,7 @@ export default function HelpPage() {
                     title="6. Tipos de usuário"
                     text={
                         <>
-                            O sistema possui dois tipos de usuários: <strong>Usuário Padrão</strong> e <strong>Administrador</strong>. O Usuário Padrão pode criar, editar e visualizar seus exercícios, pode também criar temas e editar seu perfil. Já o Administrador tem acesso a todas as funcionalidades do Usuário Padrão, além de poder gerenciar todos os usuários.
+                            O sistema possui três tipos de usuários: <strong>Professores</strong>, <strong>Alunos</strong> e <strong>Administradores</strong>. O Professor pode criar, editar e visualizar seus exercícios, pode também criar temas e editar seu perfil. Já o Aluno pode visualizar e responder aos exercícios, pode também editar seu perfil. O Administrador pode criar, editar e visualizar todos os exercícios, professores e alunos, pode também criar temas e editar seu perfil.
                         </>
                     }
                 />
