@@ -165,6 +165,10 @@ export default function Exercises() {
     navigate(`/exercicio/${id}`);
   };
 
+  const openSubmissions = (id) => {
+    navigate(`/exercicio/${id}/submissoes`);
+  };
+
   const removeExercise = async (id) => {
     if (!window.confirm("Tem certeza que deseja excluir este exercicio?")) {
       return;
@@ -258,6 +262,11 @@ export default function Exercises() {
 
                   {canManage && (
                     <>
+                      <Button
+                        text="Submissões"
+                        action={() => openSubmissions(exercise.id)}
+                        className={styles.actionButton}
+                      />
                       <Button
                         text="Editar"
                         action={() => editExercise(exercise.id)}

@@ -6,7 +6,7 @@ export class TraceTableService {
         return localStorage.getItem("token");
     }
 
-    getUserId() {
+    getUserId() {   
         return localStorage.getItem("userId");
     }
 
@@ -19,7 +19,7 @@ export class TraceTableService {
         if (!isMultipart) {
             headers["Content-Type"] = "application/json";
         }
-        
+
         const response = {
             data: {},
             message: "",
@@ -62,6 +62,18 @@ export class TraceTableService {
 
     checkUserAnswer(traceTableId, userAnswer) {
         return this.handleRequest("post", `/trace/check/${traceTableId}`, userAnswer);
+    }
+
+    submitAnswer = async (traceId, userTraceTable) => {
+        try {
+            return this.handleRequest("post", `/trace/submit/${traceId}`, userTraceTable);
+        } catch (error) {
+            return { success: false, message: "Erro ao salvar resposta no banco." };
+        }
+    };
+
+    getAnswersByExercise(traceId) {
+        return this.handleRequest("get", `/trace/answers/${traceId}`);
     }
 
     async getById(id) {

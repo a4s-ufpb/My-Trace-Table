@@ -10,6 +10,7 @@ import ShownTable from "./routes/trace-table/ShownTable";
 import ExpectedTable from "./routes/trace-table/ExpectedTable";
 import Exercises from "./routes/exercises/Exercices";
 import ExerciseDetails from "./routes/exercises/ExerciseDetails";
+import ExerciseSubmissions from "./routes/exercises/Submissions";
 import NewTheme from "./routes/themes/NewTheme";
 import NewProfessor from "./routes/Professors/NewProfessor/index";
 import HelpPage from "./routes/HelpPage";
@@ -79,6 +80,13 @@ const router = createHashRouter([
         }, {
             path: "exercicio/:id",
             element: <ExerciseDetails />
+        }, {
+            path: "exercicio/:id/submissoes",
+            element: (
+                <RoleProtectedRoute allowedRoles={["admin", "professor"]}>
+                    <ExerciseSubmissions />
+                </RoleProtectedRoute>
+            )
         }, {
             path: "new-theme",
             element: <NewTheme />

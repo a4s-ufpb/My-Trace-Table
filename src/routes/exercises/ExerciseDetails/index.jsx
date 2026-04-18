@@ -19,6 +19,8 @@ export default function ExerciseDetails() {
     const navigate = useNavigate();
     const location = useLocation();
     const creatorId = location.state?.creatorId || localStorage.getItem("userId");
+    const userRole = localStorage.getItem("userRole") || "aluno";
+    const canManage = userRole === "admin" || userRole === "professor";
 
     const [exercise, setExercise] = useState(null);
     const [originalExercise, setOriginalExercise] = useState(null);
@@ -639,9 +641,16 @@ export default function ExerciseDetails() {
 
                         </>
                     ) : (
-                        <button className="btn" onClick={() => startEditing(exercise)}>
-                            Editar
-                        </button>
+                        <>
+                            {canManage && (
+                                <button className="btn" onClick={() => navigate(`/exercicio/${id}/submissoes`)}>
+                                    Ver Submissões
+                                </button>
+                            )}
+                            <button className="btn" onClick={() => startEditing(exercise)}>
+                                Editar
+                            </button>
+                        </>
                     )}
                     <button className="btn" onClick={() => navigate(`/exercises/all?creatorId=${creatorId}`)}>
                         Voltar

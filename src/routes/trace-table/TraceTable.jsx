@@ -104,9 +104,19 @@ function TraceTable() {
       row.map((cell) => cell.toString().trim())
     );
 
+    // 1. Salva a resposta do aluno no banco de dados SEMPRE (certa ou errada)
+    try {
+      await traceTableService.submitAnswer(exercice.id, trimmedUserTraceTable);
+    } catch (error) {
+      console.error("Erro ao salvar a resposta no banco:", error);
+    }
+
+    // 2. Faz a validação normal para dar o feedback visual na tela
     const response = await traceTableService.checkUserAnswer(exercice.id, trimmedUserTraceTable);
 
     setSubmitted(true);
+
+    // 3. Mantém sua lógica original de cores e mensagens de erro
     if (response.success) {
       setIsCorrect(true);
       setErrorMessage("");
@@ -117,6 +127,7 @@ function TraceTable() {
         setCellErrors(response.data);
         const typeErrors = response.data.filter((err) => err.errorMessage === typeError).length;
         const valueErrors = response.data.filter((err) => err.errorMessage === valueError).length;
+
         if (typeErrors > 0 && valueErrors === 0) setErrorMessage("Atencao! Existem erros de tipo.");
         else if (valueErrors > 0 && typeErrors === 0) setErrorMessage("Existem valores incorretos.");
         else setErrorMessage("Ha erros de tipo e de valor. Corrija os campos da tabela.");
@@ -237,7 +248,7 @@ function TraceTable() {
                               )
                             }
                             title={getCellError(rowIndex, colIndex)?.errorMessage === typeError
-                              ? "Tipo invalido: valor nao permitido"
+                              ? "Tipo inválido: valor não permitido"
                               : getCellError(rowIndex, colIndex)?.errorMessage === valueError
                                 ? "Valor incorreto: diferente do esperado"
                                 : ""}
@@ -263,19 +274,19 @@ function TraceTable() {
 
       <div className="trace-controls">
         <BsArrowLeftCircleFill
-          title="Navegar para o exercicio anterior"
+          title="Navegar para o exercício anterior"
           className={`arrow-btn ${currentExerciceIndex === 0 ? "disabled" : ""}`}
           onClick={goToPreviousExercice}
         />
         <button
-          title="Enviar exercicio para correcao"
+          title="Enviar exercício para correção"
           className="trace-primary"
           onClick={handleSubmit}
           disabled={!isValid}
         >Enviar</button>
         {submitted && (
           <button
-            title="Reiniciar exercicio"
+            title="Reiniciar exercício"
             className="trace-secondary"
             onClick={resetCurrentExercice}
           >
@@ -284,7 +295,7 @@ function TraceTable() {
         )}
         <button title="Sair desta tela" className="trace-exit" onClick={() => setOpenPopUp(true)}>Sair</button>
         <BsArrowRightCircleFill
-          title="Navegar para o proximo exercicio"
+          title="Navegar para o próximo exercício"
           className={`arrow-btn ${currentExerciceIndex >= (JSON.parse(localStorage.getItem("exercices")) || []).length - 1 ? "disabled" : ""}`}
           onClick={goToNextExercice}
         />
@@ -293,14 +304,14 @@ function TraceTable() {
       {submitted && (
         <FeedbackBox
           title={
-            isCorrect ? "Parabens! Voce acertou" : errorMessage || "Que pena! Tente novamente"
+            isCorrect ? "Parabéns! Você acertou" : errorMessage || "Que pena! Tente novamente"
           }
         />
       )}
 
       {openPopUp && (
         <AttentionPopUp
-          text="Tem certeza que deseja sair? Voce perdera o progresso atual."
+          text="Tem certeza que deseja sair? Você perderá o progresso atual."
           confirmAction={() => navigate(-1)}
           cancelAction={() => setOpenPopUp(false)}
         />

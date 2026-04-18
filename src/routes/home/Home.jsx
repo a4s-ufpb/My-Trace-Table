@@ -47,6 +47,7 @@ function Home() {
             <>
               <Button text="Cadastrar Tema" action={() => navigate("/new-theme")} />
               <Button text="Cadastrar Exercicio" action={() => navigate("/new-exercise")} />
+              <Button text="Cadastrar Professor" action={() => navigate("/new-professor")} /> 
               <Button
                 text="Ver Exercicios"
                 action={() => navigate(`/exercises/all?creatorId=${creatorId}`)}
