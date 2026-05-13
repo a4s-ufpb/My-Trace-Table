@@ -128,11 +128,11 @@ function TraceTable() {
         const typeErrors = response.data.filter((err) => err.errorMessage === typeError).length;
         const valueErrors = response.data.filter((err) => err.errorMessage === valueError).length;
 
-        if (typeErrors > 0 && valueErrors === 0) setErrorMessage("Atencao! Existem erros de tipo.");
+        if (typeErrors > 0 && valueErrors === 0) setErrorMessage("Atenção! Existem erros de tipo.");
         else if (valueErrors > 0 && typeErrors === 0) setErrorMessage("Existem valores incorretos.");
-        else setErrorMessage("Ha erros de tipo e de valor. Corrija os campos da tabela.");
+        else setErrorMessage("Há erros de tipo e de valor. Corrija os campos da tabela.");
       } else {
-        setErrorMessage(response.message || "Erro ao validar exercicio.");
+        setErrorMessage(response.message || "Erro ao validar exercício.");
       }
     }
   };

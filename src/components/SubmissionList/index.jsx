@@ -1,3 +1,5 @@
+//ver esse arquivo para documentar
+
 import { useEffect, useState } from "react";
 import {
     BsCalendar3,
@@ -42,7 +44,7 @@ function normalizeAnswers(responseData) {
             answer.studentName ||
             answer.userName ||
             answer.student?.name ||
-            "Aluno nao identificado",
+            "Aluno não identificado",
         date:
             answer.date ||
             answer.createdAt ||
@@ -60,13 +62,13 @@ function normalizeAnswers(responseData) {
 
 function formatSubmissionDate(dateValue) {
     if (!dateValue) {
-        return "Data nao informada";
+        return "Data não informada";
     }
 
     const parsedDate = new Date(dateValue);
 
     if (Number.isNaN(parsedDate.getTime())) {
-        return "Data invalida";
+        return "Data inválida";
     }
 
     return DATE_FORMATTER.format(parsedDate);
@@ -104,7 +106,7 @@ function getColumnClasses(columnName) {
     return classes.join(" ");
 }
 
-export default function SubmissionList({ traceId, exercise }) {
+export default function SubmissionList({ traceId, exercise, startDate, endDate }) {
     const [answers, setAnswers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [errorMessage, setErrorMessage] = useState("");
@@ -117,7 +119,13 @@ export default function SubmissionList({ traceId, exercise }) {
             setLoading(true);
             setErrorMessage("");
 
-            const response = await traceTableService.getAnswersByExercise(traceId);
+            let response;
+
+            if (startDate && endDate) {
+                response = await traceTableService.getAnswersByExerciseAndDate(traceId, startDate, endDate);
+            } else {
+                response = await traceTableService.getAnswersByExercise(traceId);
+            }
 
             if (response.success) {
                 const normalizedAnswers = normalizeAnswers(response.data);
@@ -140,7 +148,7 @@ export default function SubmissionList({ traceId, exercise }) {
         }
 
         fetchAnswers();
-    }, [traceId]);
+    }, [traceId, startDate, endDate]);
 
     useEffect(() => {
         function handleEscape(event) {

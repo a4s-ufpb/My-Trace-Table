@@ -1,3 +1,5 @@
+//ver esse arquivo para documentar
+
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ImageModal from "../../../components/image-modal";
@@ -7,6 +9,7 @@ import SecondaryHeader from "../../../components/secondary-header/SecondaryHeade
 import SubmissionList from "../../../components/SubmissionList";
 import { TraceTableService } from "../../../service/TraceTableService";
 import { ThemeService } from "../../../service/ThemeService";
+import { BsCalendar3 } from "react-icons/bs";
 import styles from "./styles.module.css";
 
 function capitalizeFirstLetter(text) {
@@ -22,10 +25,14 @@ export default function ExerciseSubmissions() {
 
     const [exercise, setExercise] = useState(null);
     const [themes, setThemes] = useState([]);
+    const [metrics, setMetrics] = useState(null);
     const [loading, setLoading] = useState(true);
     const [showMessagePopUp, setShowMessagePopUp] = useState(false);
     const [popUpMessage, setPopUpMessage] = useState("");
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [startDate, setStartDate] = useState(null);
+    const [endDate, setEndDate] = useState(null);
+    const [dataOn, setDataOn] = useState(false);
 
     const traceTableService = new TraceTableService();
     const themeService = new ThemeService();
@@ -35,9 +42,10 @@ export default function ExerciseSubmissions() {
             setLoading(true);
 
             try {
-                const [exerciseResponse, themesResponse] = await Promise.all([
+                const [exerciseResponse, themesResponse, metricsResponse] = await Promise.all([
                     traceTableService.getById(id),
                     themeService.getThemesByExercise(id),
+                    startDate && endDate ? traceTableService.getMetricsWithDate(id, startDate, endDate) : traceTableService.getMetrics(id),
                 ]);
 
                 if (exerciseResponse.success) {
@@ -48,6 +56,12 @@ export default function ExerciseSubmissions() {
                         exerciseResponse.message || "Não foi possível carregar o exercício."
                     );
                     setShowMessagePopUp(true);
+                }
+
+                if (metricsResponse.success) {
+                    setMetrics(metricsResponse.data || []);
+                } else {
+                    setMetrics([]);
                 }
 
                 if (themesResponse.success) {
@@ -68,7 +82,7 @@ export default function ExerciseSubmissions() {
         }
 
         loadPageData();
-    }, [id]);
+    }, [id, startDate, endDate]);
 
     if (loading) {
         return (
@@ -97,6 +111,33 @@ export default function ExerciseSubmissions() {
                                 submissão para revisar a tabela preenchida.
                             </p>
 
+                            <div onClick={() => setDataOn(!dataOn)} className={styles.dataOn}>
+                                <h4>Filtrar respostas por período</h4>
+                                <BsCalendar3 size={24} />
+                            </div>
+
+                            {dataOn && (
+                                <div className={styles.dateFilterContainer}>
+                                    <h5>Data Inicial:</h5>
+                                    <input
+                                        type="date"
+                                        value={startDate}
+                                        onChange={(e) => setStartDate(e.target.value)}
+                                        placeholder="Data inicial"
+                                    />
+                                    <h5>Data Final:</h5>
+                                    <input
+                                        type="date"
+                                        value={endDate}
+                                        onChange={(e) => setEndDate(e.target.value)}
+                                        placeholder="Data final"
+                                    />
+                                    <button className={styles.cancelButton} onClick={() => { setDataOn(false); setStartDate(null); setEndDate(null) }}>
+                                        Cancelar
+                                    </button>
+                                </div>
+                            )}
+
                             <div className={styles.metaList}>
                                 <span className={styles.metaBadge}>
                                     Linguagem:{" "}
@@ -119,14 +160,45 @@ export default function ExerciseSubmissions() {
                             >
                                 <img
                                     src={exercise.imgName}
-                                    alt={`Ilustracao do exercicio ${exercise.exerciseName}`}
+                                    alt={`Ilustracao do exercício ${exercise.exerciseName}`}
                                 />
                                 <span>Ampliar enunciado</span>
                             </button>
                         )}
                     </section>
 
-                    <SubmissionList traceId={id} exercise={exercise} />
+                    <section className={styles.hero}>
+                        <div className={styles.copy}>
+                            <span className={styles.eyebrow}>Métricas</span>
+                            <h2 className={styles.title}>Sobre as respostas</h2>
+
+                            <div className={styles.metrics}>
+                                <div className={styles.metric}>
+                                    <p>Total de Respostas</p>
+                                    <span>{metrics.totalSubmissions || 0}</span>
+                                </div>
+                                <div className={styles.metric}>
+                                    <p>Respostas Corretas</p>
+                                    <span>{metrics.correctSubmissions || 0}</span>
+                                </div>
+                                <div className={styles.metric}>
+                                    <p>Respostas Incorretas</p>
+                                    <span>{metrics.incorrectSubmissions || 0}</span>
+                                </div>
+                                <div className={styles.metric}>
+                                    <p>Percentual de Acerto</p>
+                                    <span>{metrics.accuracy || 0}%</span>
+                                </div>
+                                <div className={styles.metric}>
+                                    <p>Percentual de Erro</p>
+                                    <span>{metrics.errorRate || 0}%</span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </section>
+
+                    <SubmissionList traceId={id} exercise={exercise} startDate={startDate} endDate={endDate} />
                 </>
             ) : (
                 <section className={styles.emptyState}>

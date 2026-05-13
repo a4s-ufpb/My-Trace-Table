@@ -76,6 +76,18 @@ export class TraceTableService {
         return this.handleRequest("get", `/trace/answers/${traceId}`);
     }
 
+    getAnswersByExerciseAndDate(traceId, startDate, endDate) {
+        return this.handleRequest("get", `/trace/answers/${traceId}?startDate=${startDate}T00:00:00&endDate=${endDate}T23:59:59`);
+    }
+
+    getMetricsWithDate(traceId, startDate, endDate) {
+        return this.handleRequest("get", `/trace/metrics/${traceId}?startDate=${startDate}T00:00:00&endDate=${endDate}T23:59:59`);
+    }
+
+    getMetrics(traceId) {
+        return this.handleRequest("get", `/trace/metrics/${traceId}`);
+    }
+
     async getById(id) {
         return this.handleRequest("get", `/trace/${id}`);
     }

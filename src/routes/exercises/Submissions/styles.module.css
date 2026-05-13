@@ -96,6 +96,98 @@
     text-align: center;
 }
 
+.metrics {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+
+.metric {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border-radius: 16px;
+    height: 80px;
+    width: 100%;
+    border: 1px solid rgba(65, 205, 196, 0.5);
+    background: rgba(65, 205, 196, 0.08);
+}
+
+.metric p {
+    color: var(--primary-green);
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+    font-weight: 800;
+    text-align: center;
+}
+
+.dataOn {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.95rem;
+    padding: 0.9rem;
+    border-radius: 26px;
+    background: rgba(248, 251, 254, 0.96);
+    box-shadow: var(--shadow-card);
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.dataOn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 22px 36px rgba(7, 19, 29, 0.18);
+}
+
+.dateFilterContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.95rem;
+    padding: 0.9rem;
+    border-radius: 26px;
+    background: rgba(248, 251, 254, 0.96);
+    box-shadow: var(--shadow-card);
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.dateFilterContainer:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 22px 36px rgba(7, 19, 29, 0.18);
+}
+
+.dateFilterContainer input {
+    padding: 0.65rem 0.95rem;
+    border-radius: 999px;
+    border: 2px solid rgba(65, 205, 196, 0.5);
+    background: rgba(65, 205, 196, 0.08);
+    color: var(--primary-green);
+    font-size: 0.9rem;
+    font-weight: 800;
+}
+
+.dateFilterContainer button {
+    padding: 0.65rem 0.95rem;
+    border-radius: 999px;
+    border: 2px solid rgba(205, 65, 65, 0.5);
+    background: rgba(205, 65, 65, 0.08);
+    font-size: 0.9rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.dateFilterContainer button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 22px 36px rgba(7, 19, 29, 0.18);
+}
+
 .emptyState {
     text-align: center;
     justify-items: center;
