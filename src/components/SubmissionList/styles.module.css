@@ -160,7 +160,7 @@
 .rowsBadge {
     display: inline-flex;
     align-items: center;
-    gap: 0.55rem;
+    gap: 0.60rem;
     width: fit-content;
     padding: 0.65rem 0.85rem;
     border-radius: 999px;

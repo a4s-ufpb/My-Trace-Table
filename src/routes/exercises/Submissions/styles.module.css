@@ -145,7 +145,7 @@
 
 .dateFilterContainer {
     display: flex;
-    flex-direction: row;
+    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
     gap: 0.95rem;
@@ -162,8 +162,9 @@
     box-shadow: 0 22px 36px rgba(7, 19, 29, 0.18);
 }
 
-.dateFilterContainer input {
+.dateFilterContainer .inputDate {
     padding: 0.65rem 0.95rem;
+    flex: 1;
     border-radius: 999px;
     border: 2px solid rgba(65, 205, 196, 0.5);
     background: rgba(65, 205, 196, 0.08);
@@ -172,9 +173,28 @@
     font-weight: 800;
 }
 
-.dateFilterContainer button {
+.dateFilterContainer .inputTitle {
+    color: var(--primary-green);
+    font-size: 0.9rem;
+    font-weight: 800;
+    flex: 1;
+}
+
+.dateFilterContainer .input {
+    padding: 0.65rem 0.95rem;
+    flex: 1 1 30%;
+    border-radius: 999px;
+    border: 2px solid rgba(65, 205, 196, 0.5);
+    background: rgba(65, 205, 196, 0.08);
+    color: var(--primary-green);
+    font-size: 0.9rem;
+    font-weight: 800;
+}
+
+.dateFilterContainer .cancelButton {
     padding: 0.65rem 0.95rem;
     border-radius: 999px;
+    display: block;
     border: 2px solid rgba(205, 65, 65, 0.5);
     background: rgba(205, 65, 65, 0.08);
     font-size: 0.9rem;

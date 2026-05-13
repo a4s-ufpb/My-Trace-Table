@@ -72,21 +72,29 @@ export class TraceTableService {
         }
     };
 
-    getAnswersByExerciseAndDate(traceId, startDate, endDate) {
+    getAnswersByExerciseAndDateAndName(traceId, startDate, endDate, studentName) {
         let url = `/trace/answers/${traceId}`;
 
-        if (startDate && endDate) {
+        if (startDate && endDate && studentName != "") {
+            url += `?startDate=${startDate}T00:00:00&endDate=${endDate}T23:59:59&studentName=${studentName}`;
+        } else if (startDate && endDate) {
             url += `?startDate=${startDate}T00:00:00&endDate=${endDate}T23:59:59`;
+        } else if (studentName != "") {
+            url += `?studentName=${studentName}`;
         }
 
         return this.handleRequest("get", url);
     }
 
-    getMetrics(traceId, startDate, endDate) {
+    getMetrics(traceId, startDate, endDate, studentName) {
         let url = `/trace/metrics/${traceId}`;
 
-        if (startDate && endDate) {
+        if (startDate && endDate && studentName != "") {
+            url += `?startDate=${startDate}T00:00:00&endDate=${endDate}T23:59:59&studentName=${studentName}`;
+        } else if (startDate && endDate) {
             url += `?startDate=${startDate}T00:00:00&endDate=${endDate}T23:59:59`;
+        } else if (studentName != "") {
+            url += `?studentName=${studentName}`;
         }
 
         return this.handleRequest("get", url);

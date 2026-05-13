@@ -1,5 +1,3 @@
-//ver esse arquivo para documentar
-
 import { useEffect, useState } from "react";
 import {
     BsCalendar3,
@@ -106,7 +104,7 @@ function getColumnClasses(columnName) {
     return classes.join(" ");
 }
 
-export default function SubmissionList({ traceId, exercise, startDate, endDate }) {
+export default function SubmissionList({ traceId, exercise, startDate, endDate, studentName }) {
     const [answers, setAnswers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [errorMessage, setErrorMessage] = useState("");
@@ -119,7 +117,7 @@ export default function SubmissionList({ traceId, exercise, startDate, endDate }
             setLoading(true);
             setErrorMessage("");
 
-            const response = await traceTableService.getAnswersByExerciseAndDate(traceId, startDate, endDate);
+            const response = await traceTableService.getAnswersByExerciseAndDateAndName(traceId, startDate, endDate, studentName);
 
             if (response.success) {
                 const normalizedAnswers = normalizeAnswers(response.data);
@@ -142,7 +140,7 @@ export default function SubmissionList({ traceId, exercise, startDate, endDate }
         }
 
         fetchAnswers();
-    }, [traceId, startDate, endDate]);
+    }, [traceId, startDate, endDate, studentName]);
 
     useEffect(() => {
         function handleEscape(event) {

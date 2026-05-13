@@ -33,6 +33,8 @@ export default function ExerciseSubmissions() {
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
     const [dataOn, setDataOn] = useState(false);
+    const [studentName, setStudentName] = useState("");
+    const [debouncedName, setDebouncedName] = useState("");
 
     const traceTableService = new TraceTableService();
     const themeService = new ThemeService();
@@ -45,7 +47,7 @@ export default function ExerciseSubmissions() {
                 const [exerciseResponse, themesResponse, metricsResponse] = await Promise.all([
                     traceTableService.getById(id),
                     themeService.getThemesByExercise(id),
-                    traceTableService.getMetrics(id, startDate, endDate),
+                    traceTableService.getMetrics(id, startDate, endDate, debouncedName),
                 ]);
 
                 if (exerciseResponse.success) {
@@ -82,7 +84,15 @@ export default function ExerciseSubmissions() {
         }
 
         loadPageData();
-    }, [id, startDate, endDate]);
+    }, [id, startDate, endDate, debouncedName]);
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setDebouncedName(studentName);
+        }, 500);
+
+        return () => clearTimeout(timer);
+    }, [studentName]);
 
     if (loading) {
         return (
@@ -118,21 +128,31 @@ export default function ExerciseSubmissions() {
 
                             {dataOn && (
                                 <div className={styles.dateFilterContainer}>
-                                    <h5>Data Inicial:</h5>
+                                    <h5 className={styles.inputTitle}>Data Inicial:</h5>
                                     <input
+                                        className={styles.inputDate}
                                         type="date"
                                         value={startDate}
                                         onChange={(e) => setStartDate(e.target.value)}
                                         placeholder="Data inicial"
                                     />
-                                    <h5>Data Final:</h5>
+                                    <h5 className={styles.inputTitle}>Data Final:</h5>
                                     <input
+                                        className={styles.inputDate}
                                         type="date"
                                         value={endDate}
                                         onChange={(e) => setEndDate(e.target.value)}
                                         placeholder="Data final"
                                     />
-                                    <button className={styles.cancelButton} onClick={() => { setDataOn(false); setStartDate(null); setEndDate(null) }}>
+                                    <h5 className={styles.inputTitle}>Aluno:</h5>
+                                    <input
+                                        className={styles.input}
+                                        type="text"
+                                        value={studentName}
+                                        onChange={(e) => setStudentName(e.target.value)}
+                                        placeholder="Nome do aluno"
+                                    />  
+                                    <button className={styles.cancelButton} onClick={() => { setDataOn(false); setStartDate(null); setEndDate(null); setStudentName("") }}>
                                         Cancelar
                                     </button>
                                 </div>
@@ -187,18 +207,18 @@ export default function ExerciseSubmissions() {
                                 </div>
                                 <div className={styles.metric}>
                                     <p>Percentual de Acerto</p>
-                                    <span>{metrics.accuracy || 0}%</span>
+                                    <span>{metrics.accuracy.toFixed(2) || 0}%</span>
                                 </div>
                                 <div className={styles.metric}>
                                     <p>Percentual de Erro</p>
-                                    <span>{metrics.errorRate || 0}%</span>
+                                    <span>{metrics.errorRate.toFixed(2) || 0}%</span>
                                 </div>
                             </div>
 
                         </div>
                     </section>
 
-                    <SubmissionList traceId={id} exercise={exercise} startDate={startDate} endDate={endDate} />
+                    <SubmissionList traceId={id} exercise={exercise} startDate={startDate} endDate={endDate} studentName={debouncedName} />
                 </>
             ) : (
                 <section className={styles.emptyState}>
