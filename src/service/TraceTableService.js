@@ -72,20 +72,24 @@ export class TraceTableService {
         }
     };
 
-    getAnswersByExercise(traceId) {
-        return this.handleRequest("get", `/trace/answers/${traceId}`);
-    }
-
     getAnswersByExerciseAndDate(traceId, startDate, endDate) {
-        return this.handleRequest("get", `/trace/answers/${traceId}?startDate=${startDate}T00:00:00&endDate=${endDate}T23:59:59`);
+        let url = `/trace/answers/${traceId}`;
+
+        if (startDate && endDate) {
+            url += `?startDate=${startDate}T00:00:00&endDate=${endDate}T23:59:59`;
+        }
+
+        return this.handleRequest("get", url);
     }
 
-    getMetricsWithDate(traceId, startDate, endDate) {
-        return this.handleRequest("get", `/trace/metrics/${traceId}?startDate=${startDate}T00:00:00&endDate=${endDate}T23:59:59`);
-    }
+    getMetrics(traceId, startDate, endDate) {
+        let url = `/trace/metrics/${traceId}`;
 
-    getMetrics(traceId) {
-        return this.handleRequest("get", `/trace/metrics/${traceId}`);
+        if (startDate && endDate) {
+            url += `?startDate=${startDate}T00:00:00&endDate=${endDate}T23:59:59`;
+        }
+
+        return this.handleRequest("get", url);
     }
 
     async getById(id) {

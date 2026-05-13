@@ -45,7 +45,7 @@ export default function ExerciseSubmissions() {
                 const [exerciseResponse, themesResponse, metricsResponse] = await Promise.all([
                     traceTableService.getById(id),
                     themeService.getThemesByExercise(id),
-                    startDate && endDate ? traceTableService.getMetricsWithDate(id, startDate, endDate) : traceTableService.getMetrics(id),
+                    traceTableService.getMetrics(id, startDate, endDate),
                 ]);
 
                 if (exerciseResponse.success) {

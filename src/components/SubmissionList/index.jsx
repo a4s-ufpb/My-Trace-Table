@@ -119,13 +119,7 @@ export default function SubmissionList({ traceId, exercise, startDate, endDate }
             setLoading(true);
             setErrorMessage("");
 
-            let response;
-
-            if (startDate && endDate) {
-                response = await traceTableService.getAnswersByExerciseAndDate(traceId, startDate, endDate);
-            } else {
-                response = await traceTableService.getAnswersByExercise(traceId);
-            }
+            const response = await traceTableService.getAnswersByExerciseAndDate(traceId, startDate, endDate);
 
             if (response.success) {
                 const normalizedAnswers = normalizeAnswers(response.data);
