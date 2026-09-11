@@ -36,8 +36,8 @@ export default function NewTheme() {
         try {
             const response = await themeService.findThemesPaginatedByUser(currentPage, 5);
             if (response.success) {
-                setThemes(response.data.content || []);
-                setTotalPages(response.data.totalPages || 0);
+                setThemes(response.data || []);
+                setTotalPages(response.data || 0);
             }
         } catch (error) {
             setPopUpMessage("Erro ao carregar temas. Tente novamente.");

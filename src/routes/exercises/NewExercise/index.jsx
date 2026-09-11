@@ -40,8 +40,8 @@ export default function NewExercise() {
         const fetchThemes = async () => {
             const response = await themeService.findAllThemesByUser();
             if (response.success) {
-                setAllThemes(response.data.content || []);
-                setIsValid((response.data.content || []).length > 0);
+                setAllThemes(response.data || []);
+                setIsValid((response.data || []).length > 0);
             }
         };
 
