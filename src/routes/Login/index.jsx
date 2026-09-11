@@ -94,6 +94,7 @@ export default function Login() {
                     </div>
                     <button type="submit" className="btn" data-testid="login-submit-button">Entrar</button>
                 </form>
+                <span className="without-registration"><Link to="/forgot-password">Esqueci minha senha</Link></span>
                 <span className="without-registration">Quer administrar os professores da sua instituição? Entre em contato com <a href={mailtoLink}>{emailAddress}</a></span>
                 <span className="without-registration">Não tem cadastro? <Link to="/register">Cadastre-se</Link></span>
             </div>

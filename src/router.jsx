@@ -19,6 +19,7 @@ import RoleProtectedRoute from "./components/RoleProtectedRoute";
 import ErrorPage from "./routes/error-page/ErrorPage";
 import Profile from "./routes/Profile";
 import Register from "./routes/Register/index";
+import ForgotPassword from "./routes/ForgotPassword/index";
 
 const router = createHashRouter([
     {
@@ -29,6 +30,11 @@ const router = createHashRouter([
     {
         path: "/register",
         element: <Register />,
+        errorElement: <ErrorPage />
+    },
+    {
+        path: "/forgot-password",
+        element: <ForgotPassword />,
         errorElement: <ErrorPage />
     },
     {

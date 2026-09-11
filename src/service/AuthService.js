@@ -1,5 +1,4 @@
 import { apiAxios } from "../axios/axiosConfig";
-import { formatFieldErrors } from "../utils/errorUtils";
 
 export class AuthService {
     async login(email, password) {
@@ -27,14 +26,27 @@ export class AuthService {
         }
     }
 
-    async register(name, email, password, role) {
+    async sendRegistrationCode(email) {
         try {
-            const response = await apiAxios.post("/user/regAlun", {
-                name,
-                email,
-                password,
-                role
-            });
+            await apiAxios.post("/verification/registration/send", { email });
+            return { success: true };
+        } catch (error) {
+            return {
+                success: false,
+                message:
+                    error.response?.data?.message ||
+                    "Erro ao enviar o código de verificação.",
+            };
+        }
+    }
+
+    async register(name, email, password, role, code) {
+        try {
+            const response = await apiAxios.post(
+                "/user/regAlun",
+                { name, email, password, role },
+                { params: { code } }
+            );
             return {
                 success: true,
                 data: response.data,
@@ -43,6 +55,38 @@ export class AuthService {
             return {
                 success: false,
                 message: error.response?.data?.message || "Erro ao cadastrar usuário",
+            };
+        }
+    }
+
+    async sendPasswordResetCode(email) {
+        try {
+            await apiAxios.post("/verification/password-reset/send", { email });
+            return { success: true };
+        } catch (error) {
+            return {
+                success: false,
+                message:
+                    error.response?.data?.message ||
+                    "Erro ao enviar o código de verificação.",
+            };
+        }
+    }
+
+    async confirmPasswordReset(email, code, newPassword) {
+        try {
+            await apiAxios.post("/verification/password-reset/confirm", {
+                email,
+                code,
+                newPassword,
+            });
+            return { success: true };
+        } catch (error) {
+            return {
+                success: false,
+                message:
+                    error.response?.data?.message ||
+                    "Erro ao redefinir a senha. Verifique o código e tente novamente.",
             };
         }
     }
