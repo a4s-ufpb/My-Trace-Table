@@ -121,7 +121,7 @@ export default function Profile() {
                     <div>
                         <label>Papel</label>
                         <span>
-                            {role === "admin" ? "Administrador" : "Usuário padrão"}
+                            {role === "admin" ? "Administrador" : role === "professor" ? "Professor" : "Aluno"}
                         </span>
                     </div>
                     <div className="btn-container">
