@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
 import { useEffect, useRef } from "react";
 import "./Menu.css";
-import { BsArrowRightCircleFill } from "react-icons/bs";
 
 function Menu({ setMenu }) {
   const menuRef = useRef(null);
+  const role = localStorage.getItem("userRole") || "user";
+  const creatorId = localStorage.getItem("userId");
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -21,14 +22,34 @@ function Menu({ setMenu }) {
   }, [setMenu]);
 
   return (
-    <div ref={menuRef} className="menu">
-      <div className="container-back-btn">
-        <p className="back-btn" onClick={() => setMenu(false)}> X </p>
-      </div>
+    <div className="menu-overlay">
+      <div ref={menuRef} className="menu">
+        <div className="container-back-btn">
+          <button className="back-btn" onClick={() => setMenu(false)} type="button">
+            X
+          </button>
+        </div>
 
-      <div className="menu-itens">
-        <Link to="/" onClick={() => setMenu(false)}>Ínicio</Link>
-        <Link to="/about" onClick={() => setMenu(false)}>Sobre</Link>
+        <div className="menu-itens">
+          <Link to="/" onClick={() => setMenu(false)}>Inicio</Link>
+
+          {role === "admin" &&
+            (<Link to="new-professor" onClick={() => setMenu(false)}>Cadastrar/Ver Professor(es)</Link>)
+          }
+          {(role === "professor" || role === "admin") &&
+            (<Link to="new-exercise" onClick={() => setMenu(false)}>Cadastrar Exercicio</Link>)
+          }
+          {(role === "professor" || role === "admin") &&
+            (<Link to={`/exercises/all?creatorId=${creatorId}`} onClick={() => setMenu(false)}>Ver Exercicios</Link>)
+          }
+          {(role === "professor" || role === "admin") &&
+            (<Link to="new-theme" onClick={() => setMenu(false)}>Cadastrar/Ver Tema(s)</Link>)
+          }
+          {(role === "professor" || role === "admin") &&
+            (<Link to="help-page" onClick={() => setMenu(false)}>Ajuda</Link>)
+          }
+          <Link to="about" onClick={() => setMenu(false)}>Sobre</Link>
+        </div>
       </div>
     </div>
   );

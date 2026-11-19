@@ -1,29 +1,72 @@
+/* eslint-disable react/prop-types */
 import "./SelectCode.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { TraceTableService } from "./../../service/TraceTableService";
 import AlertBox from "../alertBox/AlertBox";
+import MultiSelect from "../MultiSelect";
+import { UserService } from "../../service/UserService";
 
 function SelectCode({ setSelectCode }) {
-    const [themeId, setThemeId] = useState("");
-    const [showAlertBox, setAlertBox] = useState(false);
+    const [themeName, setThemeName] = useState("");
+    const [themeId, setThemeId] = useState();
+    const [showAlertBoxThemeNotFound, setAlertBoxThemeNotFound] = useState(false);
+    const [showAlertBoxNoUser, setAlertBoxNoUser] = useState(false);
+    const [selectedUser, setSelectedUser] = useState([]);
+    const [allUsers, setAllUsers] = useState([])
 
     const traceTableService = new TraceTableService();
 
     const navigate = useNavigate();
 
+    const userService = new UserService();
+
+    useEffect(() => {
+        const fetchThemes = async () => {
+            const response = await userService.findAllProfessors();
+            if (response.success) {
+                setAllUsers(response.data.content || []);;
+            }
+        };
+        fetchThemes();
+    }, []);
+
     const handleButtonClick = async (e) => {
         e.preventDefault();
+
+        if (themeId) {
+            try {
+                const traceTableResponse = await traceTableService.findAllTraceTablesByTheme(themeId);
+                if (!traceTableResponse.success) {
+                    setAlertBoxThemeNotFound(true);
+                    return;
+                }
+
+                navigate(`/exercices/${themeId}`)
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+        if (selectedUser.length === 0) {
+            setAlertBoxNoUser(true);
+            return;
+        }
+
         try {
+            const creatorId = selectedUser[0].id;;
+
             const traceTableResponse =
-                await traceTableService.findAllTraceTablesByTheme(themeId);
+                await traceTableService.findAllTraceTablesByThemeName(themeName, 0, 1000, creatorId);
 
             if (!traceTableResponse.success) {
-                setAlertBox(true);
+                setAlertBoxThemeNotFound(true);
                 return;
             }
 
-            navigate(`/exercices/${themeId}`);
+            navigate(`/exercices/${themeName}`, {
+                state: { creatorId: creatorId }
+            });
         } catch (error) {
             console.error(error);
         }
@@ -31,30 +74,46 @@ function SelectCode({ setSelectCode }) {
 
     return (
         <div className="container-select-code">
-            <form className="select-code-content">
-                <button className="close-button" onClick={() => setSelectCode(false)}>
+            <form className="select-code-content" onSubmit={handleButtonClick}>
+                <button className="close-button" onClick={() => setSelectCode(false)} type="button">
                     &times;
                 </button>
-                <h2>Digite o código do tema</h2>
+                <h2>Digite o nome ou id do tema</h2>
                 <input
                     min={1}
                     type="number"
-                    placeholder="Insira o código aqui"
+                    placeholder="Insira o código do tema aqui"
                     value={themeId}
-                    required
                     onChange={(e) => setThemeId(e.target.value)}
+                />
+                <input
+                    min={1}
+                    type="text"
+                    placeholder="Insira o nome do tema aqui"
+                    value={themeName}
+                    onChange={(e) => setThemeName(e.target.value)}
+                />
+                <MultiSelect
+                    items={allUsers}
+                    title={"Selecionar Professor(a)"}
+                    typeItem={"professores"}
+                    setSelectedItems={setSelectedUser}
+                    selectedItems={selectedUser}
                 />
                 <button
                     className="insert-button"
-                    onClick={handleButtonClick}
                     type="submit"
                 >
                     Buscar
                 </button>
             </form>
 
-            {showAlertBox && (
-                <AlertBox setAlertBox={setAlertBox} text="Tema não encontrado!" />
+            {showAlertBoxThemeNotFound && (
+                <AlertBox setAlertBox={setAlertBoxThemeNotFound} text="Tema não encontrado!" />
+            )}
+
+            {showAlertBoxNoUser && (
+                <AlertBox setAlertBox={setAlertBoxNoUser} text="Selecione um professor!" />
             )}
         </div>
     );

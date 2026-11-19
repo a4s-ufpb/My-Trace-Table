@@ -1,0 +1,93 @@
+.homeHero {
+  width: min(1120px, 100%);
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 1.5rem;
+  align-items: stretch;
+  padding: clamp(1rem, 2vw, 1.5rem) 0;
+}
+
+.homeCopy,
+.homeActions {
+  border-radius: 32px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: var(--shadow-soft);
+  backdrop-filter: blur(18px);
+}
+
+.homeCopy {
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+  background:
+    linear-gradient(140deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.04)),
+    linear-gradient(135deg, rgba(11, 40, 54, 0.92), rgba(24, 74, 92, 0.82));
+  color: var(--primary-white);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.homeEyebrow {
+  width: fit-content;
+  padding: 0.5rem 0.9rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.homeCopy h2 {
+  color: var(--primary-white);
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  line-height: 1.08;
+  max-width: 15ch;
+}
+
+.homeCopy p {
+  color: rgba(255, 255, 255, 0.82);
+  max-width: 52ch;
+  line-height: 1.7;
+  font-size: 1rem;
+}
+
+.homeActions {
+  padding: clamp(1.25rem, 3vw, 2rem);
+  background: rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+@media (max-width: 900px) {
+  .homeHero {
+    grid-template-columns: 1fr;
+  }
+
+  .homeCopy h2 {
+    max-width: none;
+  }
+}
+
+@media (max-width: 540px) {
+  .homeCopy,
+  .homeActions {
+    border-radius: 24px;
+  }
+
+  .homeCopy {
+    padding: 1.3rem;
+  }
+
+  .homeActions {
+    padding: 1rem;
+  }
+
+  .homeCopy p {
+    font-size: 0.95rem;
+  }
+}

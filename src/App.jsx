@@ -1,12 +1,14 @@
-import { Outlet } from "react-router-dom";
 import "./App.css";
-import Header from "./components/header/Header";
+import { TraceTableProvider } from "./contexts/TraceTableContext";
+import { RouterProvider } from "react-router-dom";
+import router from "./router";
 
 function App() {
   return (
     <div className="app">
-      <Header />
-      <Outlet />
+      <TraceTableProvider>
+        <RouterProvider router={router} />
+      </TraceTableProvider>
     </div>
   );
 }

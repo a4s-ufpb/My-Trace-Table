@@ -3,7 +3,6 @@ import { UserService } from '../../service/UserService';
 import Button from '../../components/button/Button';
 import { useNavigate } from 'react-router-dom';
 import Loading from '../../components/loading/Loading';
-import NavigateButton from '../../components/navigateButton/NavigateButton';
 import SecondaryHeader from '../../components/secondary-header/SecondaryHeader';
 
 function Teacher() {
@@ -20,7 +19,7 @@ function Teacher() {
     async function fetchUsers() {
         try {
             setLoading(true);
-            const usersResponse = await userService.findAllUsers();
+            const usersResponse = await userService.findAllProfessors();
             setLoading(false);
 
             if (!usersResponse.success) {

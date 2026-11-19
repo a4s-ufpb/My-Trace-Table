@@ -1,81 +1,245 @@
 .header {
-  width: 100%;
-  background: var(--primary-white);
-  height: 3.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.6);
-  z-index: 2;
+    width: 100%;
+    height: 5.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 0 1.35rem;
+    background: rgba(9, 24, 35, 0.72);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.18);
+    backdrop-filter: blur(18px);
+    z-index: 20;
+    position: sticky;
+    top: 0;
 }
 
-.header svg {
-  margin-left: 30px;
-  font-size: 35px;
-  cursor: pointer;
-  color: var(--primary-black);
-  transition: all 0.2s ease-in-out;
-  opacity: 0.8;
+.btnMenu {
+    position: absolute;
+    left: 1.4rem;
+    padding: 0.65rem;
+    width: 42px;
+    height: 42px;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.header svg:hover {
-  opacity: 1;
+.btnMenu,
+.btnPerson {
+    font-size: 1.9rem;
+    cursor: pointer;
+    color: var(--primary-white);
+    transition: transform 0.2s ease, background-color 0.2s ease, opacity 0.2s ease;
+    opacity: 0.92;
+}
+
+.btnMenu:hover,
+.btnPerson:hover {
+    opacity: 1;
+    transform: translateY(-1px);
 }
 
 .header h1 {
-  font-size: 1.5rem;
-  color: var(--primary-black);
-  cursor: pointer;
+    font-size: 1.4rem;
+    color: var(--primary-white);
+    cursor: pointer;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: "Sora", "Segoe UI", sans-serif;
+    letter-spacing: -0.04em;
+    padding: 0.55rem 1.15rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.rightOptionsContainer {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    gap: 0.85rem;
+    right: 1.35rem;
 }
 
 .header img {
-  margin-right: 30px;
-  width: 37px;
-  height: 37px;
-  background-color: #fff;
-  border-radius: 50%;
-  box-shadow: inset 0px 0px 10px #3dcfbc;
-  cursor: pointer;
-  opacity: 0.8;
+    width: 42px;
+    height: 42px;
+    background-color: rgba(255, 255, 255, 0.92);
+    border-radius: 50%;
+    padding: 0.35rem;
+    box-shadow: inset 0 0 0 1px rgba(65, 205, 196, 0.34), 0 12px 22px rgba(3, 14, 22, 0.22);
+    cursor: pointer;
+    opacity: 0.9;
+    transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
 }
 
 .header img:hover {
-  opacity: 1;
+    opacity: 1;
+    transform: translateY(-1px);
+}
+
+.personOptions {
+    position: absolute;
+    top: calc(100% + 0.8rem);
+    right: 0.2rem;
+    margin-top: 0;
+    background: rgba(255, 255, 255, 0.96);
+    box-shadow: var(--shadow-card);
+    border-radius: 22px;
+    display: flex;
+    flex-direction: column;
+    width: 220px;
+    border: 1px solid rgba(18, 32, 50, 0.08);
+    overflow: hidden;
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(-8px);
+    transition: opacity 0.22s ease, visibility 0.22s ease, transform 0.22s ease;
+    z-index: 10;
+}
+
+.personOptions.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.personOption {
+    color: var(--text-primary);
+    padding: 0.9rem 1rem;
+    width: 100%;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    font-weight: 600;
+}
+
+.personOption:hover {
+    background-color: rgba(65, 205, 196, 0.14);
+    color: var(--accent-strong);
+}
+
+.personIconAndName {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 999px;
+    padding: 0.45rem 0.8rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.personInfo {
+    padding: 1rem 1rem 0.85rem;
+    font-weight: bold;
+    background: linear-gradient(180deg, rgba(65, 205, 196, 0.18), rgba(65, 205, 196, 0.08));
+    color: var(--primary-black);
+    cursor: default;
+}
+
+.separator {
+    border: none;
+    border-top: 1px solid rgba(18, 32, 50, 0.08);
+    margin: 0;
+}
+
+.welcomeMessage {
+    color: var(--primary-white);
+    font-weight: 700;
+    font-size: 0.95rem;
 }
 
 @media (max-width: 770px) {
-  .header {
-    padding: 10px 20px;
-  }
+    .header {
+        height: 4.75rem;
+        padding: 0 1rem;
+        justify-content: center;
+    }
 
-  .header svg {
-    font-size: 30px;
-    margin-left: 5px;
-  }
+    .btnMenu,
+    .btnPerson {
+        font-size: 1.6rem;
+    }
 
-  .header h1 {
-    font-size: 1.5rem;
-    margin: 10px 0;
-  }
+    .header h1 {
+        font-size: 1.15rem;
+        padding-inline: 1rem;
+    }
 
-  .header img {
-    width: 32px;
-    height: 32px;
-    margin-right: 5px;
-  }
+    .header img {
+        width: 38px;
+        height: 38px;
+    }
+
+    .welcomeMessage {
+        display: none;
+    }
+
+    .personIconAndName {
+        padding: 0.45rem;
+        gap: 0;
+    }
+
+    .personOptions {
+        width: 170px;
+    }
 }
 
 @media (max-width: 480px) {
-  .header svg {
-    font-size: 30px;
-  }
+    .btnMenu,
+    .btnPerson {
+        font-size: 1.4rem;
+    }
 
-  .header h1 {
-    font-size: 1.2rem;
-  }
+    .header h1 {
+        font-size: 0.95rem;
+        max-width: calc(100% - 110px);
+    }
 
-  .header img {
-    width: 30px;
-    height: 30px;
-  }
+    .header img {
+        width: 34px;
+        height: 34px;
+    }
+}
+
+@media (max-width: 420px) {
+    .btnMenu {
+        left: 0.7rem;
+    }
+
+    .rightOptionsContainer {
+        gap: 0.45rem;
+        right: .7rem;
+    }
+
+    .header h1 {
+        padding-inline: 0.8rem;
+    }
+}
+
+@media (max-width: 380px) {
+    .header h1 {
+        font-size: .9rem;
+    }
+
+    .btnMenu,
+    .btnPerson {
+        font-size: 1.25rem;
+    }
+
+    .header img {
+        width: 31px;
+        height: 31px;
+    }
+}
+
+@media (max-width: 345px) {
+    .btnMenu,
+    .btnPerson {
+        font-size: 1.15rem;
+    }
 }

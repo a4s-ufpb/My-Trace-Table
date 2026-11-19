@@ -1,60 +1,68 @@
 .button {
-    width: 230px;
-    height: 80px;
+    width: min(100%, 280px);
+    min-height: 52px;
+    padding: 0.8rem 1.6rem;
     font-weight: 600;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: var(--primary-green);
+    background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.03)),
+        linear-gradient(135deg, rgba(15, 65, 72, 0.95), rgba(26, 106, 118, 0.98));
     color: #fff;
-    border-radius: 10px;
-    border: none;
-    font-size: 1.1rem;
-    line-height: 25px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    font-size: 1rem;
+    line-height: 1.5;
     cursor: pointer;
-    transition: all .2s ease-in-out;
+    box-shadow: 0 8px 24px rgba(7, 19, 29, 0.2);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    text-align: center;
+    backdrop-filter: blur(12px);
 }
 
 .button:hover {
-    background-color: #fff;
-    color: var(--primary-green);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(7, 19, 29, 0.25);
+    border-color: rgba(255, 255, 255, 0.25);
+    background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.06)),
+        linear-gradient(135deg, #145863, #2296a4);
+}
+
+.button:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 12px rgba(7, 19, 29, 0.15);
 }
 
 @media (max-width: 1025px) {
     .button {
-        width: 90%;
-        height: 100px;
-        max-width: 500px;
-        font-size: 1.5rem;
+        width: min(100%, 300px);
+        min-height: 54px;
+        font-size: 1.05rem;
     }
 }
 
 @media (max-width: 850px) {
     .button {
-        width: 90%;
-        height: 80px;
-        max-width: 380px;
-        font-size: 1.3rem;
-    }
-}
-
-@media (max-width: 780px) {
-    .button {
-        max-width: 300px;
+        min-height: 50px;
     }
 }
 
 @media (max-width: 550px) {
     .button {
-        width: 95%;
-        max-width: 230px;
-        font-size: 1.1rem;
+        width: 100%;
+        max-width: none;
+        min-height: 48px;
+        padding-inline: 1.2rem;
+        font-size: 1rem;
     }
 }
 
 @media (max-width: 400px) {
     .button {
-        max-width: 220px;
-        font-size: 1rem;
+        border-radius: 10px;
+        min-height: 44px;
+        font-size: 0.95rem;
     }
 }

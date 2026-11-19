@@ -1,0 +1,24 @@
+.invalidPopUp {
+    position: fixed;
+    top: 1.2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(10, 33, 44, 0.92);
+    color: var(--primary-white);
+    padding: 0.9rem 1.2rem;
+    border-radius: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: var(--shadow-card);
+    font-size: 0.95rem;
+    z-index: 1001;
+    min-width: min(92vw, 360px);
+    backdrop-filter: blur(14px);
+}
+
+.invalidPopUp ul {
+    list-style: none;
+}
+
+.invalidPopUp li {
+    margin-bottom: 4px;
+}

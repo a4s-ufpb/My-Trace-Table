@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./TraceTable.css";
-import ImageModal from "../../components/image-modal/ImageModal";
+import ImageModal from "../../components/image-modal/";
 import FeedbackBox from "../../components/feedback-box/FeedbackBox";
 import {
   BsArrowLeftCircleFill,
@@ -9,7 +9,7 @@ import {
   BsArrowRightCircleFill,
 } from "react-icons/bs";
 import { TraceTableService } from "../../service/TraceTableService";
-import AttentionPopUp from "../../components/attention-popUp/AttentionPopUp";
+import AttentionPopUp from "../../components/AttentionPopUp";
 import Loading from "../../components/loading/Loading";
 
 function TraceTable() {
@@ -35,7 +35,7 @@ function TraceTable() {
   const traceTableService = new TraceTableService();
 
   const valueError = "Valor incorreto";
-  const typeError = "Tipo inválido";
+  const typeError = "Tipo inv\u00E1lido";
 
   useEffect(() => {
     const allExercices = JSON.parse(localStorage.getItem("exercices")) || [];
@@ -45,9 +45,9 @@ function TraceTable() {
       setExercice(currentExerciseData);
       setUserTraceTable(currentExerciseData.shownTraceTable);
       setPlaceholders(
-        currentExerciseData.shownTraceTable.map(row => row.map(() => "?"))
+        currentExerciseData.shownTraceTable.map((row) => row.map(() => "?"))
       );
-      setHasStep(currentExerciseData.header.some(h => h.toLowerCase().includes("passo")));
+      setHasStep(currentExerciseData.header.some((h) => h.toLowerCase().includes("passo")));
       setSubmitted(false);
       setIsCorrect(null);
       setCellErrors([]);
@@ -60,8 +60,8 @@ function TraceTable() {
 
   useEffect(() => {
     if (userTraceTable.length > 0) {
-      const allFilled = userTraceTable.every(row =>
-        row.every(cell => cell.toString().trim() !== '' && cell !== '?')
+      const allFilled = userTraceTable.every((row) =>
+        row.every((cell) => cell.toString().trim() !== "" && cell !== "?")
       );
       setIsValid(allFilled);
     } else {
@@ -100,13 +100,23 @@ function TraceTable() {
   const handleSubmit = async () => {
     setSubmitted(false);
 
-    const trimmedUserTraceTable = userTraceTable.map(row =>
-      row.map(cell => cell.toString().trim())
+    const trimmedUserTraceTable = userTraceTable.map((row) =>
+      row.map((cell) => cell.toString().trim())
     );
 
+    // 1. Salva a resposta do aluno no banco de dados SEMPRE (certa ou errada)
+    try {
+      await traceTableService.submitAnswer(exercice.id, trimmedUserTraceTable);
+    } catch (error) {
+      console.error("Erro ao salvar a resposta no banco:", error);
+    }
+
+    // 2. Faz a validação normal para dar o feedback visual na tela
     const response = await traceTableService.checkUserAnswer(exercice.id, trimmedUserTraceTable);
 
     setSubmitted(true);
+
+    // 3. Mantém sua lógica original de cores e mensagens de erro
     if (response.success) {
       setIsCorrect(true);
       setErrorMessage("");
@@ -115,11 +125,12 @@ function TraceTable() {
       setIsCorrect(false);
       if (Array.isArray(response.data)) {
         setCellErrors(response.data);
-        const typeErrors = response.data.filter(err => err.errorMessage === typeError).length;
-        const valueErrors = response.data.filter(err => err.errorMessage === valueError).length;
-        if (typeErrors > 0 && valueErrors === 0) setErrorMessage("Atenção! Existem erro(s) de tipo");
-        else if (valueErrors > 0 && typeErrors === 0) setErrorMessage("Existem valor(es) incorreto(s)");
-        else setErrorMessage("Há erro(s) de tipo e de valor. Corrija os campos em sua tabela");
+        const typeErrors = response.data.filter((err) => err.errorMessage === typeError).length;
+        const valueErrors = response.data.filter((err) => err.errorMessage === valueError).length;
+
+        if (typeErrors > 0 && valueErrors === 0) setErrorMessage("Atenção! Existem erros de tipo.");
+        else if (valueErrors > 0 && typeErrors === 0) setErrorMessage("Existem valores incorretos.");
+        else setErrorMessage("Há erros de tipo e de valor. Corrija os campos da tabela.");
       } else {
         setErrorMessage(response.message || "Erro ao validar exercício.");
       }
@@ -130,14 +141,6 @@ function TraceTable() {
     return cellErrors.find(
       (err) => err.row === rowIndex && err.column === colIndex
     );
-  };
-
-  const handleImageClick = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
   };
 
   const goToNextExercice = () => {
@@ -169,22 +172,18 @@ function TraceTable() {
     }
   };
 
-  const shownPopUp = () => {
-    setOpenPopUp(true);
-  }
-
   const capitalizeFirstLetter = (string) => {
     if (!string) return "";
     return string.charAt(0).toUpperCase() + string.slice(1);
   };
 
   const getColumnClasses = (colName) => {
-    if (!colName) return '';
+    if (!colName) return "";
     const lower = colName.toLowerCase();
     const classes = [];
-    if (lower.includes('passo') || lower.includes('linha')) classes.push('metadata-column');
-    if (lower.includes('linha')) classes.push('metadata-column-divider');
-    return classes.join(' ');
+    if (lower.includes("passo") || lower.includes("linha")) classes.push("metadata-column");
+    if (lower.includes("linha")) classes.push("metadata-column-divider");
+    return classes.join(" ");
   };
 
   if (isLoading) {
@@ -198,20 +197,20 @@ function TraceTable() {
   return (
     <div className="background-trace">
       <div className="trace-table-container">
-        <div className="image-container">
+        <div className="trace-exercise-panel">
           <div className="exercise-info">
             <h2>{exercice.exerciseName}</h2>
-            <span>{capitalizeFirstLetter(exercice.programmingLanguage)}</span>
+            <span className="exercise-lang">{capitalizeFirstLetter(exercice.programmingLanguage)}</span>
           </div>
           <img
             src={exercice.imgName}
-            alt="Ilustração do exercício"
+            alt="Ilustracao do exercicio"
             className="exercise-image"
-            onClick={handleImageClick}
+            onClick={() => setIsModalOpen(true)}
           />
         </div>
 
-        <div className="trace-table">
+        <div className="trace-grid-panel">
           <table>
             <thead>
               <tr>
@@ -223,15 +222,14 @@ function TraceTable() {
             <tbody>
               {userTraceTable.map((row, rowIndex) => (
                 <tr key={rowIndex}>
-                  {hasStep && <td className={`step-cell ${getColumnClasses('Passo')}`}>{rowIndex + 1}º</td>}
+                  {hasStep && <td className={`step-cell ${getColumnClasses("Passo")}`}>{rowIndex + 1}o</td>}
                   {row.map((cell, colIndex) => {
                     const originalCell = exercice.shownTraceTable[rowIndex][colIndex];
-
                     const columnName = exercice.header[colIndex + (hasStep ? 1 : 0)];
                     const cellClasses = [
                       getColumnClasses(columnName),
-                      originalCell === '#' ? 'disabled-cell' : ''
-                    ].join(' ').trim();
+                      originalCell === "#" ? "disabled-cell" : ""
+                    ].join(" ").trim();
 
                     return (
                       <td key={colIndex} className={cellClasses}>
@@ -274,28 +272,28 @@ function TraceTable() {
         </div>
       </div>
 
-      <div className="btn-container">
+      <div className="trace-controls">
         <BsArrowLeftCircleFill
           title="Navegar para o exercício anterior"
-          className={`arrow-btn ${currentExerciceIndex === 0 ? "disabled" : ""
-            }`}
+          className={`arrow-btn ${currentExerciceIndex === 0 ? "disabled" : ""}`}
           onClick={goToPreviousExercice}
         />
         <button
           title="Enviar exercício para correção"
-          className="btn-submit"
+          className="trace-primary"
           onClick={handleSubmit}
           disabled={!isValid}
         >Enviar</button>
         {submitted && (
           <button
             title="Reiniciar exercício"
+            className="trace-secondary"
             onClick={resetCurrentExercice}
           >
             <BsArrowRepeat />
           </button>
         )}
-        <button title="Sair dessa dela" className="btn-sair" onClick={shownPopUp}>Sair</button>
+        <button title="Sair desta tela" className="trace-exit" onClick={() => setOpenPopUp(true)}>Sair</button>
         <BsArrowRightCircleFill
           title="Navegar para o próximo exercício"
           className={`arrow-btn ${currentExerciceIndex >= (JSON.parse(localStorage.getItem("exercices")) || []).length - 1 ? "disabled" : ""}`}
@@ -321,7 +319,7 @@ function TraceTable() {
 
       <ImageModal
         isOpen={isModalOpen}
-        onClose={handleCloseModal}
+        onClose={() => setIsModalOpen(false)}
         imageSrc={exercice.imgName}
       />
     </div>

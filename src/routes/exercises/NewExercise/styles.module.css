@@ -1,0 +1,32 @@
+.itensTheme {
+    margin: 5px;
+}
+
+.btnNewThemeContainer {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin: 0;
+}
+
+.btnNewTheme {
+    width: auto;
+    color: var(--accent-strong);
+    border: none;
+    cursor: pointer;
+    font-size: 0.96rem;
+    text-decoration: underline;
+    margin-bottom: 0;
+    transition: color 0.2s ease, transform 0.2s ease;
+    font-weight: 700;
+}
+
+.btnNewTheme:hover {
+    color: var(--primary-green);
+    transform: translateY(-1px);
+}
+
+.spanTheme {
+    margin-bottom: 10px;
+    color: var(--primary-black);
+}
